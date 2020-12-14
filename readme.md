@@ -21,6 +21,8 @@ Publish the required assets with:
 
 ```bash
 php artisan vendor:publish --provider='Naykel\Authit\AuthitServiceProvider'
+    or 
+php artisan vendor:publish --tag=nkr
 ```
 
 ## Change log

@@ -38,10 +38,7 @@
         "laravel": {
             "providers": [
                 "Naykel\\Authit\\AuthitServiceProvider"
-            ],
-            "aliases": {
-                "Authit": "Naykel\\Authit\\Facades\\Authit"
-            }
+            ]
         }
     }
 }
