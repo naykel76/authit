@@ -9,6 +9,8 @@
 
 Frontend auth scaffolding for NayKel Laravel applications.
 
+**Note** This package has a copy of the `FortifyServiceProvider.php` with alterations to load views, ***make sure `laravel/fortify` has already been installed, added to `app.php` and assets published before installing***
+
 ## Installation
 
 Require the package via composer:
@@ -20,9 +22,7 @@ composer require naykel/authit
 Publish the required assets with:
 
 ```bash
-php artisan vendor:publish --provider='Naykel\Authit\AuthitServiceProvider'
-    or 
-php artisan vendor:publish --tag=nkr
+php artisan vendor:publish --tag=nkr --force
 ```
 
 ## Change log
