@@ -15,7 +15,6 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     // admin routes
     Route::middleware(['role:super|admin'])->prefix('admin')->name('admin')->group(function () {
-
         Route::get('/', function () {
             return view('authit::admin.dashboard');
         });

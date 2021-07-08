@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'nathan@naykel.com.au',
             'password' => bcrypt('password'),
             'email_verified_at' => now(),
-        ])->assignRole('super');
+        ])->assignRole('super')->givePermissionTo('access admin');
 
         User::create([
             'name' => 'Angela McAdmin',

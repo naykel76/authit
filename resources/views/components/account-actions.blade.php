@@ -1,6 +1,6 @@
 {{-- user account actions navigation dropdown --}}
 
-{{-- <div class="dd">
+<div class="dd">
 
     <svg class="icon md wh40 light">
         <use xlink:href="/svg/nk_icon-defs.svg#icon-user-circle"></use>
@@ -31,4 +31,4 @@
 
     </div>
 
-</div> --}}
+</div>

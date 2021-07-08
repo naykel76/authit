@@ -2,13 +2,41 @@
 
 @section('content')
 
-<h1>User Dashboard</h1>
+<div class="container py-3">
+    <h1>Profile</h1>
 
-<div class="bx info-light">
-    <div class="bx-title">NK:TD</div>
-    need to redirect to admin!
+
+    {{-- user profile --}}
+    <div class="row">
+
+        <div class="col-lg-40">
+            <h5>Profile Information</h5>
+            <p class="mt-05 txt-sm">Update your account's profile information and email address.</p>
+        </div>
+
+        <div class="col-lg-60">
+            <x-authit::profile.update-profile-form />
+        </div>
+
+    </div>
+
+    <hr>
+
+    {{-- change password --}}
+    @if(Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
+        <div class="row">
+
+            <div class="col-lg-40">
+                <h5>Update Password</h5>
+                <p class="mt-05 txt-sm">Ensure your account is using a long, random password to stay secure.</p>
+            </div>
+
+            <div class="col-lg-60">
+                <x-authit::profile.update-password-form />
+            </div>
+
+        </div>
+    @endif
 </div>
-
-if is admin then show admin link dfgdfg
 
 @endsection

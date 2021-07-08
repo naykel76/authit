@@ -16,6 +16,8 @@ class RolesPermissionsTableSeeder extends Seeder
     public function run()
     {
         // create permissions
+        $permission = Permission::create(['name' => 'access admin']);
+
         $permission = Permission::create(['name' => 'create articles']);
         $permission = Permission::create(['name' => 'read articles']);
         $permission = Permission::create(['name' => 'edit articles']);
