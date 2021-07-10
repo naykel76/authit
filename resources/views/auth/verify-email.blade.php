@@ -2,9 +2,11 @@
 
 @section('content')
 
+<section>
+
     <div class="col-lg-40 col-md-80 max bx">
 
-        @if (session('status'))
+        @if(session('status'))
             <div class="bx success" role="alert">
                 A fresh verification link has been sent to your email address.
             </div>
@@ -18,5 +20,6 @@
         </form>
 
     </div>
+</section>
 
 @endsection

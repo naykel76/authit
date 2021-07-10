@@ -22,7 +22,7 @@
             <img src="images/nk/logo.svg" alt="{{ config('app.name') }}" height=40>
     
             @if(Route::has('login'))
-                <x-authit::account-actions />
+                <x-authit::account-dropdown />
             @endif
             
             <div class="hide-from-tablet">

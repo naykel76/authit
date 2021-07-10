@@ -2,11 +2,12 @@
 
 @section('content')
 
+<section>
     <div class="col-lg-40 col-md-80 max bx">
 
         <p class="txt-sm">Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
 
-        @if (session('status'))
+        @if(session('status'))
             <div class="pxy-05 success" role="alert">
                 {{ session('status') }}
             </div>
@@ -19,5 +20,6 @@
         </form>
 
     </div>
+</section>
 
 @endsection
