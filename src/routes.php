@@ -19,4 +19,11 @@ Route::middleware(['web', 'auth'])->group(function () {
             return view('authit::admin.dashboard');
         });
     });
+
+    // super admin only
+    // Route::middleware(['role:super'])->group(function () {
+    //     Route::get('/dev', function () {
+    //         return view('dev')->with(['title' => 'Development Page']);
+    //     });
+    // });
 });

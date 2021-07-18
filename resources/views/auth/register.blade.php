@@ -2,9 +2,10 @@
 
 @section('content')
 
-<section>
 
-    <form class="col-md-40 max bx" method="POST" action="{{ route('register') }}">
+<x-authit::auth-layout>
+    
+    <form method="POST" action="{{ route('register') }}">
         @csrf
         <x-formit-input for="name" type="text" label="Name" autocomplete="name" rowClasses="nm" />
         <x-formit-input for="email" type="email" label="E-mail Address" autocomplete="email" />
@@ -15,6 +16,7 @@
             <x-formit-submit label="Register" rowClasses="nm" />
         </div>
     </form>
-</section>
+
+</x-authit::auth-layout>
 
 @endsection

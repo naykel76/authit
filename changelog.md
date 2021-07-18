@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.3
+
+- remove admin template
+- template updates
+
 ## 0.0.2
 
 - update templates
