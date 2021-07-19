@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.4
+
+- add account links
+
 ## 0.0.3
 
 - remove admin template

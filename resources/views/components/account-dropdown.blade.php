@@ -8,7 +8,7 @@
 
     <div class="dd-content pos-r nm">
 
-        <h5 class="mb-1 fw6">Hello, {{ Auth::user()->name }}</h5>
+        <h5 class="mb-1 fw6 nmt">Hello, {{ Auth::user()->name }}</h5>
 
         <div class="nav">
 
