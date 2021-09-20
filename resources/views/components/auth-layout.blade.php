@@ -1,6 +1,6 @@
-{{-- large content gap to prevent cramming at top --}}
-<div class="cg-lg col-lg-40 col-md-70 max bx">
-
-    {{ $slot }}
-
+{{-- auth template layout --}}
+<div class="py-res px">
+    <div class="mw600 max bx">
+        {{ $slot }}
+    </div>
 </div>

@@ -1,18 +1,19 @@
 @props(['icon' => true])
 
-<form action="{{ route('logout') }}" method="POST">
+    {{-- link needs to be placed inside nav to style correctly --}}
+    <form action="{{ route('logout') }}" method="POST">
 
-    @csrf
+        @csrf
 
-    <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
+        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
 
-        @if($icon)
-            <svg class="icon">
-                <use xlink:href="/svg/nk_icon-defs.svg#icon-exit"></use>
-            </svg>
-        @endif
+            @if($icon)
+                <svg class="icon mr-1">
+                    <use xlink:href="/svg/naykel-ui-SVG-sprite.svg#exit"></use>
+                </svg>
+            @endif
 
-        <span>Logout</span>
-    </a>
+            Logout
+        </a>
 
-</form>
+    </form>

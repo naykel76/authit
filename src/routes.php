@@ -7,23 +7,35 @@ use Naykel\Authit\Http\Controllers\UserProfileController;
 Route::middleware(['web', 'auth'])->group(function () {
 
     // user routes
-    Route::prefix('user')->name('user')->group(function () {
-        Route::get('/dashboard', [UserProfileController::class, 'dashboard'])->name('.dashboard');
-        Route::put('/profile-update', [UserProfileController::class, 'update'])->name('.profile-update');
-        Route::get('/profile-show', [UserProfileController::class, 'show'])->name('.profile-show');
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('/edit-account', [UserProfileController::class, 'edit'])->name('edit');
+        Route::put('/profile-update', [UserProfileController::class, 'update'])->name('update');
+        // Route::get('/dashboard', function () {
+        //     return view(View::exists('users.dashboard') ? 'users.dashboard' : 'dashboard::users.dashboard')
+        //         ->with('title', 'Student Dashboard');
+        // })->name('dashboard');
+
+        // return local view
+        Route::get('/dashboard', function () {
+            return view('user.dashboard');
+        })->name('dashboard');
+
+        // UserProfile
+        //     Route::get('/{user}/profile/edit', 'User\UserProfileController@edit')->name('profile.edit');
+        //     Route::patch('/{user}/profile/update', 'User\UserProfileController@update')->name('profile.update');
+        //     // UserAvatarController
+        //     Route::get('/{user}/avatar/edit', 'User\UserAvatarController@edit')->name('avatar.edit');
+        //     Route::patch('/{user}/avatar/update', 'User\UserAvatarController@update')->name('avatar.update');
+
     });
 
     // admin routes
-    Route::middleware(['role:super|admin'])->prefix('admin')->name('admin')->group(function () {
+    // add local routes to override
+    Route::middleware(['role:super|admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/', function () {
-            return view('authit::admin.dashboard');
-        });
+            return view('authit::admin.dashboard')->with([
+                'title' => 'Administrator Dashboard'
+            ]);
+        })->name('dashboard');
     });
-
-    // super admin only
-    // Route::middleware(['role:super'])->group(function () {
-    //     Route::get('/dev', function () {
-    //         return view('dev')->with(['title' => 'Development Page']);
-    //     });
-    // });
 });

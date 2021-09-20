@@ -3,7 +3,8 @@
 @section('content')
 
 <div class="container py-3">
-    <h1>Profile</h1>
+
+    <h1>My Account</h1>
 
     {{-- user profile --}}
     <div class="row">
@@ -15,6 +16,22 @@
 
         <div class="col-lg-60">
             <x-authit::profile.update-profile-form />
+        </div>
+
+    </div>
+
+    <hr>
+
+    {{-- avatar --}}
+    <div class="row">
+
+        <div class="col-lg-40">
+            <h5>Profile Picture</h5>
+            <p class="mt-05 txt-sm">Select your account's profile picture.</p>
+        </div>
+
+        <div class="col-lg-60">
+            <livewire:users.avatar/>
         </div>
 
     </div>
@@ -36,7 +53,6 @@
 
         </div>
     @endif
-    
 </div>
 
 @endsection

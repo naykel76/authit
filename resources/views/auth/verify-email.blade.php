@@ -14,7 +14,7 @@
 
     <form method="POST" action="/email/verification-notification">
         @csrf
-        <x-formit-submit label="click here to request another" />
+        <x-formit::submit label="click here to request another" />
     </form>
 
 </x-authit::auth-layout>

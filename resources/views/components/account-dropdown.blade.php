@@ -1,4 +1,4 @@
-{{-- user account actions navigation dropdown --}}
+{{-- user account navigation dropdown --}}
 
 <div class="dd">
 
@@ -6,28 +6,15 @@
         <use xlink:href="/svg/nk_icon-defs.svg#icon-user-circle"></use>
     </svg>
 
-    <div class="dd-content pos-r nm">
+    <div class="dd-content  pos-r nm">
 
         <h5 class="mb-1 fw6 nmt">Hello, {{ Auth::user()->name }}</h5>
 
-        <div class="nav">
-
-            <a href="{{ url('user/dashboard') }}">
-                <svg class="icon">
-                    <use xlink:href="/svg/nk_icon-defs.svg#icon-dashboard"></use>
-                </svg>
-                <span>Dashboard</span>
-            </a>
-
-            <a href="{{ route('user.profile-show') }}">
-                <svg class="icon">
-                    <use xlink:href="/svg/nk_icon-defs.svg#icon-user-circle"></use>
-                </svg>
-                <span>Profile</span>
-            </a>
-
+        <x-gotime-menu menuname="main" filename="nav-user" class="nav">
             <x-authit::link-logout :icon=true />
-        </div>
+        </x-gotime-menu>
+
+        {{-- NK::TD create dynamic menus to populate user menues --}}
 
     </div>
 
