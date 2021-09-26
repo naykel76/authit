@@ -3,6 +3,7 @@
 namespace Naykel\Authit;
 
 use Illuminate\Support\ServiceProvider;
+use Naykel\Authit\Http\Livewire\Avatar;
 
 class AuthitServiceProvider extends ServiceProvider
 {
@@ -23,5 +24,8 @@ class AuthitServiceProvider extends ServiceProvider
             ],
             'authit-req'
         );
+
+        \Livewire\Livewire::component('avatar', Avatar::class);
+
     }
 }

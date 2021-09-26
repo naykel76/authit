@@ -19,13 +19,25 @@ NayKel authentication package
 **Note** This package has a copy of the `FortifyServiceProvider.php` with alterations to load views, ***make sure `laravel/fortify` has already been installed, added to `app.php` and assets published before installing***
 
 
+
+## Model
+
+
+Add avatar url to user model
+
+   public function avatarUrl()
+    {
+        return $this->avatar ? Storage::disk('avatars')->url($this->avatar) : "/images/avatar.jpg";
+    }
+
 <!-- MarkdownTOC -->
 
+- [Model](#model)
 - [Installation](#installation)
-    - [Publish Resources](#publish-resources)
+  - [Publish Resources](#publish-resources)
 - [Spatie Permissions](#spatie-permissions)
 - [Components](#components)
-    - [Logout Link](#logout-link)
+  - [Logout Link](#logout-link)
 - [Change log](#change-log)
 
 <!-- /MarkdownTOC -->

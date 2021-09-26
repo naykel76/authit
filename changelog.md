@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.0.5
+
+- add livewire avatar
+
 ## 0.0.4
 
 - add account links

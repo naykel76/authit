@@ -12,27 +12,13 @@ class UserProfileController extends Controller
 {
 
     /**
-     * Show the user dashboard view
+     * Show the edit profile screen.
      */
-    public function dashboard()
+    public function edit()
     {
-        return view('authit::dashboard');
+        return view('authit::user.edit');
     }
 
-    /**
-     * Show the user profile screen.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     */
-    public function show(Request $request)
-    {
-
-        return view('authit::profile.show');
-        // return view('profile.show', [
-        //     'request' => $request,
-        //     'user' => $request->user(),
-        // ]);
-    }
 
     /**
      * Validate and update the given user's profile information.
