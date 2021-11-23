@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.7
+## 0.1.1
 
 - fix menu styles
 
