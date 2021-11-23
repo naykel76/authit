@@ -8,7 +8,7 @@
 
         <h5 class="mb-1 fw6 nmt">Hello, {{ Auth::user()->name }}</h5>
 
-        <x-gotime-menu menuname="main" filename="nav-user" useIcons=true class="nav" />
+        <x-gotime-menu menuname="main" filename="nav-user" useIcons=true class="menu" />
 
     </div>
 
