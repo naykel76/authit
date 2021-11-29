@@ -2,6 +2,8 @@
 
     <x-authit::auth-box>
 
+        <p> {{ __('This is a secure area of the application. Please confirm your password before continuing.') }} </p>
+
         <p>Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
 
         @if(session('status'))
@@ -10,10 +12,13 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('password.email') }}">
+        <form method="POST" action="{{ route('password.confirm') }}">
             @csrf
-            <x-formit::input for="email" type="email" label="E-mail Address" autocomplete="email" />
-            <x-formit::submit text="EMAIL PASSWORD RESET LINK" rowClasses="tar" />
+
+            <x-formit::input for="password" type="password" label="Password" autocomplete="current-password" />
+            <x-formit::submit text="Confirm" rowClasses="tar" />
+
+
         </form>
 
     </x-authit::auth-box>

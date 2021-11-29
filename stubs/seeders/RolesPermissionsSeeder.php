@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
-class RolesPermissionsTableSeeder extends Seeder
+class RolesPermissionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -33,7 +33,7 @@ class RolesPermissionsTableSeeder extends Seeder
 
         $role = Role::create(['name' => 'admin']);
         $role->syncPermissions(['create articles', 'read articles', 'edit articles', 'delete articles']);
-        
+
         $role = Role::create(['name' => 'writer']);
         $role->syncPermissions(['create articles', 'read articles', 'edit articles']);
 

@@ -10,16 +10,14 @@ class Avatar extends Component
 {
 
     use WithFileUploads;
+
     public User $user;
-
     public $saved = false;
-
     public $upload;
 
     protected $rules = [
-        'upload' => 'nullable|image|max:512',
+        'upload' => 'nullable|image|max:1000',
     ];
-
 
     public function mount()
     {
@@ -35,23 +33,33 @@ class Avatar extends Component
 
     public function save()
     {
-
         $this->validate();
 
-        $this->upload && $this->user->update([
-            'avatar' => $this->upload->store('/', 'avatars'),
-        ]);
+        $this->user->avatar = 'apple';
+        $this->user->save();
+        // $this->upload && $this->user->update([
+        //     'avatar' => $this->upload->store('/', 'avatars'),
+        // ]);
 
         $this->saved = true;
     }
 
-    // public function updated($field)
+
+
+    // public function save()
     // {
-    //     // turn of saved message after input update if not manually closed
-    //     if ($field !== 'saved') {
-    //         $this->saved = false;
-    //     }
+    //     $this->validate();
+
+    //     $this->user->save();
+
+    //     $this->upload && $this->user->update([
+    //         'avatar' => $this->upload->store('/', 'avatars'),
+    //     ]);
+
+    //     $this->emitSelf('notify-saved');
     // }
+
+
     public function render()
     {
         return view('authit::livewire.avatar');

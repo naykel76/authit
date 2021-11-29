@@ -1,0 +1,24 @@
+{
+  "main": {
+    "links": [
+      {
+        "title": "Dashboard",
+        "route_name": "user.dashboard",
+        "icon": "dashboard-o",
+        "url": "/user/dashboard"
+      },
+      {
+        "title": "Profile",
+        "route_name": "user.profile",
+        "icon": "edit-o",
+        "url": "/user/edit-profile"
+      },
+      {
+        "title": "Change Password",
+        "route_name": "user.update-password",
+        "icon": "lock-o",
+        "url": "/user/update-password"
+      }
+    ]
+  }
+}

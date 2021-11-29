@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0
+
+- update with new layouts and install method
+- add livewire components
+
 ## 0.1.1
 
 - fix menu styles

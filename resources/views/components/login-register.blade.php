@@ -1,9 +1,12 @@
 @if(Route::has('register'))
+
     @guest
+
         <div class="grid cols-2 nm">
             <a class="btn primary outline fullwidth" href="{{ route('login') }}">Login</a>
             <a class="btn primary fullwidth" href="{{ route('register') }}">{{ __('Register') }}</a>
         </div>
+
     @else
 
         <div class="dd">
@@ -19,4 +22,5 @@
         </div>
 
     @endguest
+
 @endif
