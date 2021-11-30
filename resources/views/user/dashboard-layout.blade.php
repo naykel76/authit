@@ -1,6 +1,6 @@
 <x-gotime-app-layout layout="{{ config('naykel.template') }}">
 
-    <div class="container">
+    <div class="container success">
 
         <div class="row">
 
