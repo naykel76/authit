@@ -10,7 +10,7 @@
 - fix menu styles
 
 ## 0.0.6
-
+squash
 - bug fixes
 
 ## 0.0.5
