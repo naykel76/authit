@@ -6,9 +6,9 @@
 
     <form wire:submit.prevent="save" class="bx">
 
-        <x-formit::input wire:model.defer="user.name" for="user.name" label="Name" inline=true />
+        <x-gotime-input wire:model.defer="user.name" for="user.name" label="Name" inline=true />
         <hr class="my-1">
-        <x-formit::input wire:model.defer="user.email" for="user.email" label="E-mail" inline=true />
+        <x-gotime-input wire:model.defer="user.email" for="user.email" label="E-mail" inline=true />
         <hr class="my-1">
 
         <div class="flex va-c">
@@ -33,7 +33,7 @@
 
         <hr class="my-1">
 
-        <x-formit::submit text="Save" rowClasses="tar" />
+        <x-gotime-submit text="Save" rowClasses="tar" />
 
     </form>
 

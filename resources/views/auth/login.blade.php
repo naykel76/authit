@@ -6,9 +6,9 @@
 
             @csrf
 
-            <x-formit::input for="email" type="email" label="E-mail Address" />
-            <x-formit::input for="password" type="password" label="Password" />
-            <x-formit-checkbox for="remember" label="Remember Me" rowClasses="mt-05" />
+            <x-gotime-input for="email" type="email" label="E-mail Address" />
+            <x-gotime-input for="password" type="password" label="Password" />
+            <x-gotime-checkbox for="remember" label="Remember Me" rowClasses="mt-05" />
 
             <div class="frm-row flex ha-r va-c">
 
@@ -16,7 +16,7 @@
                     <a class="mr-05" href="{{ route('password.request') }}">Forgot Your Password?</a>
                 @endif
 
-                <x-formit::submit text="Login" inline=true />
+                <x-gotime-submit text="Login" inline=true />
 
             </div>
 

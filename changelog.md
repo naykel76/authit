@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0
+
+- update to gotime form components
+
+
 ## 1.0.0
 
 - update with new layouts and install method

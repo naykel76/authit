@@ -12,8 +12,8 @@
 
         <form method="POST" action="{{ route('password.email') }}">
             @csrf
-            <x-formit::input for="email" type="email" label="E-mail Address" autocomplete="email" />
-            <x-formit::submit text="EMAIL PASSWORD RESET LINK" rowClasses="tar" />
+            <x-gotime-input for="email" type="email" label="E-mail Address" autocomplete="email" />
+            <x-gotime-submit text="EMAIL PASSWORD RESET LINK" rowClasses="tar" />
         </form>
 
     </x-authit::auth-box>
