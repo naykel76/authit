@@ -38,6 +38,13 @@ class InstallCommand extends Command
         // "Dashboard" Route...
         $this->replaceInFile('/home', '/user/dashboard', app_path('Providers/RouteServiceProvider.php'));
 
+        // Add implement MustVerifyEmail to User model
+
+        if (!$this->stringInFile(app_path('Models/User.php'), 'class User extends Authenticatable implements MustVerifyEmail')) {
+            $this->replaceInFile('class User extends Authenticatable', 'class User extends Authenticatable implements MustVerifyEmail', app_path('Models/User.php'));
+        }
+
+
         // Publish Fortify Assets...
         Artisan::call('vendor:publish', [
             '--provider' => 'Laravel\Fortify\FortifyServiceProvider',
@@ -46,6 +53,10 @@ class InstallCommand extends Command
         // Remove Fortify Features...
         if (!$this->stringInFile('./config/fortify.php', '// Features::updatePasswords(),')) {
             $this->replaceInFile('Features::updatePasswords(),', '// Features::updatePasswords(),',  './config/fortify.php');
+        }
+
+        if ($this->stringInFile('./config/fortify.php', '// Features::emailVerification(),')) {
+            $this->replaceInFile('// Features::emailVerification(),', 'Features::emailVerification(),',  './config/fortify.php');
         }
 
         // Register Service Provider...

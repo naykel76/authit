@@ -1,9 +1,12 @@
 # Changelog
 
+## 1.1.1
+
+- add registration verification
+
 ## 1.1.0
 
 - update to gotime form components
-
 
 ## 1.0.0
 

@@ -8,11 +8,15 @@
             </div>
         @endif
 
-        <p>Before proceeding, please check your email for a verification link. If you did not receive the email,</p>
+        <div class="bx-title">Verification Required</div>
+
+        <p>Thanks for registering! Before getting started, please check your email for a verification link. If you didn't receive the email, we will gladly send you another.</p>
+
+        <p>The verification link is valid for 48 hours then re-registration will be required.</p>
 
         <form method="POST" action="/email/verification-notification">
             @csrf
-            <x-gotime-submit label="click here to request another" />
+            <x-gotime-submit text="Resend Verification Email" />
         </form>
 
     </x-authit::auth-box>
