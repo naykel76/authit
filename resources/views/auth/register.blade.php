@@ -5,6 +5,7 @@
         <form method="POST" action="{{ route('register') }}">
 
             @csrf
+            <x-honeypot />
 
             <x-gotime-input for="name" type="text" label="Name" autocomplete="name" />
             <x-gotime-input for="email" type="email" label="E-mail Address" autocomplete="email" />
@@ -13,7 +14,7 @@
 
             <div class="frm-row flex ha-r va-c">
                 <a class="mr-1" href="{{ route('login') }}">Already registered?</a>
-                <x-gotime-submit text="Register" inline=true/>
+                <x-gotime-submit text="Register" inline=true />
             </div>
 
         </form>

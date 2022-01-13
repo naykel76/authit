@@ -50,13 +50,17 @@ class InstallCommand extends Command
             '--provider' => 'Laravel\Fortify\FortifyServiceProvider',
         ]);
 
-        // Remove Fortify Features...
+        // Add/Disable Fortify Features...
         if (!$this->stringInFile('./config/fortify.php', '// Features::updatePasswords(),')) {
             $this->replaceInFile('Features::updatePasswords(),', '// Features::updatePasswords(),',  './config/fortify.php');
         }
 
         if ($this->stringInFile('./config/fortify.php', '// Features::emailVerification(),')) {
             $this->replaceInFile('// Features::emailVerification(),', 'Features::emailVerification(),',  './config/fortify.php');
+        }
+
+        if (!$this->stringInFile('./config/fortify.php', '// Features::updateProfileInformation()')) {
+            $this->replaceInFile('Features::updateProfileInformation()', '// Features::updateProfileInformation()',  './config/fortify.php');
         }
 
         // Register Service Provider...

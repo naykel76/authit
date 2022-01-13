@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2
+
+- disable fortify routes in FortifyServiceProvider.php for custom implement
+- add spatie/honeypot
+- add fortify routes to routes.php
+
 ## 1.1.1
 
 - add registration verification
