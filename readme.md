@@ -48,17 +48,6 @@ Add storage driver to `disks` in `config\filesystems.php`;
         'visibility' => 'public',
     ],
 
-## Publish Views (optional)
-
-Initially all views will be served from the package however for more control you can publish the views locally
-
-
-```bash
-php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider" --force
-# php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
-# php artisan vendor:publish --provider="Naykel\Authit\AuthitServiceProvider" --force
-```
-
 
 
 ## Other Resources

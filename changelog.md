@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.0
+- upgrade spatie-permissions to v5.5
+
 ## 1.1.2
 
 - disable fortify routes in FortifyServiceProvider.php for custom implement
