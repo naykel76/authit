@@ -6,16 +6,16 @@
 
     <form wire:submit.prevent="save" class="bx">
 
-        <x-gotime-input wire:model.defer="user.name" for="user.name" label="Name" inline=true />
+        <x-input wire:model.defer="user.name" for="user.name" label="Name" inline=true />
         <hr class="my-1">
-        <x-gotime-input wire:model.defer="user.email" for="user.email" label="E-mail" inline=true />
+        <x-input wire:model.defer="user.email" for="user.email" label="E-mail" inline=true />
         <hr class="my-1">
 
         <div class="flex va-c">
             @if($upload)
-                <img class="round wh40" src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
+                <img class="round wh-40px" src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
             @else
-                <img class="round wh40" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
+                <img class="round wh-40px" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
             @endif
 
             <div class="file btn sm ml">

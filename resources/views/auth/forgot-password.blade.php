@@ -12,7 +12,7 @@
 
         <form method="POST" action="{{ route('password.email') }}">
             @csrf
-            <x-gotime-input for="email" type="email" label="E-mail Address" autocomplete="email" />
+            <x-input-email for="email" label="E-mail Address" autocomplete="email" />
             <x-gotime-submit text="EMAIL PASSWORD RESET LINK" rowClasses="tar" />
         </form>
 

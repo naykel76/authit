@@ -7,10 +7,10 @@
             @csrf
             <x-honeypot />
 
-            <x-gotime-input for="name" type="text" label="Name" autocomplete="name" />
-            <x-gotime-input for="email" type="email" label="E-mail Address" autocomplete="email" />
-            <x-gotime-input for="password" type="password" label="Password" autocomplete="password" />
-            <x-gotime-input for="password_confirmation" type="password" label="Confirm Password" autocomplete="new-password" />
+            <x-input for="name" label="Name" autocomplete="name" />
+            <x-input-email for="email" label="E-mail Address" autocomplete="email" />
+            <x-input-password for="password" label="Password" autocomplete="password" />
+            <x-input-password for="password_confirmation" label="Confirm Password" autocomplete="new-password" />
 
             <div class="frm-row flex ha-r va-c">
                 <a class="mr-1" href="{{ route('login') }}">Already registered?</a>

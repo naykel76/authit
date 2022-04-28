@@ -15,9 +15,8 @@
         <form method="POST" action="{{ route('password.confirm') }}">
             @csrf
 
-            <x-gotime-input for="password" type="password" label="Password" autocomplete="current-password" />
+            <x-input-password for="password" label="Password" autocomplete="current-password" />
             <x-gotime-submit text="Confirm" rowClasses="tar" />
-
 
         </form>
 

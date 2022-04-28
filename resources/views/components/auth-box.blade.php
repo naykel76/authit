@@ -1,6 +1,6 @@
 {{-- auth template layout --}}
-<div class="py-res px">
-    <div class="bx maxw600 max">
+<div class="py-5-3-2 px">
+    <div class="bx maxw600 mx-auto">
         {{ $slot }}
     </div>
 </div>

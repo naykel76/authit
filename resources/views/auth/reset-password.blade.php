@@ -5,10 +5,10 @@
         <form method="POST" action="{{ route('password.update') }}">
             @csrf
             <input type="hidden" name="token" value="{{ $request->route('token') }}">
-            <x-gotime-input for="email" type="email" label="E-mail Address" autocomplete="email" rowClasses="nm" />
-            <x-gotime-input for="password" type="password" label="Password" autocomplete="password" />
-            <x-gotime-input for="password_confirmation" type="password" label="Confirm Password" autocomplete="new-password" />
-            <x-gotime-submit label="Reset Password" rowClasses="tar" />
+            <x-input-email for="email" label="E-mail Address" autocomplete="email" rowClasses="mxy-0"/>
+            <x-input-password for="password" label="Password" autocomplete="password" />
+            <x-input-password for="password_confirmation" label="Confirm Password" autocomplete="new-password" />
+            <x-gotime-submit text="Reset Password" rowClasses="tar" />
         </form>
 
     </x-authit::auth-box>
