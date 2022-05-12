@@ -16,7 +16,7 @@
 
         <form method="POST" action="/email/verification-notification">
             @csrf
-            <x-gotime-submit text="Resend Verification Email" />
+            <x-submit text="Resend Verification Email" />
         </form>
 
     </x-authit::auth-box>

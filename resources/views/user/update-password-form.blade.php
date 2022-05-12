@@ -10,7 +10,7 @@
         <x-input-password wire:model.defer="state.password" for="password" label="New Password" />
         <x-input-password wire:model.defer="state.password_confirmation" for="password_confirmation" label="Current Password" />
 
-        <x-gotime-submit text="Save" />
+        <x-submit text="Save" />
 
     </form>
 

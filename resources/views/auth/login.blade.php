@@ -20,7 +20,7 @@
                     <a class="mr-05" href="{{ route('password.request') }}">Forgot Your Password?</a>
                 @endif
 
-                <x-gotime-submit text="Login" inline=true />
+                <x-submit text="Login" inline=true />
 
             </div>
 

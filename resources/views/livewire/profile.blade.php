@@ -33,7 +33,7 @@
 
         <hr class="my-1">
 
-        <x-gotime-submit text="Save" rowClasses="tar" />
+        <x-submit text="Save" rowClasses="tar" />
 
     </form>
 

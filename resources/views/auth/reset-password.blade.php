@@ -8,7 +8,7 @@
             <x-input-email for="email" label="E-mail Address" autocomplete="email" rowClasses="mxy-0"/>
             <x-input-password for="password" label="Password" autocomplete="password" />
             <x-input-password for="password_confirmation" label="Confirm Password" autocomplete="new-password" />
-            <x-gotime-submit text="Reset Password" rowClasses="tar" />
+            <x-submit text="Reset Password" rowClasses="tar" />
         </form>
 
     </x-authit::auth-box>

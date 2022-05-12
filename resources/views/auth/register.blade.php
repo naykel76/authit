@@ -14,7 +14,7 @@
 
             <div class="frm-row flex ha-r va-c">
                 <a class="mr-1" href="{{ route('login') }}">Already registered?</a>
-                <x-gotime-submit text="Register" inline=true />
+                <x-submit text="Register" inline=true />
             </div>
 
         </form>
