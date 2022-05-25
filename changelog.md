@@ -1,5 +1,10 @@
 # Changelog
 
+
+## 1.3.0
+
+- update templates styles
+
 ## 1.2.0
 - upgrade spatie-permissions to v5.5
 
