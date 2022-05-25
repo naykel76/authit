@@ -1,5 +1,6 @@
 <div>
 
+    <h1>sdfsdf</h1>
     <x-slot name="title">Profile Information</x-slot>
 
     <p>Update your account's profile information and email address.</p>

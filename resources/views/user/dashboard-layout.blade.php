@@ -1,33 +1,29 @@
-<x-gotime-app-layout layout="{{ config('naykel.template') }}">
+<x-gotime-app-layout layout="{{ config('naykel.template') }}" class="py-5-3-2">
 
-    <div class="container">
 
-        <div class="row">
+    <div class="grid cols-25_25_100 cols-2  ">
 
-            <div class="col-md-25">
+        <div>
 
-                <div class="tac mb-2">
-                    <img class="wh200 round" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
-                </div>
-
-                <x-authit::user-navigation />
-
+            <div class="tac mb-2">
+                <img class="wh200 round" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
             </div>
 
-            <div class="col-md-75 pl-2">
-
-                @isset($title)
-
-                    <h1 {{ $title->attributes->class([]) }}> {{ $title }} </h1>
-
-                @endisset
-
-                {{ $slot ?? null }}
-
-            </div>
+            <x-authit::user-navigation />
 
         </div>
 
+        <div class="col-md-75 pl-2">
+
+            @isset($title)
+
+                <h1 {{ $title->attributes->class([]) }}> {{ $title }} </h1>
+
+            @endisset
+
+            {{ $slot ?? null }}
+
+        </div>
     </div>
 
 </x-gotime-app-layout>
