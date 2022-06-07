@@ -15,3 +15,28 @@
     </form>
 
 </div>
+
+
+
+{{-- <div class="container py-4">
+
+    <div class="grid cols-40:60">
+
+        <div>
+            <div class="bx-title">Profile Information</div>
+            <p>Update your account's profile information and email address.</p>
+        </div>
+
+        <form>
+            <div class="bx">
+                <x-input wire:model.defer="user.name" for="user.name" label="Name" autocomplete="off" />
+                <x-input wire:model.defer="user.email" for="user.email" label="E-mail" />
+                <div class="tar">
+                    <button type="submit" class="btn primary">Save</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+</div> --}}

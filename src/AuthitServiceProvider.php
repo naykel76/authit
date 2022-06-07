@@ -33,5 +33,25 @@ class AuthitServiceProvider extends ServiceProvider
             InstallCommand::class,
         ]);
 
+        $this->publishes([
+            __DIR__ . '/../resources/views/user' => resource_path('views/user'),
+        ], 'authit-views');
+
+
+        // $this->publishes([
+        //     __DIR__.'/../resources/views' => resource_path('views/vendor/jetstream'),
+        // ], 'jetstream-views');
+
+        // $this->publishes([
+        //     __DIR__.'/../database/migrations/2014_10_12_000000_create_users_table.php' => database_path('migrations/2014_10_12_000000_create_users_table.php'),
+        // ], 'jetstream-migrations');
+
+        // publish assets to public directory
+        // $this->publishes(
+        //     [
+        //         __DIR__ . '/vendor/ckeditor/' => public_path('vendor/ckeditor/'),
+        //     ],
+        //     'nkr'
+        // );
     }
 }

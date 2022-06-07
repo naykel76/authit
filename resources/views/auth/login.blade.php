@@ -1,7 +1,5 @@
 <x-gotime-app-layout layout="{{ config('naykel.template') }}" class="py-5-3-2">
 
-
-
     <x-authit::auth-box>
 
         <form method="POST" action="{{ route('login') }}">
