@@ -2,9 +2,9 @@
 
     <x-authit::auth-box>
 
-        @if(session('status'))
-            <div class="bx success" role="alert">
-                A fresh verification link has been sent to your email address.
+        @if(session('status') == 'verification-link-sent')
+            <div class="txt-sm txt-green">
+                {{ __('A new verification link has been sent to the email address you provided during registration.') }}
             </div>
         @endif
 

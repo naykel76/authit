@@ -3,10 +3,6 @@
 namespace Naykel\Authit\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -16,19 +12,19 @@ class UserController extends Controller
      */
     public function dashboard()
     {
-        if (view()->exists('user.dashboard-layout')) {
-            return view('user.dashboard-layout');
+        if (view()->exists('user.dashboard')) {
+            return view('user.dashboard');
         } else {
-            return view('authit::user.dashboard-layout');
+            return view('authit::user.dashboard');
         }
     }
 
-    /**
-     * Show the edit profile screen.
-     */
-    public function edit()
-    {
-        return view('authit::user.edit');
-    }
+    // /**
+    //  * Show the edit profile screen.
+    //  */
+    // public function edit()
+    // {
+    //     return view('authit::user.edit');
+    // }
 
 }

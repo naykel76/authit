@@ -1,9 +1,15 @@
 # Changelog
 
-## 1.3.1 (pending)
+## Whats Next?
+- user profile
+- two factor authentication
+- notifications on login
 
-- update dependencies
 
+## 1.4.0 (pending)
+
+- remove dependency on fortify
+- add new auth controllers (based on breeze)
 
 ## 1.3.0
 

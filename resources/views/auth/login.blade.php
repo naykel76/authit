@@ -2,10 +2,11 @@
 
     <x-authit::auth-box>
 
+        <x-authit::auth-session-status class="mb" :status="session('status')" />
+
         <form method="POST" action="{{ route('login') }}">
 
             @csrf
-
 
             <x-input-email for="email" label="E-mail Address" />
             <x-input-password for="password" label="Password" />

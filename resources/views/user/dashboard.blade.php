@@ -1,13 +1,15 @@
 <x-gotime-app-layout layout="{{ config('naykel.template') }}" class="py-5-3-2">
 
-
-    <div class="grid cols-25_25_100 cols-2  ">
+<h1>User Dashboard</h1>
+    <div class="grid cols-25_25_100">
 
         <div>
 
-            <div class="tac mb-2">
+
+            {{-- if has avatar, then show it! --}}
+            {{-- <div class="tac mb-2">
                 <img class="wh200 round" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
-            </div>
+            </div> --}}
 
             <x-authit::user-navigation />
 

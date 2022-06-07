@@ -14,7 +14,6 @@
     "homepage": "https://github.com/naykel76/authit.git",
     "keywords": ["Laravel", "Authit"],
     "require": {
-        "laravel/fortify": "^1.13",
         "spatie/laravel-honeypot": "^4.3",
         "spatie/laravel-permission": "^5.5.4"
     },

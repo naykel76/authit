@@ -7,7 +7,7 @@
         <p>Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
 
         @if(session('status'))
-            <div class="pxy-05 success" role="alert">
+            <div class="pxy-05 txt-green" role="alert">
                 {{ session('status') }}
             </div>
         @endif

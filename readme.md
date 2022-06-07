@@ -7,13 +7,12 @@
 
 # NAYKEL Authit
 
-Authentication, permissions and user package for Naykel applications built on Laravel Fortify and Spatie Permissions.
+Authentication and permissions package for Naykel Laravel applications.
 
 ## Things to Know
 
-- the dashboard view is published and managed locally Good?? Bad??
-- the install process will adds an updated `FortifyServiceProvider.php` including the views in the `boot` method.
-- The logout link should not be included in the `nav-user.json` file, use the `<x-authit::logout-link />` component. ????
+- The logout link should not be included in the `nav-user.json` file, use the `<x-authit::logout-link />` component.
+- Uses Spatie Permissions and Spatie Honeypot
 
 ## Installation
 
@@ -25,7 +24,6 @@ Next, install Authit's resources using the authit:install command:
 
     php artisan authit:install
 
-The `authit:install` command discussed above will also publish any required assets to use Fortify and Spatie Permissions as well as add the `App\Providers\FortifyServiceProvider` class within the providers array of your application's config/app.php configuration file.
 
 ## Finishing up and making it work
 
@@ -49,7 +47,3 @@ Add storage driver to `disks` in `config\filesystems.php`;
     ],
 
 
-
-## Other Resources
-
-https://talltips.novate.co.uk/laravel/laravel-8-conditional-login-redirects
