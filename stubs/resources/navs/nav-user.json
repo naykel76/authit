@@ -14,7 +14,7 @@
         "url": "/user/edit-profile"
       },
       {
-        "title": "Change Password",
+        "title": "Account Security",
         "route_name": "user.update-password",
         "icon": "lock-o",
         "url": "/user/update-password"

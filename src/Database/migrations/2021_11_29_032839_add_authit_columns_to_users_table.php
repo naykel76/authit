@@ -10,7 +10,7 @@ class AddAuthitColumnsToUsersTable extends Migration
     {
         if (!Schema::hasColumn('users', 'avatar')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->string('avatar')->nullable();
+                $table->string('avatar', 2048)->nullable();
             });
         }
     }

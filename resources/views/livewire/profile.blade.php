@@ -1,17 +1,19 @@
 <div>
 
-    <h1>sdfsdf</h1>
+
     <x-slot name="title">Profile Information</x-slot>
 
     <p>Update your account's profile information and email address.</p>
 
     <form wire:submit.prevent="save" class="bx">
 
-        <x-input wire:model.defer="user.name" for="user.name" label="Name" inline=true />
-        <hr class="my-1">
-        <x-input wire:model.defer="user.email" for="user.email" label="E-mail" inline=true />
-        <hr class="my-1">
+        <x-input wire:model.defer="user.name" for="user.name" label="Name" autocomplete="off" req />
 
+        <x-input wire:model.defer="user.email" for="user.email" label="E-mail" req />
+
+
+        {{-- NK::TD --}}
+        {{--
         <div class="flex va-c">
             @if($upload)
                 <img class="round wh-40px" src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
@@ -31,8 +33,7 @@
 
             </div>
         </div>
-
-        <hr class="my-1">
+        --}}
 
         <x-submit text="Save" rowClasses="tar" />
 

@@ -19,21 +19,21 @@ class UsersSeeder extends Seeder
 
         User::create([
             'name' => 'Angela McAdmin',
-            'email' => 'admin@admin.com',
+            'email' => 'admin@example.com',
             'password' => bcrypt('1'),
             'email_verified_at' => now(),
         ])->assignRole('admin');
 
         User::create([
             'name' => 'Michelle Writer',
-            'email' => 'writer@writer.com',
+            'email' => 'writer@example.com',
             'password' => bcrypt('1'),
             'email_verified_at' => now(),
         ])->assignRole('writer');
 
         User::create([
             'name' => 'Jimmy Peters',
-            'email' => 'user@user.com',
+            'email' => 'user@example.com',
             'password' => bcrypt('1'),
             'email_verified_at' => now(),
         ])->assignRole('user');

@@ -3,7 +3,6 @@
 namespace Naykel\Authit\Http\Livewire;
 
 use App\Models\User;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -48,29 +47,12 @@ class Profile extends Component
             'avatar' => $this->upload->store('/', 'avatars'),
         ]);
 
-        // $this->emitSelf('notify-saved');
         $this->dispatchBrowserEvent('notify', 'Profile saved!');
     }
 
     public function render()
     {
         return view('authit::livewire.profile')
-        // places livewire component in the slot of dashboard-layout,
-        // which is placed in the slot of the main app layout
-        ->layout('authit::user.dashboard-layout');
+            ->layout('authit::user.dashboard');
     }
 }
-
-
-// public function updatedImage()
-// {
-//     $previousPath = auth()->user()->avatar;
-
-//     $path = $this->image->store('/', 'avatars');
-
-//     auth()->user()->update(['avatar' => $path]);
-
-//     Storage::disk('avatars')->delete($previousPath);
-
-//     $this->dispatchBrowserEvent('updated', ['message' => 'Profile changed successfully!']);
-// }
