@@ -5,54 +5,73 @@ namespace Naykel\Authit\Http\Livewire;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\UploadedFile;
 
 class Profile extends Component
 {
     use WithFileUploads;
 
-    public User $user;
+    public User $editing;
+
     public $upload;
 
     protected function rules()
     {
-
         return [
-            'user.name' => 'required|min:6',
-            'user.email' => 'required|string|email|max:255|unique:users,email,' . $this->user->id,
-            'upload' => 'nullable|image|max:1000',
+            'editing.name' => 'required|min:6',
+            'editing.email' => 'required|string|email|max:255|unique:users,email,' . $this->editing->id,
         ];
-    }
-
-    public function updateForm()
-    {
-        $validatedData = $this->validate();
-
-        $this->user->update($validatedData);
-
-        session()->flash('message', 'User successfully updated.');
     }
 
     public function mount()
     {
-        $this->user = auth()->user();
+        $this->editing = auth()->user();
+    }
+
+    public function updatedUpload() // real time validation
+    {
+        $this->validate(['upload' => 'nullable|image|max:1000']);
     }
 
     public function save()
     {
+
         $this->validate();
 
-        $this->user->save();
+        $this->editing->save();
 
-        $this->upload && $this->user->update([
-            'avatar' => $this->upload->store('/', 'avatars'),
-        ]);
+        if ($this->upload) {
+            $this->updateUploadedFile($this->upload);
+        }
 
         $this->dispatchBrowserEvent('notify', 'Profile saved!');
     }
 
+
+    /**
+     * Add or update uploaded file
+     *
+     * @param Illuminate\Http\UploadedFile $file
+     * @return void
+     */
+    public function updateUploadedFile(UploadedFile $file)
+    {
+        tap($this->editing->avatar, function ($previous) use ($file) {
+
+            $this->editing->forceFill([
+                'avatar' => $file->store('/', 'avatars')
+            ])->save();
+
+            if ($previous) {
+                Storage::disk('avatars')->delete($previous);
+            }
+        });
+    }
+
     public function render()
     {
-        return view('authit::livewire.profile')
+        return view('authit::user.profile')
             ->layout('authit::user.dashboard');
     }
 }

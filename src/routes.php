@@ -34,7 +34,6 @@ Route::middleware('web', 'guest')->group(function () {
 Route::middleware(['web', 'auth', 'verified'])->prefix('user')->name('user')->group(function () {
 
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('.dashboard');
-    // Route::get('/edit-account', [UserController::class, 'edit'])->name('.edit');
     Route::get('/edit-profile', Profile::class)->name('.edit-password'); // livewire component
     Route::get('/update-password', UpdatePasswordForm::class)->name('.update-password'); // livewire component
 

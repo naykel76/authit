@@ -31,6 +31,7 @@ class AuthitServiceProvider extends ServiceProvider
 
         $this->commands([
             InstallCommand::class,
+            InstallLocalCommand::class
         ]);
 
         $this->publishes([

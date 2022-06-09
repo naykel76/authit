@@ -1,18 +1,17 @@
 # Changelog
 
 ## Whats Next?
-- user profile profile picture
 - two factor authentication
 - notifications on login
 - add disk on install command
-- create copy command for local usage
 
 
 ## 1.4.0 (pending)
 
 - remove dependency on fortify
 - add new auth controllers (based on breeze)
-- Add UpdatePassword livewire component and rules
+- add UpdatePassword livewire component and rules
+- fix avatar and profile form
 
 ## 1.3.0
 

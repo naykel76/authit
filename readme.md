@@ -11,39 +11,52 @@ Authentication and permissions package for Naykel Laravel applications.
 
 ## Things to Know
 
-- The logout link should not be included in the `nav-user.json` file, use the `<x-authit::logout-link />` component.
-- Uses Spatie Permissions and Spatie Honeypot
+- Registration form uses Spatie Permissions and Spatie Honeypot
+- Certain files can be installed and used locally (see local overrides)
+- The logout link should not be included in the `nav-user.json` file, use the `<x-authit::logout-link />` component
+- User model implements `MustVerifyEmail` after the install command is run
 
 ## Installation
+
+**Requires Naykel Gotime Package**
 
 To get started, install Authit using the Composer package manager:
 
     composer require naykel/authit
 
-Next, install Authit's resources using the authit:install command:
+After installing the Authit package, you should execute the `authit:install` Artisan command. This command will;
 
-    php artisan authit:install
+- \* install any necessary files
+- \* implement `MustVerifyEmail` on the User model
+- \* update the `RouteServiceProvider` home path
+- \* create the avatar storage disk in `config\filesystems.php`;
 
+```php
+'avatars' => [
+    'driver' => 'local',
+    'root' => storage_path('app/public/avatars'),
+    'url' => env('APP_URL') . '/storage/avatars',
+    'visibility' => 'public',
+],
+```
 
-## Finishing up and making it work
+### Finalizing The Installation
 
-Run the migration to install and update database tables:
+After installing Authit, you should migrate your database and make the necessary changes to the User model:
 
     php artisan migrate
 
-Add avatar url to user model
+Depending on your taste update user models `$fillable` array to accept the newly create user table fields or change to `$guarded`.
+
+Add storage support and avatar url
+
+    use Illuminate\Support\Facades\Storage;
 
     public function avatarUrl() {
-        return $this->avatar ? Storage::disk('avatars')->url($this->avatar) : "/images/avatar.jpg";
+        return $this->avatar
+            ? Storage::disk('avatars')->url($this->avatar)
+            : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=7F9CF5&background=EBF4FF';
     }
 
-Add storage driver to `disks` in `config\filesystems.php`;
 
-    'avatars' => [
-        'driver' => 'local',
-        'root' => storage_path('app/public/avatars'),
-        'url' => '/storage/avatars',
-        'visibility' => 'public',
-    ],
-
-
+**Refer to documentation for additional information**

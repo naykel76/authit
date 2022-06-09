@@ -36,6 +36,22 @@ class InstallCommand extends Command
             $this->replaceInFile('class User extends Authenticatable', 'class User extends Authenticatable implements MustVerifyEmail', app_path('Models/User.php'));
         }
 
+        // Create avatar disk
+        if (!$this->stringInFile('./config/filesystems.php', "'avatars' => [")) {
+
+            $this->replaceInFile(
+                "'disks' => [",
+                "'disks' => [" . "\r\r\t\t" .
+                    "'avatars' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/avatars'),
+            'url' => env('APP_URL') . '/storage/avatars',
+            'visibility' => 'public',
+        ],",
+                './config/filesystems.php'
+            );
+        }
+
         return Command::SUCCESS;
     }
 

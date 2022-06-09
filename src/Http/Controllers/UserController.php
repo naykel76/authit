@@ -18,13 +18,4 @@ class UserController extends Controller
             return view('authit::user.dashboard');
         }
     }
-
-    // /**
-    //  * Show the edit profile screen.
-    //  */
-    // public function edit()
-    // {
-    //     return view('authit::user.edit');
-    // }
-
 }
