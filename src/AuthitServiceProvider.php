@@ -4,9 +4,8 @@ namespace Naykel\Authit;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Naykel\Authit\Http\Livewire\Avatar;
-use Naykel\Authit\Http\Livewire\Profile;
-use Naykel\Authit\Http\Livewire\UpdatePasswordForm;
+use Naykel\Authit\Http\Livewire\User\Profile;
+use Naykel\Authit\Http\Livewire\User\UpdatePasswordForm;
 use Livewire\Livewire;
 
 class AuthitServiceProvider extends ServiceProvider

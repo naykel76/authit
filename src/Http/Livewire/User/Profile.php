@@ -1,6 +1,8 @@
 <?php
 
-namespace Naykel\Authit\Http\Livewire;
+namespace Naykel\Authit\Http\Livewire\User;
+
+// namespace App\Http\Livewire\User;
 
 use App\Models\User;
 use Livewire\Component;
@@ -36,7 +38,6 @@ class Profile extends Component
 
     public function save()
     {
-
         $this->validate();
 
         $this->editing->save();

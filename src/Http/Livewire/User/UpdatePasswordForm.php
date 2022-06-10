@@ -1,6 +1,6 @@
 <?php
 
-namespace Naykel\Authit\Http\Livewire;
+namespace Naykel\Authit\Http\Livewire\User;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;

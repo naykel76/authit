@@ -60,3 +60,10 @@ Add storage support and avatar url
 
 
 **Refer to documentation for additional information**
+
+
+Use locally,
+
+Run the php artisan authit:install-local command to copy files and update and references
+
+Add routes to local `web.php` making sure they override the package routes

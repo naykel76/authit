@@ -9,8 +9,8 @@ use Naykel\Authit\Http\Controllers\Auth\PasswordResetLinkController;
 use Naykel\Authit\Http\Controllers\Auth\RegisterUserController;
 use Naykel\Authit\Http\Controllers\Auth\VerifyEmailController;
 use Naykel\Authit\Http\Controllers\UserController;
-use Naykel\Authit\Http\Livewire\Profile;
-use Naykel\Authit\Http\Livewire\UpdatePasswordForm;
+use Naykel\Authit\Http\Livewire\User\Profile;
+use Naykel\Authit\Http\Livewire\User\UpdatePasswordForm;
 
 use Spatie\Honeypot\ProtectAgainstSpam;
 

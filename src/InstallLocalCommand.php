@@ -23,15 +23,22 @@ class InstallLocalCommand extends Command
      */
     public function handle()
     {
-
-        // check if local directories exist and create if necessary;
-        (new Filesystem)->ensureDirectoryExists(app_path('Http/Livewire/User'));
-
         // copy livewire component and views
-        (new Filesystem)->copy(__DIR__ . '/Http/Livewire/Profile.php', app_path('Http/Livewire/User/Profile.php'));
+        (new Filesystem)->ensureDirectoryExists(app_path('Http/Livewire/User'));
+        (new Filesystem)->copy(__DIR__ . '/Http/Livewire/User/Profile.php', app_path('Http/Livewire/User/Profile.php'));
+
+        // copy migrations
+        (new Filesystem)->copyDirectory(__DIR__ . '/../stubs/database', base_path('database'));
 
         // update local namespace
         $this->replaceInFile('Naykel\Authit', 'App', app_path('Http/Livewire/User/Profile.php'));
+
+
+        // add route locally to override package routes
+        if (!$this->stringInFile('./routes/web.php', "use App\Http\Livewire\Profile;")) {
+            $find = "use Illuminate\Support\Facades\Route;";
+            $this->replaceInFile($find, "$find\r\r" . 'use App\Http\Livewire\User\Profile;', './routes/web.php');
+        }
 
         return Command::SUCCESS;
     }
