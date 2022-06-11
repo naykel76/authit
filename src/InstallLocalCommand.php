@@ -23,19 +23,23 @@ class InstallLocalCommand extends Command
      */
     public function handle()
     {
-        // copy livewire component and views
+        // make sure directories exist...
         (new Filesystem)->ensureDirectoryExists(app_path('Http/Livewire/User'));
+        (new Filesystem)->ensureDirectoryExists(resource_path('views/user'));
+
+        // copy components and views...
         (new Filesystem)->copy(__DIR__ . '/Http/Livewire/User/Profile.php', app_path('Http/Livewire/User/Profile.php'));
+        (new Filesystem)->copy(__DIR__ . '/../resources/views/user/profile.blade.php', resource_path('views/user/profile.blade.php'));
 
         // copy migrations
         (new Filesystem)->copyDirectory(__DIR__ . '/../stubs/database', base_path('database'));
 
-        // update local namespace
+        // update namespace and templates...
+        $this->replaceInFile('authit::user.profile', 'user.profile', app_path('Http/Livewire/User/Profile.php'));
         $this->replaceInFile('Naykel\Authit', 'App', app_path('Http/Livewire/User/Profile.php'));
 
-
-        // add route locally to override package routes
-        if (!$this->stringInFile('./routes/web.php', "use App\Http\Livewire\Profile;")) {
+        // add component class routes
+        if (!$this->stringInFile('./routes/web.php', "use App\Http\Livewire\User\Profile;")) {
             $find = "use Illuminate\Support\Facades\Route;";
             $this->replaceInFile($find, "$find\r\r" . 'use App\Http\Livewire\User\Profile;', './routes/web.php');
         }
