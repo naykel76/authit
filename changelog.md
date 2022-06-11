@@ -6,7 +6,7 @@
 - add disk on install command
 
 
-## 1.4.0 (pending)
+## 1.4.0
 
 - remove dependency on fortify
 - add new auth controllers (based on breeze)
