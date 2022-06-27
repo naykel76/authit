@@ -1,4 +1,10 @@
-<x-gotime-app-layout layout="{{ config('naykel.template') }}" class="py-5-3-2">
+{{-- <x-gotime-app-layout layout="{{ config('naykel.template') }}" class="py-5-3-2">
+
+
+
+</x-gotime-app-layout> --}}
+
+<x-gotime-layouts.base>
 
     <x-authit::auth-box>
 
@@ -11,9 +17,9 @@
             <x-input-email for="email" label="E-mail Address" />
             <x-input-password for="password" label="Password" />
 
-            <x-gotime-checkbox for="remember" label="Remember Me" rowClasses="mt-05" />
+            <x-gotime-checkbox for="remember" label="Remember Me" rowClasses="mt-05" inline/>
 
-            <div class="frm-row flex ha-r va-c">
+            <div class="frm-row flex-row ha-r va-c">
 
                 @if(Route::has('password.request'))
                     <a class="mr-05" href="{{ route('password.request') }}">Forgot Your Password?</a>
@@ -27,4 +33,4 @@
 
     </x-authit::auth-box>
 
-</x-gotime-app-layout>
+</x-gotime-layouts.base>

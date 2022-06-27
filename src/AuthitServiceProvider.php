@@ -36,5 +36,10 @@ class AuthitServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../resources/views/user' => resource_path('views/user'),
         ], 'authit-views');
+
+
+        $this->publishes([
+            __DIR__ . '/../stubs/seeders' => database_path('seeders'),
+        ], 'authit-permissions');
     }
 }
