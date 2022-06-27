@@ -1,4 +1,4 @@
-<x-gotime-app-layout layout="{{ config('naykel.template') }}" class="py-5-3-2">
+<x-gotime-layouts.base>
 
     <x-authit::auth-box>
 
@@ -12,7 +12,7 @@
             <x-input-password for="password" label="Password" autocomplete="password" />
             <x-input-password for="password_confirmation" label="Confirm Password" autocomplete="new-password" />
 
-            <div class="frm-row flex ha-r va-c">
+            <div class="frm-row flex-row ha-r va-c">
                 <a class="mr-1" href="{{ route('login') }}">Already registered?</a>
                 <x-submit text="Register" inline=true />
             </div>
@@ -21,4 +21,4 @@
 
     </x-authit::auth-box>
 
-</x-gotime-app-layout>
+</x-gotime-layouts.base>
