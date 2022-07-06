@@ -3,7 +3,7 @@
         <svg class="icon">
             <use xlink:href="/svg/naykel-ui-SVG-sprite.svg#user"></use>
         </svg>
-        <div class="mt-025 lh-1">Account</div>
+        <div class="mt-025 lh1">Account</div>
     </div>
     <div class="dd-content bx white pos-r">
         @auth

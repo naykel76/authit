@@ -5,7 +5,7 @@
     <div class="maxw600 flex-col mx-auto">
 
         <div class="mx-auto">
-            <img src="{{ config('naykel.logo.path') }}" height="{{ config('naykel.logo.height') }}" alt="{{ config('app.name') }}">
+            <a href="{{ route('home') }}"><img src="{{ config('naykel.logo.path') }}" height="{{ config('naykel.logo.height') }}" alt="{{ config('app.name') }}"></a>
         </div>
 
         <div class="bx mt">
