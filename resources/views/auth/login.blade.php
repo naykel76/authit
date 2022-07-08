@@ -1,10 +1,4 @@
-{{-- <x-gotime-app-layout layout="{{ config('naykel.template') }}" class="py-5-3-2">
-
-
-
-</x-gotime-app-layout> --}}
-
-<x-gotime-layouts.base>
+<x-gotime-app-layout layout="{{ config('naykel.template') }}" class="py-5-3-2">
 
     <x-authit::auth-box>
 
@@ -33,4 +27,8 @@
 
     </x-authit::auth-box>
 
-</x-gotime-layouts.base>
+</x-gotime-app-layout>
+
+
+
+

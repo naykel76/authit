@@ -6,6 +6,10 @@
 - add disk on install command
 
 
+## 1.4.1
+
+- minor template updates
+
 ## 1.4.0
 
 - remove dependency on fortify

@@ -12,9 +12,9 @@
             <x-input-password for="password" label="Password" autocomplete="password" />
             <x-input-password for="password_confirmation" label="Confirm Password" autocomplete="new-password" />
 
-            <div class="frm-row flex ha-r va-c">
+            <div class="frm-row flex-row va-c ha-r">
                 <a class="mr-1" href="{{ route('login') }}">Already registered?</a>
-                <x-submit text="Register" inline=true />
+                <button type="submit" class="btn primary">Register</button>
             </div>
 
         </form>
