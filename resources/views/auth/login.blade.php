@@ -11,7 +11,7 @@
             <x-input-email for="email" label="E-mail Address" />
             <x-input-password for="password" label="Password" />
 
-            <x-gotime-checkbox for="remember" label="Remember Me" rowClasses="mt-05" inline/>
+            <x-checkbox for="remember" label="Remember Me" rowClass="mt-05" />
 
             <div class="frm-row flex-row ha-r va-c">
 

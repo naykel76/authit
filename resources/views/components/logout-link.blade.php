@@ -1,19 +1,21 @@
 @props(['useIcons' => false])
-    @auth
 
-        <form method="POST" action="{{ route('logout') }}">
+@auth
 
-            @csrf
+    {{-- the menu class is to keep styling consistancy when used with user navigation --}}
+    <form method="POST" class="menu" action="{{ route('logout') }}">
 
-            <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
+        @csrf
 
-                @if($useIcons)
-                    <x-gotime::icon icon="exit-o" />
-                @endif
+        <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
 
-                <span>{{ __('Log Out') }}</span>
-            </a>
+            @if($useIcons)
+                <x-gotime::icon icon="exit-o" />
+            @endif
 
-        </form>
+            <span>{{ __('Log Out') }}</span>
+        </a>
 
-    @endauth
+    </form>
+
+@endauth

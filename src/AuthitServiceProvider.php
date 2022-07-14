@@ -2,11 +2,12 @@
 
 namespace Naykel\Authit;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
+use Livewire\Livewire;
 use Naykel\Authit\Http\Livewire\User\Profile;
 use Naykel\Authit\Http\Livewire\User\UpdatePasswordForm;
-use Livewire\Livewire;
 
 class AuthitServiceProvider extends ServiceProvider
 {
@@ -28,6 +29,8 @@ class AuthitServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/routes.php');
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
+        $this->configureComponents();
+
         $this->commands([
             InstallCommand::class,
             InstallLocalCommand::class
@@ -41,5 +44,29 @@ class AuthitServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../stubs/seeders' => database_path('seeders'),
         ], 'authit-permissions');
+    }
+
+    /**
+     * Configure the Gotime Blade components.
+     *
+     * @return void
+     */
+    protected function configureComponents()
+    {
+        $this->callAfterResolving(BladeCompiler::class, function () {
+            $this->registerComponent('account-dropdown');
+            // $this->registerComponent('account-icon-button');
+        });
+    }
+
+    /**
+     * Register the given component.
+     *
+     * @param  string  $component
+     * @return void
+     */
+    protected function registerComponent(string $component)
+    {
+        Blade::component('authit::components.' . $component, 'authit-' . $component);
     }
 }

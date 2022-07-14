@@ -6,6 +6,11 @@
 - add disk on install command
 
 
+## 1.4.2
+
+- add account dropdown
+- template class updates
+
 ## 1.4.1
 
 - minor template updates

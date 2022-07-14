@@ -16,7 +16,7 @@
             @csrf
 
             <x-input-password for="password" label="Password" autocomplete="current-password" />
-            <x-submit text="Confirm" rowClasses="tar" />
+            <x-submit text="Confirm" rowClass="tar" />
 
         </form>
 
