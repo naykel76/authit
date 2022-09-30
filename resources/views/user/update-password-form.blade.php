@@ -10,7 +10,7 @@
 
         <x-input-password wire:model.defer="editing.current_password" for="editing.current_password" label="Current Password" req />
         <x-input-password wire:model.defer="editing.password" for="editing.password" label="New Password" req />
-        <x-input-password wire:model.defer="editing.password_confirmation" for="editing.password_confirmation" label="Current Password" req />
+        <x-input-password wire:model.defer="editing.password_confirmation" for="editing.password_confirmation" label="Confirm Password" req />
 
         <x-submit text="Save" rowClass="tar" />
 

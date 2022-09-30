@@ -3,7 +3,7 @@
     <x-authit::auth-box>
 
         @if(session('status') == 'verification-link-sent')
-            <div class="txt-sm txt-green">
+            <div class="bx success-light pxy-1">
                 {{ __('A new verification link has been sent to the email address you provided during registration.') }}
             </div>
         @endif
@@ -18,6 +18,8 @@
             @csrf
             <x-submit text="Resend Verification Email" />
         </form>
+
+        <p class="txt-red">If you do not see the email in your inbox, please check your junk mail folder.</p>
 
     </x-authit::auth-box>
 

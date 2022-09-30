@@ -6,6 +6,12 @@
 - add disk on install command
 
 
+## 1.4.3 CURRENT
+
+- Add "check junk mail folder" message to registration
+- Minor fixes
+
+
 ## 1.4.2
 
 - add account dropdown
