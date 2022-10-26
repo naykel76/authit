@@ -6,9 +6,9 @@
 
     <form wire:submit.prevent="save" class="bx">
 
-        <x-input wire:model.defer="editing.name" for="editing.name" label="Name" autocomplete="off" req />
+        <x-gt-input wire:model.defer="editing.name" for="editing.name" label="Name" autocomplete="off" req />
 
-        <x-input wire:model.defer="editing.email" for="editing.email" label="E-mail" req />
+        <x-gt-input wire:model.defer="editing.email" for="editing.email" label="E-mail" req />
 
         <hr>
 
@@ -23,7 +23,7 @@
             @endif
 
             <div class="ml">
-                <x-control.file wire:model.defer="upload" for="upload" />
+                <x-gt-control.file wire:model.defer="upload" for="upload" />
             </div>
 
         </div>

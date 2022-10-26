@@ -15,7 +15,7 @@
         <form method="POST" action="{{ route('password.confirm') }}">
             @csrf
 
-            <x-input-password for="password" label="Password" autocomplete="current-password" />
+            <x-gt-input-password for="password" label="Password" autocomplete="current-password" />
             <x-submit text="Confirm" rowClass="tar" />
 
         </form>

@@ -6,6 +6,11 @@
 - add disk on install command
 
 
+## 1.5.0
+
+- update control components with new Gotime syntax
+
+
 ## 1.4.3
 
 - Add "check junk mail folder" message to registration

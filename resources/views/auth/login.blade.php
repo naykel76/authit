@@ -8,10 +8,10 @@
 
             @csrf
 
-            <x-input-email for="email" label="E-mail Address" />
-            <x-input-password for="password" label="Password" />
+            <x-gt-input-email for="email" label="E-mail Address" />
+            <x-gt-input-password for="password" label="Password" />
 
-            <x-checkbox for="remember" label="Remember Me" rowClass="mt-05" />
+            <x-gt-checkbox for="remember" label="Remember Me" rowClass="mt-05" />
 
             <div class="frm-row flex-row ha-r va-c">
 
