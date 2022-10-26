@@ -12,7 +12,7 @@
         <x-gt-input-password wire:model.defer="editing.password" for="editing.password" label="New Password" req />
         <x-gt-input-password wire:model.defer="editing.password_confirmation" for="editing.password_confirmation" label="Confirm Password" req />
 
-        <x-submit text="Save" rowClass="tar" />
+        <x-gt-submit text="Save" rowClass="tar" />
 
     </form>
 

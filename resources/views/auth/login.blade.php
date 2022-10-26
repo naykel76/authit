@@ -19,7 +19,7 @@
                     <a class="mr-05" href="{{ route('password.request') }}">Forgot Your Password?</a>
                 @endif
 
-                <x-submit text="Login" inline=true />
+                <x-gt-submit text="Login" inline=true />
 
             </div>
 

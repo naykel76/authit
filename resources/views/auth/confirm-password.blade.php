@@ -16,7 +16,7 @@
             @csrf
 
             <x-gt-input-password for="password" label="Password" autocomplete="current-password" />
-            <x-submit text="Confirm" rowClass="tar" />
+            <x-gt-submit text="Confirm" rowClass="tar" />
 
         </form>
 

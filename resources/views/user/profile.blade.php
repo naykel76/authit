@@ -30,7 +30,7 @@
 
         <hr>
 
-        <x-submit text="Save" rowClass="tar" />
+        <x-gt-submit text="Save" rowClass="tar" />
 
     </form>
 

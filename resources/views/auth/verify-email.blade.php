@@ -16,7 +16,7 @@
 
         <form method="POST" action="/email/verification-notification">
             @csrf
-            <x-submit text="Resend Verification Email" />
+            <x-gt-submit text="Resend Verification Email" />
         </form>
 
         <p class="txt-red">If you do not see the email in your inbox, please check your junk mail folder.</p>
