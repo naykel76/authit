@@ -8,7 +8,7 @@
 
         <form method="POST" action="{{ route('password.email') }}">
             @csrf
-            <x-gt-input-email for="email" label="E-mail Address" autocomplete="email" />
+            <x-gt-input.email for="email" label="E-mail Address" autocomplete="email" />
             <x-gt-submit text="EMAIL PASSWORD RESET LINK" rowClass="tar" />
         </form>
 
