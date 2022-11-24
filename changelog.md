@@ -1,16 +1,18 @@
 # Changelog
 
+## 1.6.1
+- fix composer psr-4 name issue
+- update file control
+
 ## 1.6.0
 - fix incorrect control names
 
 ## 1.5.0
 - update control components with new Gotime syntax
 
-
 ## 1.4.3
 - Add "check junk mail folder" message to registration
 - Minor fixes
-
 
 ## 1.4.2
 - add account dropdown

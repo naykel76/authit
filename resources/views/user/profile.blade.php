@@ -23,7 +23,7 @@
             @endif
 
             <div class="ml">
-                <x-gt-control.file wire:model.defer="upload" for="upload" />
+                <x-gt-input.file wire:model.defer="upload" for="upload" />
             </div>
 
         </div>
