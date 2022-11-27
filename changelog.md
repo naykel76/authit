@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.2
+- fix nav drop down styling
+
 ## 1.6.1
 - fix composer psr-4 name issue
 - update file control
