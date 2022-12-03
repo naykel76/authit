@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.3
+- update jtb classes
+
 ## 1.6.2
 - fix nav drop down styling
 
