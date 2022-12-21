@@ -23,12 +23,11 @@ class RolesPermissionsSeeder extends Seeder
         // create permissions
         $permission = Permission::create(['name' => 'see all']);
         $permission = Permission::create(['name' => 'access admin']);
-        // $permission = Permission::create(['name' => 'access site']);
 
-        $permission = Permission::create(['name' => 'create articles']);
-        $permission = Permission::create(['name' => 'read articles']);
-        $permission = Permission::create(['name' => 'edit articles']);
-        $permission = Permission::create(['name' => 'delete articles']);
+        // $permission = Permission::create(['name' => 'create articles']);
+        // $permission = Permission::create(['name' => 'read articles']);
+        // $permission = Permission::create(['name' => 'edit articles']);
+        // $permission = Permission::create(['name' => 'delete articles']);
 
         // assign role(s)
         $super->syncPermissions(['see all', 'access admin']);

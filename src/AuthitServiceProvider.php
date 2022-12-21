@@ -2,19 +2,20 @@
 
 namespace Naykel\Authit;
 
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\View\Compilers\BladeCompiler;
-use Livewire\Livewire;
-use Naykel\Authit\Http\Livewire\User\Profile;
 use Naykel\Authit\Http\Livewire\User\UpdatePasswordForm;
+use Naykel\Authit\Commands\InstallLocalCommand;
+use Naykel\Authit\Http\Livewire\User\Profile;
+use Illuminate\View\Compilers\BladeCompiler;
+use Naykel\Authit\Commands\InstallCommand;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
+use Livewire\Livewire;
 
 class AuthitServiceProvider extends ServiceProvider
 {
 
     public function register()
     {
-
         $this->app->afterResolving(BladeCompiler::class, function () {
             // Livewire Components...
             Livewire::component('update-password-form', UpdatePasswordForm::class);
@@ -31,19 +32,15 @@ class AuthitServiceProvider extends ServiceProvider
 
         $this->configureComponents();
 
-        $this->commands([
-            InstallCommand::class,
-            InstallLocalCommand::class
-        ]);
+        $this->commands([InstallCommand::class, InstallLocalCommand::class]);
 
         $this->publishes([
             __DIR__ . '/../resources/views/user' => resource_path('views/user'),
         ], 'authit-views');
 
-
         $this->publishes([
-            __DIR__ . '/../stubs/seeders' => database_path('seeders'),
-        ], 'authit-permissions');
+            __DIR__ . '/database/seeders' => database_path('seeders'),
+        ], 'authit-seeders');
     }
 
     /**
@@ -55,17 +52,13 @@ class AuthitServiceProvider extends ServiceProvider
     {
         $this->callAfterResolving(BladeCompiler::class, function () {
             $this->registerComponent('account-dropdown');
-            // $this->registerComponent('account-icon-button');
         });
     }
 
     /**
      * Register the given component.
-     *
-     * @param  string  $component
-     * @return void
      */
-    protected function registerComponent(string $component)
+    protected function registerComponent(string $component): void
     {
         Blade::component('authit::components.' . $component, 'authit-' . $component);
     }

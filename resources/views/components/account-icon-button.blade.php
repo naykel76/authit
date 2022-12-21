@@ -1,7 +1,7 @@
 <div class="dd secondary withState bdr-0">
 
     <div class="icon-button">
-        <x-iconit-user class="icon"></x-iconit-user>
+        <x-gt-icon-user class="icon"></x-gt-icon-user>
         <div class="mt-025 lh-1">Account</div>
     </div>
 

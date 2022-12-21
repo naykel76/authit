@@ -1,6 +1,9 @@
 # Changelog
 
 ## 1.6.3
+- tidy up files and update classes
+-
+## 1.6.3
 - update jtb classes
 
 ## 1.6.2

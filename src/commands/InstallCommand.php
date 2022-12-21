@@ -1,6 +1,6 @@
 <?php
 
-namespace Naykel\Authit;
+namespace Naykel\Authit\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -34,7 +34,7 @@ class InstallCommand extends Command
 
         // Nav...
         (new Filesystem)->ensureDirectoryExists(resource_path('navs'));
-        (new Filesystem)->copyDirectory(__DIR__ . '/../stubs/resources/navs', resource_path('navs'));
+        (new Filesystem)->copyDirectory(__DIR__ . '/../resources/navs', resource_path('navs'));
 
         // Update "Dashboard" Route...
         $this->replaceInFile('/home', '/user/dashboard', app_path('Providers/RouteServiceProvider.php'));

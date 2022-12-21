@@ -1,6 +1,6 @@
 <?php
 
-namespace Naykel\Authit;
+namespace Naykel\Authit\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;

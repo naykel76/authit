@@ -4,8 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddAuthitColumnsToUsersTable extends Migration
+return new class extends Migration
 {
+
     public function up()
     {
         if (!Schema::hasColumn('users', 'avatar')) {
@@ -21,4 +22,4 @@ class AddAuthitColumnsToUsersTable extends Migration
             $table->dropColumn('avatar');
         });
     }
-}
+};
