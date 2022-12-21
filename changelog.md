@@ -1,8 +1,11 @@
 # Changelog
 
-## 1.6.3
+## 1.6.5
+- fix folder naming issue
+
+## 1.6.4
 - tidy up files and update classes
--
+
 ## 1.6.3
 - update jtb classes
 
