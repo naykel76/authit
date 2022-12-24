@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.7.0
+- update gotime menu component
+
 ## 1.6.5
 - fix folder naming issue
 

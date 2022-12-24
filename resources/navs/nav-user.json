@@ -2,19 +2,18 @@
   "main": {
     "links": [
       {
-        "title": "Dashboard",
-        "route_name": "user.dashboard",
-        "icon": "dashboard-o",
-        "url": "/user/dashboard"
+        "name": "Dashboard",
+        "url": "/user/dashboard",
+        "icon": "dashboard-o"
       },
       {
-        "title": "Profile",
+        "name": "Profile",
         "route_name": "user.profile",
         "icon": "edit-o",
         "url": "/user/edit-profile"
       },
       {
-        "title": "Account Security",
+        "name": "Account Security",
         "route_name": "user.update-password",
         "icon": "lock-o",
         "url": "/user/update-password"
