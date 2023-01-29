@@ -41,7 +41,9 @@ class InstallCommand extends Command
 
         // Implement MustVerifyEmail to User model
         if (!$this->stringInFile(app_path('Models/User.php'), 'class User extends Authenticatable implements MustVerifyEmail')) {
+
             $this->replaceInFile('class User extends Authenticatable', 'class User extends Authenticatable implements MustVerifyEmail', app_path('Models/User.php'));
+            $this->replaceInFile('// use Illuminate\Contracts\Auth\MustVerifyEmail;', 'use Illuminate\Contracts\Auth\MustVerifyEmail;', app_path('Models/User.php'));
         }
 
         // Create avatar disk

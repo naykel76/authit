@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.1
+- update install command to un comment mustVerifyEmail
+- update user seeder
+
 ## 1.7.0
 - update gotime menu component
 
