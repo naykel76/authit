@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.2
+- fix path to copy nav-user.json
+- fix account dropdown icon
+
 ## 1.7.1
 - update install command to un comment mustVerifyEmail
 - update user seeder

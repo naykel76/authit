@@ -8,9 +8,7 @@
             <div class="ml-075">
                 <span>{{ Auth::user()->name }}</span>
 
-                <svg class="icon sm">
-                    <use href="/svg/naykel-ui-SVG-sprite.svg#down-caret"></use>
-                </svg>
+                <x-gt-icon-down-caret class="icon sm ml-025"/>
             </div>
 
         </div>

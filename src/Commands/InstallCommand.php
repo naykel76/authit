@@ -34,7 +34,7 @@ class InstallCommand extends Command
 
         // Nav...
         (new Filesystem)->ensureDirectoryExists(resource_path('navs'));
-        (new Filesystem)->copyDirectory(__DIR__ . '/../resources/navs', resource_path('navs'));
+        copy(__DIR__ . '/../../resources/navs/nav-user.json', resource_path('navs/nav-user.json'));
 
         // Update "Dashboard" Route...
         $this->replaceInFile('/home', '/user/dashboard', app_path('Providers/RouteServiceProvider.php'));
