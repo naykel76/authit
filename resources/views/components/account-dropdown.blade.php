@@ -8,7 +8,7 @@
             <div class="ml-075">
                 <span>{{ Auth::user()->name }}</span>
 
-                <x-gt-icon-down-caret class="icon sm ml-025"/>
+                <x-gt-icon-down-caret class="icon pxy-05"/>
             </div>
 
         </div>
