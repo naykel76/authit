@@ -47,7 +47,8 @@ class RegisterUserController extends Controller
         // log in the user
         Auth::login($user);
 
-        // return redirect('/')->with('success', 'Your account has been created.');
-        return redirect(RouteServiceProvider::HOME);
+        // this assumes that the user being registered average Joe, this may
+        // not play well if you are registering admin users.
+        return redirect(route('user.dashboard'));
     }
 }

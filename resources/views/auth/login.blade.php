@@ -1,34 +1,26 @@
-<x-gotime-app-layout layout="{{ config('naykel.template') }}" class="py-5-3-2">
+<x-authit::guest-layout>
 
-    <x-authit::auth-box>
+    <x-authit::auth-session-status class="mb" :status="session('status')" />
 
-        <x-authit::auth-session-status class="mb" :status="session('status')" />
+    <form method="POST" action="{{ route('login') }}">
 
-        <form method="POST" action="{{ route('login') }}">
+        @csrf
 
-            @csrf
+        <x-gt-input.email for="email" label="E-mail Address" />
+        <x-gt-input.password for="password" label="Password" />
 
-            <x-gt-input.email for="email" label="E-mail Address" />
-            <x-gt-input.password for="password" label="Password" />
+        <x-gt-checkbox for="remember" label="Remember Me" rowClass="mt-05" />
 
-            <x-gt-checkbox for="remember" label="Remember Me" rowClass="mt-05" />
+        <div class="frm-row flex-row ha-r va-c">
 
-            <div class="frm-row flex-row ha-r va-c">
+            @if(Route::has('password.request'))
+                <a class="mr-05" href="{{ route('password.request') }}">Forgot Your Password?</a>
+            @endif
 
-                @if(Route::has('password.request'))
-                    <a class="mr-05" href="{{ route('password.request') }}">Forgot Your Password?</a>
-                @endif
+            <x-gt-submit text="Login" inline=true />
 
-                <x-gt-submit text="Login" inline=true />
+        </div>
 
-            </div>
+    </form>
 
-        </form>
-
-    </x-authit::auth-box>
-
-</x-gotime-app-layout>
-
-
-
-
+</x-authit::guest-layout>

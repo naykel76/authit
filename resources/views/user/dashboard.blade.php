@@ -1,29 +1,9 @@
-<x-gotime-app-layout layout="{{ config('naykel.template') }}" hasContainer class="py-5-3-2">
+<x-gotime-app-layout layout="auth-layout" hasContainer class="py-5-3-2">
 
-    <div class="grid cols-25_25_100">
+    <livewire:user.update-password-form />
 
-        <div>
+    <hr>
 
-            <div class="tac mb-2">
-                <img class="wh-200px round" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
-            </div>
-
-            <x-authit::user-navigation />
-
-        </div>
-
-        <div>
-
-            @isset($title)
-
-                <h1 {{ $title->attributes->class([]) }}> {{ $title }} </h1>
-
-            @endisset
-
-            {{ $slot ?? null }}
-
-        </div>
-
-    </div>
+    <livewire:user.update-profile-form />
 
 </x-gotime-app-layout>

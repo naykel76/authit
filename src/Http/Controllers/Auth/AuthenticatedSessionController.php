@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Naykel\Authit\AuthitServiceProvider;
 use Naykel\Authit\Http\Requests\Auth\LoginRequest;
 
 class AuthenticatedSessionController extends Controller
@@ -27,11 +28,16 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $intended  = auth()->user()->can('access admin')
+            ? AuthitServiceProvider::ADMIN_DASHBOARD
+            : AuthitServiceProvider::USER_DASHBOARD;
+
+        return redirect()->intended($intended);
     }
 
     /**

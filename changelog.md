@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.8.0
+- check for avatarUrl existence to prevent undefined method error
+- add dedicated user and admin auth routes
+- add const user and admin dashboard routes to AuthitServiceProvider
+- template updates
+
 ## 1.7.2
 - fix path to copy nav-user.json
 - fix account dropdown icon

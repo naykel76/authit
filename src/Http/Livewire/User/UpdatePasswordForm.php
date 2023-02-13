@@ -56,12 +56,10 @@ class UpdatePasswordForm extends Component
         $this->editing = [];
 
         $this->dispatchBrowserEvent('notify', 'Password Updated!');
-
     }
 
     public function render()
     {
-        return view('authit::user.update-password-form')
-            ->layout('authit::user.dashboard');
+        return view('authit::user.update-password-form');
     }
 }

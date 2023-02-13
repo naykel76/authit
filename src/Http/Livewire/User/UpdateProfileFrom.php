@@ -2,15 +2,13 @@
 
 namespace Naykel\Authit\Http\Livewire\User;
 
-// namespace App\Http\Livewire\User;
-
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 
-class Profile extends Component
+class UpdateProfileFrom extends Component
 {
     use WithFileUploads;
 
@@ -49,7 +47,6 @@ class Profile extends Component
         $this->dispatchBrowserEvent('notify', 'Profile saved!');
     }
 
-
     /**
      * Add or update uploaded file
      *
@@ -72,7 +69,6 @@ class Profile extends Component
 
     public function render()
     {
-        return view('authit::user.profile')
-            ->layout('authit::user.dashboard');
+        return view('authit::user.update-profile-form');;
     }
 }

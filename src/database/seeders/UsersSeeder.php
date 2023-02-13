@@ -24,11 +24,11 @@ class UsersSeeder extends Seeder
         //     'email_verified_at' => now(),
         // ])->assignRole('admin');
 
-        // User::create([
-        //     'name' => 'Jimmy Peters',
-        //     'email' => 'user@example.com',
-        //     'password' => bcrypt('1'),
-        //     'email_verified_at' => now(),
-        // ])->assignRole('user');
+        User::create([
+            'name' => 'Jimmy Peters',
+            'email' => 'user@example.com',
+            'password' => bcrypt('1'),
+            'email_verified_at' => now(),
+        ])->assignRole('user');
     }
 }

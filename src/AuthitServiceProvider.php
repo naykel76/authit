@@ -3,10 +3,10 @@
 namespace Naykel\Authit;
 
 use Naykel\Authit\Http\Livewire\User\UpdatePasswordForm;
+use Naykel\Authit\Http\Livewire\User\UpdateProfileFrom;
 use Naykel\Authit\Commands\InstallLocalCommand;
-use Naykel\Authit\Http\Livewire\User\Profile;
-use Illuminate\View\Compilers\BladeCompiler;
 use Naykel\Authit\Commands\InstallCommand;
+use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
@@ -14,13 +14,22 @@ use Livewire\Livewire;
 class AuthitServiceProvider extends ServiceProvider
 {
 
+    public const ADMIN_DASHBOARD = '/admin';
+    public const USER_DASHBOARD = '/user/dashboard';
+
+
+    /**
+     * ----------------------------------------------------------------------
+     *                  !! - IMPORTANT INFORMATION - !!
+     * ----------------------------------------------------------------------
+     * Configuration settings for this package are handled in naykel.php
+     */
+
     public function register()
     {
         $this->app->afterResolving(BladeCompiler::class, function () {
-            // Livewire Components...
-            Livewire::component('update-password-form', UpdatePasswordForm::class);
-            Livewire::component('avatar', Avatar::class);
-            Livewire::component('profile', Profile::class);
+            Livewire::component('user.update-password-form', UpdatePasswordForm::class);
+            Livewire::component('user.update-profile-form', UpdateProfileFrom::class);
         });
     }
 

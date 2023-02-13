@@ -3,20 +3,8 @@
     "links": [
       {
         "name": "Dashboard",
-        "url": "/user/dashboard",
+        "route_name": "user.dashboard",
         "icon": "dashboard-o"
-      },
-      {
-        "name": "Profile",
-        "route_name": "user.profile",
-        "icon": "edit-o",
-        "url": "/user/edit-profile"
-      },
-      {
-        "name": "Account Security",
-        "route_name": "user.update-password",
-        "icon": "lock-o",
-        "url": "/user/update-password"
       }
     ]
   }

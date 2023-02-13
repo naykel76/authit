@@ -1,25 +1,20 @@
-<x-gotime-app-layout layout="{{ config('naykel.template') }}" class="py-5-3-2">
+{{-- this could be considered for the auth layout, however for simplicity leave it here --}}
+<x-authit::guest-layout>
 
-    <x-authit::auth-box>
+    <p> {{ __('This is a secure area of the application. Please confirm your password before continuing.') }} </p>
 
-        <p> {{ __('This is a secure area of the application. Please confirm your password before continuing.') }} </p>
+    @if(session('status'))
+        <div class="pxy-05 txt-green" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
 
-        <p>Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
+    <form method="POST" action="{{ route('password.confirm') }}">
+        @csrf
 
-        @if(session('status'))
-            <div class="pxy-05 txt-green" role="alert">
-                {{ session('status') }}
-            </div>
-        @endif
+        <x-gt-input.password for="password" label="Password" autocomplete="current-password" />
+        <x-gt-submit text="Confirm" rowClass="tar" />
 
-        <form method="POST" action="{{ route('password.confirm') }}">
-            @csrf
+    </form>
 
-            <x-gt-input.password for="password" label="Password" autocomplete="current-password" />
-            <x-gt-submit text="Confirm" rowClass="tar" />
-
-        </form>
-
-    </x-authit::auth-box>
-
-</x-gotime-app-layout>
+</x-authit::guest-layout>

@@ -24,6 +24,8 @@ To get started, install Authit using the Composer package manager:
 
     composer require naykel/authit
 
+Configuration settings are managed in `naykel.php`
+
 After installing the Authit package, you should execute the `authit:install` Artisan command. This command will;
 
 - \* install any necessary files

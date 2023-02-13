@@ -1,23 +1,40 @@
-<div class="dd cursor-pointer">
+@props(['btnClass' => null])
 
-    @auth
+    <div class="dd cursor-pointer {{ $btnClass }}">
 
-        <div class="flex va-c py-025">
+        @auth
 
-            <img class="wh-2 round" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
+            <div class="flex va-c py-025">
 
-            <div class="ml-075">
-                <span>{{ Auth::user()->name }}</span>
+                @if(method_exists( auth()->user(), 'avatarUrl'))
+                    <img class="wh-2 round" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
+                @endif
 
-                <x-gt-icon-down-caret class="icon pxy-05"/>
+                <div class="ml-075">
+                    <span>{{ Auth::user()->name }}</span>
+                    <x-gt-icon-down-caret class="ml-025" />
+                </div>
+
             </div>
 
-        </div>
+            <div {{ $attributes->class(['dd-content bx pxy-0 mt-025 block']) }}>
 
-        <div class="dd-content bx pxy-0 mt-025">
-            <x-authit::user-navigation />
-        </div>
+                @if(isset($content))
+                    {{ $content }}
+                @else
+                    @if(auth()->user()->can('access admin'))
+                        <x-gt-menu menuname="user" filename="nav-admin" class="menu">
+                            <x-authit::logout-link />
+                        </x-gt-menu>
+                    @else
+                        <x-gt-menu menuname="main" filename="nav-user" class="menu">
+                            <x-authit::logout-link />
+                        </x-gt-menu>
+                    @endif
+                @endif
 
-    @endauth
+            </div>
 
-</div>
+        @endauth
+
+    </div>
