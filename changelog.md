@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.1
+- fix logout icon
+
 ## 1.8.0
 - check for avatarUrl existence to prevent undefined method error
 - add dedicated user and admin auth routes
