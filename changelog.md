@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.2
+- change allow registration key
+
 ## 1.8.1
 - fix logout icon
 
