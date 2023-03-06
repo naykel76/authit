@@ -10,7 +10,6 @@
 
         <x-gt-input wire:model.defer="editing.email" for="editing.email" label="E-mail" req inline />
 
-
         <div class="flex va-c">
 
             @if($upload)
@@ -22,7 +21,6 @@
             <div class="ml">
                 <x-gt-input.file wire:model.defer="upload" for="upload" />
             </div>
-
 
         </div>
 

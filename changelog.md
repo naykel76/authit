@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.0
+- replace 'dashboard' with 'account'
+- remove UserController
+
 ## 1.8.2
 - change allow registration key
 

@@ -8,9 +8,6 @@ use Naykel\Authit\Http\Controllers\Auth\PasswordResetLinkController;
 use Naykel\Authit\Http\Controllers\Auth\RegisterUserController;
 use Naykel\Authit\Http\Controllers\Auth\VerifyEmailController;
 use Naykel\Authit\Http\Controllers\Auth\NewPasswordController;
-use Naykel\Authit\Http\Livewire\User\UpdatePasswordForm;
-use Naykel\Authit\Http\Controllers\UserController;
-use Naykel\Authit\Http\Livewire\User\Profile;
 
 use Spatie\Honeypot\ProtectAgainstSpam;
 
@@ -43,8 +40,8 @@ Route::middleware(['web', 'auth'])->group(function () {
 
         // verified users
         Route::middleware(['verified'])->prefix('user')->name('user')->group(function () {
-            Route::get('/dashboard', [UserController::class, 'dashboard'])->name('.dashboard');
-            Route::get('/update-password', UpdatePasswordForm::class)->name('.update-password'); // livewire component
+            // account details with basic profile and change password
+            Route::view('/account', 'authit::user.account')->name('.account');
         });
 
         Route::get('verify-email', [EmailVerificationPromptController::class, '__invoke'])->name('verification.notice');

@@ -15,7 +15,7 @@ class AuthitServiceProvider extends ServiceProvider
 {
 
     public const ADMIN_DASHBOARD = '/admin';
-    public const USER_DASHBOARD = '/user/dashboard';
+    public const USER_DASHBOARD = '/user/account';
 
 
     /**
