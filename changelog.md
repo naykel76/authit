@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.9.1
+- Updated: JTB Classes
+
 ## 1.9.0
 - replace 'dashboard' with 'account'
 - remove UserController
