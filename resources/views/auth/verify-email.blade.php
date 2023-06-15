@@ -2,7 +2,7 @@
 <x-authit::guest-layout>
 
     @if(session('status') == 'verification-link-sent')
-        <div class="bx success-light pxy-1">
+        <div class="bx success pxy-1">
             {{ __('A new verification link has been sent to the email address you provided during registration.') }}
         </div>
     @endif
