@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.10.1
+- Updated: JTB Classes
+
 ## 1.10.0
 - Updated: JTB Classes
 

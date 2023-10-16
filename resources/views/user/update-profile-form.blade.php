@@ -13,9 +13,9 @@
         <div class="flex va-c">
 
             @if($upload)
-                <img class="round ml-10 wh-40px" src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
+                <img class="round ml-10 wh-2.5" src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
             @else
-                <img class="round ml-10 wh-40px" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
+                <img class="round ml-10 wh-2.5" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
             @endif
 
             <div class="ml">
