@@ -7,7 +7,7 @@
             <div class="flex va-c py-025">
 
                 @if(method_exists( auth()->user(), 'avatarUrl'))
-                    <img class="wh-2 round" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
+                    <img class="wh-2 rounded-full" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
                 @endif
 
                 <div class="ml-075">

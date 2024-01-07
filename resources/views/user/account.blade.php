@@ -1,7 +1,8 @@
-<x-gotime-app-layout layout="auth" hasContainer class="py-5-3-2-2">
+{{-- local `auth` layout which is published during the install command --}}
+<x-layouts.auth pageTitle="Account Settings">
 
+    <h1>Account Settings</h1>
     <livewire:user.update-profile-form />
     <hr>
     <livewire:user.update-password-form />
-
-</x-gotime-app-layout>
+</x-layouts.auth>
