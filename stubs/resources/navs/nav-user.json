@@ -1,0 +1,12 @@
+{
+    "main": {
+        "links": [
+            {
+                "name": "My Account",
+                "route_name": "user.account",
+                "icon": "dashboard-o",
+                "exclude_route": true
+            }
+        ]
+    }
+}

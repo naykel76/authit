@@ -11,7 +11,7 @@ class InstallCommand extends Command
     /**
      * The name and signature of the console command.
      */
-    protected $signature = 'authit:install {--L|local : Indicates if components and views support should be published}';
+    protected $signature = 'authit:install';
 
     /**
      * The console command description.
@@ -23,21 +23,48 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-
-        // publish local assets...
-        if ($this->option('local')) {
-            $this->callSilent('vendor:publish', ['--tag' => 'authit-views', '--force' => true]);
-        }
-
         // Publish spatie permissions and update kernel.php...
         $this->installPermissions();
 
-        // Nav...
+        // Copy over layouts, views and navs...
         (new Filesystem)->ensureDirectoryExists(resource_path('navs'));
-        copy(__DIR__ . '/../../resources/navs/nav-user.json', resource_path('navs/nav-user.json'));
 
-        // Update "Dashboard" Route...
-        $this->replaceInFile('/home', '/user/dashboard', app_path('Providers/RouteServiceProvider.php'));
+        (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/navs', resource_path('navs'));
+        (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/views/components', resource_path('views/components'));
+
+        $this->handleDashboardAndAccount();
+        $this->addCodeToUserModel();
+        $this->addAvatarStorageDisk();
+
+        return Command::SUCCESS;
+    }
+
+    public function handleDashboardAndAccount(): void
+    {
+        if ($this->confirm('Do you wish to install the dashboard?')) {
+            // Publish the dashboard and set `HOME` route to `user.dashboard`
+            $this->replaceInFile('/home', '/user/dashboard', app_path('Providers/RouteServiceProvider.php'));
+            (new Filesystem)->ensureDirectoryExists(resource_path('views/user'));
+            (new Filesystem)->copy(__DIR__ . '/../../stubs/resources/views/user/dashboard.blade.php', resource_path('views/user/dashboard.blade.php'));
+        } else {
+            // Publish the dashboard and set `HOME` route to `user.account`
+            $this->replaceInFile('/home', '/user/account', app_path('Providers/RouteServiceProvider.php'));
+        }
+    }
+
+    public function addCodeToUserModel()
+    {
+        // Add avatarUrl method to User model
+        if (!$this->stringInFile('./app/Models/User.php', "avatarUrl")) {
+            $this->appendBeforeLastCurlyBrace(
+                "\r    public function avatarUrl() {
+        return \$this->avatar
+            ? Storage::disk('avatars')->url(\$this->avatar)
+            : 'https://ui-avatars.com/api/?name=' . urlencode(\$this->name) . '&color=7F9CF5&background=EBF4FF';
+    }",
+                './app/Models/User.php'
+            );
+        }
 
         // Implement MustVerifyEmail to User model
         if (!$this->stringInFile(app_path('Models/User.php'), 'class User extends Authenticatable implements MustVerifyEmail')) {
@@ -46,7 +73,19 @@ class InstallCommand extends Command
             $this->replaceInFile('// use Illuminate\Contracts\Auth\MustVerifyEmail;', 'use Illuminate\Contracts\Auth\MustVerifyEmail;', app_path('Models/User.php'));
         }
 
-        // Create avatar disk
+
+        // Implement
+        if (!$this->stringInFile(app_path('Models/User.php'), 'use Illuminate\Support\Facades\Storage;')) {
+            $this->replaceInFile(
+                'use Illuminate\Contracts\Auth\MustVerifyEmail;',
+                "use Illuminate\Contracts\Auth\MustVerifyEmail; \ruse Illuminate\Support\Facades\Storage;",
+                app_path('Models/User.php')
+            );
+        }
+    }
+
+    public function addAvatarStorageDisk()
+    {
         if (!$this->stringInFile('./config/filesystems.php', "'avatars' => [")) {
 
             $this->replaceInFile(
@@ -61,17 +100,14 @@ class InstallCommand extends Command
                 './config/filesystems.php'
             );
         }
-
-        return Command::SUCCESS;
     }
-
 
     public function installPermissions()
     {
 
         $this->callSilent('vendor:publish', ['--provider' => 'Spatie\Permission\PermissionServiceProvider', '--force' => true]);
 
-        // // Include HasRoles trait in user model
+        // Include HasRoles trait in user model
         if (!$this->stringInFile('./app/Models/User.php', "HasRoles")) {
             $this->replaceInFile('HasFactory,', 'HasFactory, HasRoles,', 'app/Models/User.php');
 
@@ -117,5 +153,32 @@ class InstallCommand extends Command
     protected function stringInFile($path, $search)
     {
         return str_contains(file_get_contents($path), $search);
+    }
+
+    /**
+     * Append a given string before the last curly brace in a given file.
+     *
+     * It finds the last curly brace (which should be the closing brace of the
+     * class) and inserts the provided string before it. This is useful for
+     * programmatically adding methods to a class.
+     *
+     * @param string $insertion The string to be inserted before the last curly brace
+     * @param string $path The path to the PHP file where the insertion should be made.
+     */
+    protected function appendBeforeLastCurlyBrace($insertion, $path): void
+    {
+        // Read the content of the file into a string.
+        $content = file_get_contents($path);
+
+        // Find the position of the last curly brace in the string.
+        $lastCurlyBracePos = strrpos($content, '}');
+
+        // This condition checks if the last curly brace was found in the string.
+        if ($lastCurlyBracePos !== false) {
+            // This line inserts $insertion before the last curly brace in the string,
+            // and then writes the modified string back to the file.
+            $content = substr_replace($content, $insertion . "\n}", $lastCurlyBracePos, 1);
+            file_put_contents($path, $content);
+        }
     }
 }

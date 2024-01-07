@@ -9,63 +9,15 @@
 
 Authentication and permissions package for Naykel Laravel applications.
 
-## Things to Know
-
-- Registration form uses Spatie Permissions and Spatie Honeypot
-- Certain files can be installed and used locally (see local overrides)
-- The logout link should not be included in the `nav-user.json` file, use the `<x-authit::logout-link />` component
-- User model implements `MustVerifyEmail` after the install command is run
-
-## Installation
-
-**Requires Naykel Gotime Package**
-
-To get started, install Authit using the Composer package manager:
-
-    composer require naykel/authit
-
-Configuration settings are managed in `naykel.php`
-
-After installing the Authit package, you should execute the `authit:install` Artisan command. This command will;
-
-- \* install any necessary files
-- \* implement `MustVerifyEmail` on the User model
-- \* update the `RouteServiceProvider` home path
-- \* create the avatar storage disk in `config\filesystems.php`;
-
-```php
-'avatars' => [
-    'driver' => 'local',
-    'root' => storage_path('app/public/avatars'),
-    'url' => env('APP_URL') . '/storage/avatars',
-    'visibility' => 'public',
-],
-```
-
-### Finalizing The Installation
-
-After installing Authit, you should migrate your database and make the necessary changes to the User model:
-
-    php artisan migrate
-
-Depending on your taste update user models `$fillable` array to accept the newly create user table fields or change to `$guarded`.
-
-Add storage support and avatar url
-
-    use Illuminate\Support\Facades\Storage;
-
-    public function avatarUrl() {
-        return $this->avatar
-            ? Storage::disk('avatars')->url($this->avatar)
-            : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&color=7F9CF5&background=EBF4FF';
-    }
-
-
 **Refer to documentation for additional information**
 
+it_redirects_to_dashboard_if_user
+it_redirects_to_admin_if_admin_user
+it_redirects_to_home_when_logged_out
+it_uploads_avatar_image
+it_replaces_avatar_image
 
-Use locally,
+## To Do's
 
-Run the php artisan authit:install-local command to copy files and update and references
-
-Add routes to local `web.php` making sure they override the package routes
+Update livewire components to use the new Livewire 3 'Form Object' approach. Currently, you will
+need to set `'legacy_model_binding' => true`, in your config/livewire.php file.

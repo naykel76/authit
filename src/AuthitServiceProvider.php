@@ -4,9 +4,8 @@ namespace Naykel\Authit;
 
 use Naykel\Authit\Http\Livewire\User\UpdatePasswordForm;
 use Naykel\Authit\Http\Livewire\User\UpdateProfileFrom;
-use Naykel\Authit\Commands\InstallLocalCommand;
-use Naykel\Authit\Commands\InstallCommand;
 use Illuminate\View\Compilers\BladeCompiler;
+use Naykel\Authit\Commands\InstallCommand;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire;
@@ -31,6 +30,8 @@ class AuthitServiceProvider extends ServiceProvider
             Livewire::component('user.update-password-form', UpdatePasswordForm::class);
             Livewire::component('user.update-profile-form', UpdateProfileFrom::class);
         });
+
+        $this->mergeConfigFrom(__DIR__ . '/config/authit.php', 'authit');
     }
 
     public function boot(): void
@@ -41,7 +42,7 @@ class AuthitServiceProvider extends ServiceProvider
 
         $this->configureComponents();
 
-        $this->commands([InstallCommand::class, InstallLocalCommand::class]);
+        $this->commands([InstallCommand::class]);
 
         $this->publishes([
             __DIR__ . '/../resources/views/user' => resource_path('views/user'),

@@ -13,8 +13,7 @@ use Spatie\Honeypot\ProtectAgainstSpam;
 
 // guest users
 Route::middleware('web', 'guest')->group(function () {
-
-    $enableRegistration = config('naykel.allow_register');
+    $enableRegistration = config('authit.allow_register');
 
     if ($enableRegistration) {
         Route::get('register', [RegisterUserController::class, 'create'])->middleware(ProtectAgainstSpam::class)->name('register');
@@ -34,7 +33,7 @@ Route::middleware('web', 'guest')->group(function () {
 // authenticated users
 Route::middleware(['web', 'auth'])->group(function () {
 
-    $enableRegistration = config('naykel.allow_register');
+    $enableRegistration = config('authit.allow_register');
 
     if ($enableRegistration) {
 
