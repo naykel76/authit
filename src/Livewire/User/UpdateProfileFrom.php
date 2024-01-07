@@ -1,6 +1,6 @@
 <?php
 
-namespace Naykel\Authit\Http\Livewire\User;
+namespace Naykel\Authit\Livewire\User;
 
 use App\Models\User;
 use Livewire\Component;

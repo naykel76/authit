@@ -2,8 +2,8 @@
 
 namespace Naykel\Authit;
 
-use Naykel\Authit\Http\Livewire\User\UpdatePasswordForm;
-use Naykel\Authit\Http\Livewire\User\UpdateProfileFrom;
+use Naykel\Authit\Livewire\User\UpdatePasswordForm;
+use Naykel\Authit\Livewire\User\UpdateProfileFrom;
 use Illuminate\View\Compilers\BladeCompiler;
 use Naykel\Authit\Commands\InstallCommand;
 use Illuminate\Support\ServiceProvider;
