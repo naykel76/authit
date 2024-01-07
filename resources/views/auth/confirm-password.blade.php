@@ -1,20 +1,13 @@
-{{-- this could be considered for the auth layout, however for simplicity leave it here --}}
-<x-authit::guest-layout>
+<x-authit::layouts.guest pageTitle="Verify Password">
 
-    <p> {{ __('This is a secure area of the application. Please confirm your password before continuing.') }} </p>
-
-    @if(session('status'))
-        <div class="pxy-05 txt-green" role="alert">
-            {{ session('status') }}
-        </div>
-    @endif
+    <p class="txt-sm"> {{ __('This is a secure area of the application. Please confirm your password before continuing.') }} </p>
 
     <form method="POST" action="{{ route('password.confirm') }}">
         @csrf
-
         <x-gt-input.password for="password" label="Password" autocomplete="current-password" />
-        <x-gt-submit text="Confirm" rowClass="tar" />
-
+        <div class="frm-row">
+            <x-gt-submit text="Confirm" class="primary" />
+        </div>
     </form>
 
-</x-authit::guest-layout>
+</x-authit::layouts.guest>
