@@ -6,33 +6,35 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\View\View;
 
-class RegisterUserController extends Controller
+class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
      */
-    public function create()
+    public function create(): View
     {
-        if (view()->exists('auth.register')) {
-            return view('auth.register');
-        } else {
-            return view('authit::auth.register');
-        }
+        return view()->exists('auth.register')
+            ? view('auth.register')
+            : view('authit::auth.register');
     }
 
     /**
      * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -44,11 +46,8 @@ class RegisterUserController extends Controller
 
         event(new Registered($user));
 
-        // log in the user
         Auth::login($user);
 
-        // this assumes that the user being registered average Joe, this may
-        // not play well if you are registering admin users.
-        return redirect(route('user.dashboard'));
+        return redirect(RouteServiceProvider::HOME);
     }
 }

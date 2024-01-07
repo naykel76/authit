@@ -3,27 +3,29 @@
 namespace Naykel\Authit\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use Illuminate\View\View;
 
 class PasswordResetLinkController extends Controller
 {
     /**
      * Display the password reset link request view.
      */
-    public function create()
+    public function create(): View
     {
-        if (view()->exists('auth.forgot-password')) {
-            return view('auth.forgot-password');
-        } else {
-            return view('authit::auth.forgot-password');
-        }
+        return view()->exists('auth.forgot-password')
+            ? view('auth.forgot-password')
+            : view('authit::auth.forgot-password');
     }
 
     /**
      * Handle an incoming password reset link request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'email' => ['required', 'email'],

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.11.0
+- Added: `config/authit.php` config file
+- Moved: `nav-user` to stubs and updated install command
+- Moved: guest layout to `components.layout` directory and updated references
+- Moved: livewire components ready for upgrade to v3
+- Updated: `InstallCommand` to reflect changes
+- Updated: to optionally add `dashboard` layout and route
+- Updated: to use breeze `v1.26.2` auth resources
+
 ## 1.10.1
 - Updated: JTB Classes
 

@@ -2,48 +2,44 @@
 
 namespace Naykel\Authit\Http\Controllers\Auth;
 
+use Naykel\Authit\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Naykel\Authit\AuthitServiceProvider;
-use Naykel\Authit\Http\Requests\Auth\LoginRequest;
+use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Display the login view.
      */
-    public function create()
+    public function create(): View
     {
-        if (view()->exists('auth.login')) {
-            return view('auth.login');
-        } else {
-            return view('authit::auth.login');
+        {
+            return view()->exists('auth.login')
+                ? view('auth.login')
+                : view('authit::auth.login');
         }
     }
 
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request)
+    public function store(LoginRequest $request): RedirectResponse
     {
-
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        $intended  = auth()->user()->can('access admin')
-            ? AuthitServiceProvider::ADMIN_DASHBOARD
-            : AuthitServiceProvider::USER_DASHBOARD;
-
-        return redirect()->intended($intended);
+        return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
 
