@@ -44,7 +44,7 @@ class UpdateProfileFrom extends Component
             $this->updateUploadedFile($this->upload);
         }
 
-        $this->dispatchBrowserEvent('notify', 'Profile saved!');
+        $this->dispatch('notify', 'Profile saved!');
     }
 
     /**

@@ -4,7 +4,7 @@
     @csrf
     <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();">
         @if($useIcons)
-            <x-gt-icon-exit-o />
+            <x-gt-icon name="exit" />
         @endif
         <span>{{ __('Log Out') }}</span>
     </a>

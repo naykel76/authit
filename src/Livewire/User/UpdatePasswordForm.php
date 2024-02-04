@@ -55,7 +55,7 @@ class UpdatePasswordForm extends Component
         //   reset state
         $this->editing = [];
 
-        $this->dispatchBrowserEvent('notify', 'Password Updated!');
+        $this->dispatch('notify', 'Password Updated!');
     }
 
     public function render()

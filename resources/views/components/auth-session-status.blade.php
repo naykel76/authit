@@ -1,10 +1,8 @@
 @props(['status'])
 
-@if($status)
+@if ($status)
     <div {{ $attributes->merge(['class' => 'bx success-light flex va-c txt-sm']) }}>
-        <svg class="icon fs0 mr-1">
-            <use xlink:href="/svg/naykel-ui.svg#info"></use>
-        </svg>
-        <div>{{ $status }}</div>
+        <x-gt-icon name="information-circle" class="icon fs0 mr-1" />
+        <span>{{ $status }}</span>
     </div>
 @endif
