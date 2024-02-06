@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.1.0
+- Fixed: file input for avatar
+
 ## 2.0.0
 - Added: `config/authit.php` config file
 - Moved: `nav-user` to stubs and updated install command
