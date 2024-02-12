@@ -33,7 +33,7 @@ class InstallCommand extends Command
         (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/views/components', resource_path('views/components'));
 
         $this->handleDashboardAndAccount();
-        $this->addCodeToUserModel();
+        $this->updateUserModel();
         $this->addAvatarStorageDisk();
 
         return Command::SUCCESS;
@@ -52,7 +52,7 @@ class InstallCommand extends Command
         }
     }
 
-    public function addCodeToUserModel()
+    public function updateUserModel()
     {
         // Add avatarUrl method to User model
         if (!$this->stringInFile('./app/Models/User.php', "avatarUrl")) {
@@ -69,10 +69,26 @@ class InstallCommand extends Command
         // Implement MustVerifyEmail to User model
         if (!$this->stringInFile(app_path('Models/User.php'), 'class User extends Authenticatable implements MustVerifyEmail')) {
 
-            $this->replaceInFile('class User extends Authenticatable', 'class User extends Authenticatable implements MustVerifyEmail', app_path('Models/User.php'));
-            $this->replaceInFile('// use Illuminate\Contracts\Auth\MustVerifyEmail;', 'use Illuminate\Contracts\Auth\MustVerifyEmail;', app_path('Models/User.php'));
+            $this->replaceInFile(
+                'class User extends Authenticatable',
+                'class User extends Authenticatable implements MustVerifyEmail',
+                app_path('Models/User.php')
+            );
+            $this->replaceInFile(
+                '// use Illuminate\Contracts\Auth\MustVerifyEmail;',
+                'use Illuminate\Contracts\Auth\MustVerifyEmail;',
+                app_path('Models/User.php')
+            );
         }
 
+        // update fillable
+        if (!$this->stringInFile(app_path('Models/User.php'), "`protected \$fillable = [`")) {
+            $this->replaceInFile(
+                'protected $fillable = [',
+                "protected \$fillable = [ \n\t\t'firstname', \n\t\t'lastname',",
+                app_path('Models/User.php')
+            );
+        }
 
         // Implement
         if (!$this->stringInFile(app_path('Models/User.php'), 'use Illuminate\Support\Facades\Storage;')) {

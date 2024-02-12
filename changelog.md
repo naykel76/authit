@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.0
+- Added: option in config to use first and last name for user name
+- Removed: `avatar` and `avatarUrl` from `User` model (handle separately from now on)
+- Update: livewire components to Livewire 3
+- Update: views to reflect change
+
 ## 2.1.0
 - Fixed: file input for avatar
 

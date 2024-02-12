@@ -32,11 +32,22 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+
+        $rules = [
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        ];
+
+        // If the config option is set to use a single name field then use it,
+        // otherwise use firstname and lastname fields.
+        if (config('authit.use_single_name_field')) {
+            $rules['name'] = ['required', 'string', 'max:255'];
+        } else {
+            $rules['firstname'] = ['required', 'string', 'max:128'];
+            $rules['lastname'] = ['required', 'string', 'max:128'];
+        }
+
+        $request->validate($rules);
 
         $user = User::create([
             'name' => $request->name,

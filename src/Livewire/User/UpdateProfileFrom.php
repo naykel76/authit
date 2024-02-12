@@ -5,28 +5,53 @@ namespace Naykel\Authit\Livewire\User;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\UploadedFile;
 
 class UpdateProfileFrom extends Component
 {
     use WithFileUploads;
 
-    public User $editing;
+    public User $user;
 
-    public $upload;
+    public string $name;
+    public string $firstname;
+    public string $lastname;
+    public string $email;
+
+    // public $upload;
 
     protected function rules()
     {
-        return [
-            'editing.name' => 'required|min:6',
-            'editing.email' => 'required|string|email|max:255|unique:users,email,' . $this->editing->id,
+        $rules = [
+            'email' => 'required|string|email|max:255|unique:users,email,' . auth()->user()->id,
         ];
+
+        // If the config option is set to use a single name field then use it,
+        // otherwise use firstname and lastname fields.
+        if (config('authit.use_single_name_field')) {
+            $rules['name'] = ['required', 'string', 'max:255'];
+        } else {
+            $rules['firstname'] = ['required', 'string', 'max:128'];
+            $rules['lastname'] = ['required', 'string', 'max:128'];
+        }
+
+        return $rules;
     }
+
 
     public function mount()
     {
-        $this->editing = auth()->user();
+
+        $this->user = auth()->user();
+
+        if (config('authit.use_single_name_field')) {
+            $this->name = $this->user->name;
+        } else {
+            $this->firstname = $this->user->firstname;
+            $this->lastname = $this->user->lastname;
+        }
+
+        // dd($this->user->firstname);
+        $this->email = $this->user->email;
     }
 
     public function updatedUpload() // real time validation
@@ -36,35 +61,12 @@ class UpdateProfileFrom extends Component
 
     public function save()
     {
-        $this->validate();
+        $validated = $this->validate();
 
-        $this->editing->save();
-
-        if ($this->upload) {
-            $this->updateUploadedFile($this->upload);
-        }
+        // dd($validated);
+        $this->user->update($validated);
 
         $this->dispatch('notify', 'Profile saved!');
-    }
-
-    /**
-     * Add or update uploaded file
-     *
-     * @param Illuminate\Http\UploadedFile $file
-     * @return void
-     */
-    public function updateUploadedFile(UploadedFile $file)
-    {
-        tap($this->editing->avatar, function ($previous) use ($file) {
-
-            $this->editing->forceFill([
-                'avatar' => $file->store('/', 'avatars')
-            ])->save();
-
-            if ($previous) {
-                Storage::disk('avatars')->delete($previous);
-            }
-        });
     }
 
     public function render()

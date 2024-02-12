@@ -10,25 +10,29 @@ class UsersSeeder extends Seeder
 
     public function run()
     {
-        User::create([
-            'name' => 'Super User',
+
+        $super = config('authit.use_single_name_field')
+            ? ['name' => 'Super User']
+            : ['firstname' => 'Super', 'lastname' => 'User'];
+
+        $super += [
             'email' => 'super@example.com.au',
             'password' => bcrypt('1'),
             'email_verified_at' => now(),
-        ])->assignRole('super')->givePermissionTo('access admin');
+        ];
 
-        // User::create([
-        //     'name' => 'Admin User',
-        //     'email' => 'admin@example.com',
-        //     'password' => bcrypt('1'),
-        //     'email_verified_at' => now(),
-        // ])->assignRole('admin');
+        User::create($super)->assignRole('super')->givePermissionTo('access admin');
 
-        User::create([
-            'name' => 'Jimmy Peters',
+        $user = config('authit.use_single_name_field')
+            ? ['name' => 'Jimmy Peters']
+            : ['firstname' => 'Jimmy', 'lastname' => 'Peters'];
+
+        $user += [
             'email' => 'user@example.com',
             'password' => bcrypt('1'),
             'email_verified_at' => now(),
-        ])->assignRole('user');
+        ];
+
+        User::create($user)->assignRole('user');
     }
 }

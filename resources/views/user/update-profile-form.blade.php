@@ -5,29 +5,18 @@
     <p>Update your account's profile information and email address.</p>
 
     <form wire:submit.prevent="save" class="bx">
+        @if (config('authit.use_single_name_field'))
+            <x-gt-input wire:model="name" for="name" label="Name" autocomplete="name" req />
+        @else
+            <x-gt-input wire:model="firstname" for="firstname" label="firstname" autocomplete="firstname" req />
+            <x-gt-input wire:model="lastname" for="lastname" label="lastname" autocomplete="lastname" req />
+        @endif
 
-        <x-gt-input wire:model.defer="editing.name" for="editing.name" label="Name" autocomplete="off" req inline />
+        <x-gt-input wire:model="email" for="email" label="E-mail" req />
 
-        <x-gt-input wire:model.defer="editing.email" for="editing.email" label="E-mail" req inline />
-
-        <div class="flex va-c">
-
-            @if($upload)
-                <img class="rounded-full ml-10 wh-2.5" src="{{ $upload->temporaryUrl() }}" alt="Profile Photo">
-            @else
-                <img class="rounded-full ml-10 wh-2.5" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
-            @endif
-
-            <div class="ml">
-                <x-gt-file-input wire:model.defer="upload" for="upload" />
-            </div>
-
+        <div class="tar">
+            <x-gt-button wire:click.prevent="save" text="save" class="primary" />
         </div>
-
-        <div class="bx-footer tar">
-            <x-gt-button-save wire:click.prevent="save" />
-        </div>
-
     </form>
 
 </div>

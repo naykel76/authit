@@ -3,7 +3,16 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
         <x-honeypot />
-        <x-gt-input for="name" label="Name" autocomplete="name" />
+
+        @if (config('authit.use_single_name_field'))
+            <x-gt-input for="name" label="Name" autocomplete="name" />
+        @else
+            <div class="grid md:cols-2">
+                <x-gt-input for="firstname" label="firstname" autocomplete="firstname" />
+                <x-gt-input for="lastname" label="lastname" autocomplete="lastname" />
+            </div>
+        @endif
+
         <x-gt-input.email for="email" label="E-mail Address" autocomplete="email" />
         <x-gt-input.password for="password" label="Password" autocomplete="password" />
         <x-gt-input.password for="password_confirmation" label="Confirm Password" autocomplete="new-password" />

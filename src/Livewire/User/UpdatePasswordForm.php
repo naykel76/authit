@@ -4,26 +4,15 @@ namespace Naykel\Authit\Livewire\User;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Validator;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Validation\ValidationException;
 use Livewire\Component;
-use Naykel\Authit\Rules\Password; // from fortify
 
 class UpdatePasswordForm extends Component
 {
-
-    public $editing = [
-        'current_password' => '',
-        'password' => '',
-        'password_confirmation' => '',
-    ];
-
-    public function rules()
-    {
-        return [
-            'editing.current_password' => ['required', 'string'],
-            'editing.password' => ['required', 'string', new Password, 'confirmed'],
-        ];
-    }
+    public string $current_password = '';
+    public string $password = '';
+    public string $password_confirmation = '';
 
     protected $validationAttributes = [
         'editing.current_password' => 'current password',
@@ -32,28 +21,22 @@ class UpdatePasswordForm extends Component
 
     public function updatePassword()
     {
-
-        $this->withValidator(function (Validator $validator) {
-            $validator->after(function ($validator) {
-                if (!isset($this->editing['current_password']) || !Hash::check($this->editing['current_password'], Auth::user()->password)) {
-                    $validator->errors()->add('current_password', __('The provided password does not match your current password.'));
-                }
-            });
-        })->validate();
-
-        Auth::user()->forceFill([
-            'password' => Hash::make($this->editing['password']),
-        ])->save();
-
-
-        if (request()->hasSession()) {
-            request()->session()->put([
-                'password_hash_' . Auth::getDefaultDriver() => Auth::user()->getAuthPassword(),
+        try {
+            $validated = $this->validate([
+                'current_password' => ['required', 'string', 'current_password'],
+                'password' => ['required', 'string', Password::defaults(), 'confirmed'],
             ]);
+        } catch (ValidationException $e) {
+            $this->reset('current_password', 'password', 'password_confirmation');
+
+            throw $e;
         }
 
-        //   reset state
-        $this->editing = [];
+        Auth::user()->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        $this->reset('current_password', 'password', 'password_confirmation');
 
         $this->dispatch('notify', 'Password Updated!');
     }

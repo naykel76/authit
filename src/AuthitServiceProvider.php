@@ -12,17 +12,8 @@ use Livewire\Livewire;
 
 class AuthitServiceProvider extends ServiceProvider
 {
-
     public const ADMIN_DASHBOARD = '/admin';
     public const USER_DASHBOARD = '/user/account';
-
-
-    /**
-     * ----------------------------------------------------------------------
-     *                  !! - IMPORTANT INFORMATION - !!
-     * ----------------------------------------------------------------------
-     * Configuration settings for this package are handled in naykel.php
-     */
 
     public function register()
     {
