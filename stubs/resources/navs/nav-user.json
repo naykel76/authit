@@ -4,7 +4,7 @@
             {
                 "name": "My Account",
                 "route_name": "user.account",
-                "icon": "dashboard-o",
+                "icon": "dashboard",
                 "exclude_route": true
             }
         ]

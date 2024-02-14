@@ -12,11 +12,11 @@ class UsersSeeder extends Seeder
     {
 
         $super = config('authit.use_single_name_field')
-            ? ['name' => 'Super User']
+            ? ['name' => 'Sue Peruser']
             : ['firstname' => 'Super', 'lastname' => 'User'];
 
         $super += [
-            'email' => 'super@example.com.au',
+            'email' => 'super@example.com',
             'password' => bcrypt('1'),
             'email_verified_at' => now(),
         ];

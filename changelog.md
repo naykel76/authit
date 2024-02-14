@@ -1,5 +1,9 @@
 # Changelog
 
+
+## 2.3.0
+- Added: use permissions confirmation to installer (defaults to no)
+
 ## 2.2.0
 - Added: option in config to use first and last name for user name
 - Removed: `avatar` and `avatarUrl` from `User` model (handle separately from now on)
