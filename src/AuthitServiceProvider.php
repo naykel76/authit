@@ -36,6 +36,10 @@ class AuthitServiceProvider extends ServiceProvider
         $this->commands([InstallCommand::class]);
 
         $this->publishes([
+            __DIR__ . '/config/authit.php' => config_path('authit.php'),
+        ], 'authit-config');
+
+        $this->publishes([
             __DIR__ . '/../resources/views/user' => resource_path('views/user'),
         ], 'authit-views');
 

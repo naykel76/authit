@@ -71,7 +71,7 @@ class InstallCommand extends Command
 
     public function handleDashboardAndAccount(): void
     {
-        if ($this->confirm('Do you wish to install the dashboard 123?')) {
+        if ($this->confirm('Do you wish to install the dashboard?')) {
             // Publish the dashboard and set `HOME` route to `user.dashboard`
             $this->replaceInFile('/home', '/user/dashboard', app_path('Providers/RouteServiceProvider.php'));
             (new Filesystem)->ensureDirectoryExists(resource_path('views/user'));

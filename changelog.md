@@ -1,6 +1,10 @@
 # Changelog
 
 
+## 2.3.1
+- Added: publish configuration
+- Fixed: typo
+
 ## 2.3.0
 - Added: use permissions confirmation to installer (defaults to no)
 
