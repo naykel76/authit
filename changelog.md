@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0
+- Added: Laravel 11 support
+- Updated: dependencies
+- Updated: `authit:install` command
 
 ## 2.3.1
 - Added: publish configuration

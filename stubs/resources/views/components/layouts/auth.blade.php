@@ -1,4 +1,4 @@
-<x-gotime-app-layout layout="{{ config('naykel.template') }}" :$pageTitle class="container py-3">
+<x-gt-app-layout layout="{{ config('naykel.template') }}" :$pageTitle class="container py-3">
 
     <div class="flex gap-2 pxy">
 
@@ -15,4 +15,4 @@
 
     </div>
 
-</x-gotime-app-layout>
+</x-gt-app-layout>

@@ -14,7 +14,7 @@
 
     <x-slot name="bottom">
         <div class="txt-sm tac space-y-1">
-            @if(Route::has('password.request'))
+            @if (Route::has('password.request'))
                 <p>Forgot your <a href="{{ route('password.request') }}">password</a>?</p>
             @endif
             <p>Need and account? <a href="{{ route('register') }}">Sign up here.</a></p>

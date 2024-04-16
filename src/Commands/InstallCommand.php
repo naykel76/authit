@@ -23,14 +23,13 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-
-        // Copy over layouts, views and navs...
+        // Copy layouts, views and navs...
         (new Filesystem)->ensureDirectoryExists(resource_path('navs'));
 
         (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/navs', resource_path('navs'));
         (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/views/components', resource_path('views/components'));
 
-        $this->handleDashboardAndAccount();
+        // $this->handleDashboardAndAccount();
         $this->handlePermissions();
         $this->updateUserModel();
         $this->addAvatarStorageDisk();
@@ -41,10 +40,11 @@ class InstallCommand extends Command
 
     public function handlePermissions()
     {
-        if ($this->confirm('Do you wish to use permissions?')) {
+        // php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+        if ($this->confirm('Do you wish to use permissions?', true)) {
             $this->callSilent('vendor:publish', ['--provider' => 'Spatie\Permission\PermissionServiceProvider', '--force' => true]);
 
-            // Include HasRoles trait in user model
+            // add HasRoles trait in user model
             if (!$this->stringInFile('./app/Models/User.php', "HasRoles")) {
                 $this->replaceInFile('HasFactory,', 'HasFactory, HasRoles,', 'app/Models/User.php');
 
@@ -55,32 +55,33 @@ class InstallCommand extends Command
                 );
             }
 
-            // Add middleware to kernel.php
-            if (!$this->stringInFile('./app/Http/kernel.php', "Spatie\Permission\Middlewares")) {
-                $this->replaceInFile(
-                    "'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,",
-                    "'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-            'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
-            'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
-            'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,",
-                    './app/Http/kernel.php'
-                );
-            }
+            // Add package middleware
+            // NK::TD permissions are 644. need is a 
+            // if (!$this->stringInFile('./bootstrap/app.php', "Spatie\Permission\Middlewares")) {
+            //     $this->replaceInFile(
+            //         "->withMiddleware(function (Middleware \$middleware) {",
+            //             "\$middleware->alias([",
+            //                 "'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,",
+            //                 "'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,",
+            //                 "'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,",
+            //             "]);",
+            //     );
+            // }
         }
     }
 
-    public function handleDashboardAndAccount(): void
-    {
-        if ($this->confirm('Do you wish to install the dashboard?')) {
-            // Publish the dashboard and set `HOME` route to `user.dashboard`
-            $this->replaceInFile('/home', '/user/dashboard', app_path('Providers/RouteServiceProvider.php'));
-            (new Filesystem)->ensureDirectoryExists(resource_path('views/user'));
-            (new Filesystem)->copy(__DIR__ . '/../../stubs/resources/views/user/dashboard.blade.php', resource_path('views/user/dashboard.blade.php'));
-        } else {
-            // Publish the dashboard and set `HOME` route to `user.account`
-            $this->replaceInFile('/home', '/user/account', app_path('Providers/RouteServiceProvider.php'));
-        }
-    }
+    // public function handleDashboardAndAccount(): void
+    // {
+    //     if ($this->confirm('Do you wish to install the dashboard?')) {
+    //         // Publish the dashboard and set `HOME` route to `user.dashboard`
+    //         $this->replaceInFile('/home', '/user/dashboard', app_path('Providers/RouteServiceProvider.php'));
+    //         (new Filesystem)->ensureDirectoryExists(resource_path('views/user'));
+    //         (new Filesystem)->copy(__DIR__ . '/../../stubs/resources/views/user/dashboard.blade.php', resource_path('views/user/dashboard.blade.php'));
+    //     } else {
+    //         // Publish the dashboard and set `HOME` route to `user.account`
+    //         $this->replaceInFile('/home', '/user/account', app_path('Providers/RouteServiceProvider.php'));
+    //     }
+    // }
 
     public function updateUserModel()
     {
@@ -148,35 +149,6 @@ class InstallCommand extends Command
                 './config/filesystems.php'
             );
         }
-    }
-
-    public function installPermissions()
-    {
-
-        // $this->callSilent('vendor:publish', ['--provider' => 'Spatie\Permission\PermissionServiceProvider', '--force' => true]);
-
-        // // Include HasRoles trait in user model
-        // if (!$this->stringInFile('./app/Models/User.php', "HasRoles")) {
-        //     $this->replaceInFile('HasFactory,', 'HasFactory, HasRoles,', 'app/Models/User.php');
-
-        //     $this->replaceInFile(
-        //         'use Illuminate\Database\Eloquent\Factories\HasFactory;',
-        //         "use Illuminate\Database\Eloquent\Factories\HasFactory;\ruse Spatie\Permission\Traits\HasRoles;",
-        //         'app/Models/User.php'
-        //     );
-        // }
-
-        // // Add middleware to kernel.php
-        // if (!$this->stringInFile('./app/Http/kernel.php', "Spatie\Permission\Middlewares")) {
-        //     $this->replaceInFile(
-        //         "'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,",
-        //         "'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        // 'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
-        // 'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
-        // 'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,",
-        //         './app/Http/kernel.php'
-        //     );
-        // }
     }
 
     /**
