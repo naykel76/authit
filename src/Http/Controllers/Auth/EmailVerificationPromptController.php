@@ -3,10 +3,10 @@
 namespace Naykel\Authit\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Naykel\Authit\AuthitServiceProvider;
 
 class EmailVerificationPromptController extends Controller
 {
@@ -16,7 +16,7 @@ class EmailVerificationPromptController extends Controller
     public function __invoke(Request $request): RedirectResponse|View
     {
         return $request->user()->hasVerifiedEmail()
-                    ? redirect()->intended(RouteServiceProvider::HOME)
-                    : view('authit::auth.verify-email');
+            ? redirect()->intended(route(AuthitServiceProvider::REDIRECT_ROUTE, absolute: false))
+            : view('authit::auth.verify-email');
     }
 }

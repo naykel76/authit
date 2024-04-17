@@ -35,12 +35,8 @@ Route::middleware(['web', 'guest'])->group(function () {
 
 // user routes
 Route::middleware(['web', 'auth', 'verified'])->prefix('user')->name('user')->group(function () {
-    // account details with basic profile and change password
     Route::view('/account', 'authit::user.account')->name('.account');
-    // only if user dashboard is enabled in config
-    if (config('authit.user_dashboard')) {
-        Route::view('/dashboard', 'user.dashboard')->name('.dashboard');
-    }
+    // dashboard route is handled locally
 });
 
 Route::middleware(['web', 'auth'])->group(function () {

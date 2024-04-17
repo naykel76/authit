@@ -2,6 +2,12 @@
     "main": {
         "links": [
             {
+                "name": "Dashboard",
+                "route_name": "user.dashboard",
+                "icon": "dashboard",
+                "exclude_route": true
+            },
+            {
                 "name": "My Account",
                 "route_name": "user.account",
                 "icon": "dashboard",

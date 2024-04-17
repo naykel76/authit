@@ -4,6 +4,7 @@ namespace Naykel\Authit\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
 
 
 class InstallCommand extends Command
@@ -29,18 +30,68 @@ class InstallCommand extends Command
         (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/navs', resource_path('navs'));
         (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/views/components', resource_path('views/components'));
 
-        // $this->handleDashboardAndAccount();
+        $this->handleNameFields();
+        $this->addAvatarStorageDisk();
+        $this->handleUserDashboard();
+        $this->handleAdminDashboard();
         $this->handlePermissions();
         $this->updateUserModel();
-        $this->addAvatarStorageDisk();
 
         $this->comment('Don\'t forget to add the necessary keys to your .env file');
         return Command::SUCCESS;
     }
 
+    protected function handleNameFields()
+    {
+        $hasSingleField = $this->confirm('Do you wish to use a single name field?', true);
+
+        $this->addAvatarToUserModel($hasSingleField);
+
+        if (!$hasSingleField) {
+            if (!$this->stringInFile(app_path('Models/User.php'), "`protected \$fillable = [`")) {
+                $this->replaceInFile(
+                    'protected $fillable = [',
+                    "protected \$fillable = [ \n\t\t'firstname', \n\t\t'lastname',",
+                    app_path('Models/User.php')
+                );
+            }
+        }
+    }
+
+    public function addAvatarToUserModel(bool $hasSingleField = true)
+    {
+        if (!$this->stringInFile('./app/Models/User.php', "avatarUrl")) {
+            $this->appendBeforeLastCurlyBrace(
+                "\n    public function avatarUrl()\n    {\n" .
+                    "        return \$this->avatar\n" .
+                    "            ? Storage::disk('avatars')->url(\$this->avatar)\n" .
+                    "            : 'https://ui-avatars.com/api/?name=' . urlencode(" .
+                    ($hasSingleField ? "\$this->name" : "\$this->firstname . ' ' . \$this->lastname") . ") . '&color=7F9CF5&background=EBF4FF';\n" .
+                    "    }\n",
+                './app/Models/User.php'
+            );
+        }
+    }
+
+    public function addAvatarStorageDisk()
+    {
+        if (!$this->stringInFile('./config/filesystems.php', "'avatars' => [")) {
+            $this->replaceInFile(
+                "'disks' => [",
+                "'disks' => [\n\n\t\t" .
+                    "'avatars' => [\n" .
+                    "\t\t\t'driver' => 'local',\n" .
+                    "\t\t\t'root' => storage_path('app/public/avatars'),\n" .
+                    "\t\t\t'url' => env('APP_URL') . '/storage/avatars',\n" .
+                    "\t\t\t'visibility' => 'public',\n" .
+                    "\t\t],",
+                './config/filesystems.php'
+            );
+        }
+    }
+
     public function handlePermissions()
     {
-        // php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
         if ($this->confirm('Do you wish to use permissions?', true)) {
             $this->callSilent('vendor:publish', ['--provider' => 'Spatie\Permission\PermissionServiceProvider', '--force' => true]);
 
@@ -54,50 +105,47 @@ class InstallCommand extends Command
                     'app/Models/User.php'
                 );
             }
-
-            // Add package middleware
-            // NK::TD permissions are 644. need is a 
-            // if (!$this->stringInFile('./bootstrap/app.php', "Spatie\Permission\Middlewares")) {
-            //     $this->replaceInFile(
-            //         "->withMiddleware(function (Middleware \$middleware) {",
-            //             "\$middleware->alias([",
-            //                 "'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,",
-            //                 "'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,",
-            //                 "'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,",
-            //             "]);",
-            //     );
-            // }
         }
     }
 
-    // public function handleDashboardAndAccount(): void
-    // {
-    //     if ($this->confirm('Do you wish to install the dashboard?')) {
-    //         // Publish the dashboard and set `HOME` route to `user.dashboard`
-    //         $this->replaceInFile('/home', '/user/dashboard', app_path('Providers/RouteServiceProvider.php'));
-    //         (new Filesystem)->ensureDirectoryExists(resource_path('views/user'));
-    //         (new Filesystem)->copy(__DIR__ . '/../../stubs/resources/views/user/dashboard.blade.php', resource_path('views/user/dashboard.blade.php'));
-    //     } else {
-    //         // Publish the dashboard and set `HOME` route to `user.account`
-    //         $this->replaceInFile('/home', '/user/account', app_path('Providers/RouteServiceProvider.php'));
-    //     }
-    // }
+    public function handleAdminDashboard(): void
+    {
+        if ($this->confirm('Do you wish to use the admin dashboard?')) {
+            File::append(
+                base_path('routes/web.php'),
+                "\nRoute::middleware(['role:super|admin', 'auth'])->prefix('admin')->name('admin')->group(function () {\n" .
+                    "   Route::view('/dashboard', 'admin.dashboard');\n" .
+                    "});\n"
+            );
+            (new Filesystem)->ensureDirectoryExists(resource_path('views/admin'));
+            (new Filesystem)->copy(
+                __DIR__ . '/../../stubs/resources/views/admin/dashboard.blade.php',
+                resource_path('views/admin/dashboard.blade.php')
+            );
+        }
+    }
+
+    public function handleUserDashboard(): void
+    {
+        if ($this->confirm('Do you wish to use the user dashboard?')) {
+            File::append(
+                base_path('routes/web.php'),
+                "\nRoute::middleware(['auth', 'verified'])->prefix('user')->name('user')->group(function () {\n" .
+                    "   Route::view('/dashboard', 'user.dashboard')->name('.dashboard');\n" .
+                    "});\n"
+            );
+
+            (new Filesystem)->ensureDirectoryExists(resource_path('views/user'));
+
+            (new Filesystem)->copy(
+                __DIR__ . '/../../stubs/resources/views/user/dashboard.blade.php',
+                resource_path('views/user/dashboard.blade.php')
+            );
+        }
+    }
 
     public function updateUserModel()
     {
-        // Add avatarUrl method to User model
-        if (!$this->stringInFile('./app/Models/User.php', "avatarUrl")) {
-            $this->appendBeforeLastCurlyBrace(
-                "\r    public function avatarUrl() {
-        return \$this->avatar
-            ? Storage::disk('avatars')->url(\$this->avatar)
-            : 'https://ui-avatars.com/api/?name=' . urlencode(\$this->name) . '&color=7F9CF5&background=EBF4FF';
-    }",
-                './app/Models/User.php'
-            );
-        }
-
-        // Implement MustVerifyEmail to User model
         if (!$this->stringInFile(app_path('Models/User.php'), 'class User extends Authenticatable implements MustVerifyEmail')) {
 
             $this->replaceInFile(
@@ -112,18 +160,6 @@ class InstallCommand extends Command
             );
         }
 
-        if (!$this->confirm('Do you wish to use a single name field?', true)) {
-            // update fillable
-            if (!$this->stringInFile(app_path('Models/User.php'), "`protected \$fillable = [`")) {
-                $this->replaceInFile(
-                    'protected $fillable = [',
-                    "protected \$fillable = [ \n\t\t'firstname', \n\t\t'lastname',",
-                    app_path('Models/User.php')
-                );
-            }
-        }
-
-        // Implement
         if (!$this->stringInFile(app_path('Models/User.php'), 'use Illuminate\Support\Facades\Storage;')) {
             $this->replaceInFile(
                 'use Illuminate\Contracts\Auth\MustVerifyEmail;',
@@ -133,23 +169,7 @@ class InstallCommand extends Command
         }
     }
 
-    public function addAvatarStorageDisk()
-    {
-        if (!$this->stringInFile('./config/filesystems.php', "'avatars' => [")) {
 
-            $this->replaceInFile(
-                "'disks' => [",
-                "'disks' => [" . "\r\r\t\t" .
-                    "'avatars' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/avatars'),
-            'url' => env('APP_URL') . '/storage/avatars',
-            'visibility' => 'public',
-        ],",
-                './config/filesystems.php'
-            );
-        }
-    }
 
     /**
      * Replace a given string within a given file.

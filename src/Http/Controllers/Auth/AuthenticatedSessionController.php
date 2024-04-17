@@ -4,11 +4,11 @@ namespace Naykel\Authit\Http\Controllers\Auth;
 
 use Naykel\Authit\Http\Requests\Auth\LoginRequest;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Naykel\Authit\AuthitServiceProvider;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -16,8 +16,7 @@ class AuthenticatedSessionController extends Controller
      * Display the login view.
      */
     public function create(): View
-    {
-        {
+    { {
             return view()->exists('auth.login')
                 ? view('auth.login')
                 : view('authit::auth.login');
@@ -33,7 +32,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended(route(AuthitServiceProvider::REDIRECT_ROUTE, absolute: false));
     }
 
     /**

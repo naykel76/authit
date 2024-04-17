@@ -12,8 +12,8 @@ use Livewire\Livewire;
 
 class AuthitServiceProvider extends ServiceProvider
 {
-    public const ADMIN_DASHBOARD = '/admin';
-    public const USER_DASHBOARD = '/user/account';
+    // NK::TD need to give this some more thought because it may need to be dynamic
+    public const REDIRECT_ROUTE = 'user.dashboard';
 
     public function register()
     {
