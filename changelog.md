@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.1.0
+- Updated: Routes to conditionally add user and admin dashboard
+- Updated: Installer to handle more options
+- Minor fixes and tweaks
+
 ## 3.0.0
 - Added: Laravel 11 support
 - Updated: dependencies

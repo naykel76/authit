@@ -8,14 +8,9 @@ use Spatie\Permission\Models\Permission;
 
 class RolesPermissionsSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
     public function run()
     {
-        // // create permissions
+        // create permissions
         $super = Role::create(['name' => 'super']);
         $admin = Role::create(['name' => 'admin']);
         $user = Role::create(['name' => 'user']);
@@ -23,11 +18,6 @@ class RolesPermissionsSeeder extends Seeder
         // create permissions
         $permission = Permission::create(['name' => 'see all']);
         $permission = Permission::create(['name' => 'access admin']);
-
-        // $permission = Permission::create(['name' => 'create articles']);
-        // $permission = Permission::create(['name' => 'read articles']);
-        // $permission = Permission::create(['name' => 'edit articles']);
-        // $permission = Permission::create(['name' => 'delete articles']);
 
         // assign role(s)
         $super->syncPermissions(['see all', 'access admin']);

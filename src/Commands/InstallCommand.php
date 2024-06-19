@@ -5,7 +5,7 @@ namespace Naykel\Authit\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
-
+use Naykel\Gotime\Facades\FileManagement as FMS;
 
 class InstallCommand extends Command
 {
@@ -26,18 +26,16 @@ class InstallCommand extends Command
     {
         // Copy layouts, views and navs...
         (new Filesystem)->ensureDirectoryExists(resource_path('navs'));
-
         (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/navs', resource_path('navs'));
         (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/views/components', resource_path('views/components'));
 
         $this->handleNameFields();
+        $this->handlePermissions();
+        $this->handleAdminDashboard();
         $this->addAvatarStorageDisk();
         $this->handleUserDashboard();
-        $this->handleAdminDashboard();
-        $this->handlePermissions();
         $this->updateUserModel();
 
-        $this->comment('Don\'t forget to add the necessary keys to your .env file');
         return Command::SUCCESS;
     }
 
@@ -48,19 +46,23 @@ class InstallCommand extends Command
         $this->addAvatarToUserModel($hasSingleField);
 
         if (!$hasSingleField) {
-            if (!$this->stringInFile(app_path('Models/User.php'), "`protected \$fillable = [`")) {
-                $this->replaceInFile(
+            if (!FMS::stringInFile(app_path('Models/User.php'), "`protected \$fillable = [`")) {
+                FMS::replaceInFile(
                     'protected $fillable = [',
                     "protected \$fillable = [ \n\t\t'firstname', \n\t\t'lastname',",
                     app_path('Models/User.php')
                 );
+            }
+
+            if (!FMS::stringInFile('.env', 'NK_USE_SINGLE_NAME_FIELD')) {
+                File::prepend('.env', "NK_USE_SINGLE_NAME_FIELD=false\n\n");
             }
         }
     }
 
     public function addAvatarToUserModel(bool $hasSingleField = true)
     {
-        if (!$this->stringInFile('./app/Models/User.php', "avatarUrl")) {
+        if (!FMS::stringInFile('./app/Models/User.php', "avatarUrl")) {
             $this->appendBeforeLastCurlyBrace(
                 "\n    public function avatarUrl()\n    {\n" .
                     "        return \$this->avatar\n" .
@@ -75,8 +77,8 @@ class InstallCommand extends Command
 
     public function addAvatarStorageDisk()
     {
-        if (!$this->stringInFile('./config/filesystems.php', "'avatars' => [")) {
-            $this->replaceInFile(
+        if (!FMS::stringInFile('./config/filesystems.php', "'avatars' => [")) {
+            FMS::replaceInFile(
                 "'disks' => [",
                 "'disks' => [\n\n\t\t" .
                     "'avatars' => [\n" .
@@ -92,31 +94,43 @@ class InstallCommand extends Command
 
     public function handlePermissions()
     {
+
         if ($this->confirm('Do you wish to use permissions?', true)) {
             $this->callSilent('vendor:publish', ['--provider' => 'Spatie\Permission\PermissionServiceProvider', '--force' => true]);
 
-            // add HasRoles trait in user model
-            if (!$this->stringInFile('./app/Models/User.php', "HasRoles")) {
-                $this->replaceInFile('HasFactory,', 'HasFactory, HasRoles,', 'app/Models/User.php');
+            if (!FMS::stringInFile('./app/Models/User.php', "HasRoles")) {
+                FMS::replaceInFile('HasFactory,', 'HasFactory, HasRoles,', 'app/Models/User.php');
 
-                $this->replaceInFile(
+                FMS::replaceInFile(
                     'use Illuminate\Database\Eloquent\Factories\HasFactory;',
                     "use Illuminate\Database\Eloquent\Factories\HasFactory;\ruse Spatie\Permission\Traits\HasRoles;",
                     'app/Models/User.php'
                 );
             }
+
+            FMS::replaceInFile(
+                "->withMiddleware(function (Middleware \$middleware) {",
+                "->withMiddleware(function (Middleware \$middleware) {" .
+                    "\n\t\t\$middleware->alias([" .
+                    "\n\t\t\t'role' => \Spatie\Permission\Middleware\RoleMiddleware::class," .
+                    "\n\t\t\t'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class," .
+                    "\n\t\t\t'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class," .
+                    "\n\t\t]);",
+                './bootstrap/app.php'
+            );
         }
     }
 
     public function handleAdminDashboard(): void
     {
-        if ($this->confirm('Do you wish to use the admin dashboard?')) {
-            File::append(
-                base_path('routes/web.php'),
-                "\nRoute::middleware(['role:super|admin', 'auth'])->prefix('admin')->name('admin')->group(function () {\n" .
-                    "   Route::view('/dashboard', 'admin.dashboard');\n" .
-                    "});\n"
-            );
+        // Routes are handled by the package. No need to add to web.php
+        if ($this->confirm('Do you wish to use the admin dashboard?', true)) {
+            // File::append(
+            //     base_path('routes/web.php'),
+            //     "\nRoute::middleware(['role:super|admin', 'auth'])->prefix('admin')->name('admin')->group(function () {\n" .
+            //         "   Route::view('/dashboard', 'admin.dashboard');\n" .
+            //         "});\n"
+            // );
             (new Filesystem)->ensureDirectoryExists(resource_path('views/admin'));
             (new Filesystem)->copy(
                 __DIR__ . '/../../stubs/resources/views/admin/dashboard.blade.php',
@@ -146,53 +160,27 @@ class InstallCommand extends Command
 
     public function updateUserModel()
     {
-        if (!$this->stringInFile(app_path('Models/User.php'), 'class User extends Authenticatable implements MustVerifyEmail')) {
+        if (!FMS::stringInFile(app_path('Models/User.php'), 'class User extends Authenticatable implements MustVerifyEmail')) {
 
-            $this->replaceInFile(
+            FMS::replaceInFile(
                 'class User extends Authenticatable',
                 'class User extends Authenticatable implements MustVerifyEmail',
                 app_path('Models/User.php')
             );
-            $this->replaceInFile(
+            FMS::replaceInFile(
                 '// use Illuminate\Contracts\Auth\MustVerifyEmail;',
                 'use Illuminate\Contracts\Auth\MustVerifyEmail;',
                 app_path('Models/User.php')
             );
         }
 
-        if (!$this->stringInFile(app_path('Models/User.php'), 'use Illuminate\Support\Facades\Storage;')) {
-            $this->replaceInFile(
+        if (!FMS::stringInFile(app_path('Models/User.php'), 'use Illuminate\Support\Facades\Storage;')) {
+            FMS::replaceInFile(
                 'use Illuminate\Contracts\Auth\MustVerifyEmail;',
                 "use Illuminate\Contracts\Auth\MustVerifyEmail; \ruse Illuminate\Support\Facades\Storage;",
                 app_path('Models/User.php')
             );
         }
-    }
-
-
-
-    /**
-     * Replace a given string within a given file.
-     *
-     * @param  string  $search
-     * @param  string  $replace
-     * @param  string  $path
-     * @return void
-     */
-    protected function replaceInFile($search, $replace, $path)
-    {
-        file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
-    }
-    /**
-     * A given string exists within a given file.
-     *
-     * @param string $path
-     * @param string $search
-     * @return bool
-     */
-    protected function stringInFile($path, $search)
-    {
-        return str_contains(file_get_contents($path), $search);
     }
 
     /**

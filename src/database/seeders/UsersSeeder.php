@@ -12,7 +12,7 @@ class UsersSeeder extends Seeder
     {
 
         $super = config('authit.use_single_name_field')
-            ? ['name' => 'Sue Peruser']
+            ? ['name' => 'Super']
             : ['firstname' => 'Super', 'lastname' => 'User'];
 
         $super += [
@@ -21,7 +21,15 @@ class UsersSeeder extends Seeder
             'email_verified_at' => now(),
         ];
 
-        User::create($super)->assignRole('super')->givePermissionTo('access admin');
+        $admin = config('authit.use_single_name_field')
+            ? ['name' => 'Admin']
+            : ['firstname' => 'Admin', 'lastname' => 'User'];
+
+        $admin += [
+            'email' => 'admin@example.com',
+            'password' => bcrypt('1'),
+            'email_verified_at' => now(),
+        ];
 
         $user = config('authit.use_single_name_field')
             ? ['name' => 'Jimmy Peters']
@@ -33,6 +41,8 @@ class UsersSeeder extends Seeder
             'email_verified_at' => now(),
         ];
 
+        User::create($super)->assignRole('super')->givePermissionTo('access admin');
+        User::create($admin)->assignRole('admin')->givePermissionTo('access admin');
         User::create($user)->assignRole('user');
     }
 }
