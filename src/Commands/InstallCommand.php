@@ -24,17 +24,17 @@ class InstallCommand extends Command
      */
     public function handle()
     {
+        $this->handleNameFields();
+        $this->handleUserDashboard();
+        $this->handlePermissions();
+        $this->handleAdminDashboard();
+        $this->addAvatarStorageDisk();
+        $this->updateUserModel();
+
         // Copy layouts, views and navs...
         (new Filesystem)->ensureDirectoryExists(resource_path('navs'));
         (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/navs', resource_path('navs'));
         (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/views/components', resource_path('views/components'));
-
-        $this->handleNameFields();
-        $this->handlePermissions();
-        $this->handleAdminDashboard();
-        $this->addAvatarStorageDisk();
-        $this->handleUserDashboard();
-        $this->updateUserModel();
 
         return Command::SUCCESS;
     }
@@ -141,13 +141,13 @@ class InstallCommand extends Command
 
     public function handleUserDashboard(): void
     {
-        if ($this->confirm('Do you wish to use the user dashboard?')) {
-            File::append(
-                base_path('routes/web.php'),
-                "\nRoute::middleware(['auth', 'verified'])->prefix('user')->name('user')->group(function () {\n" .
-                    "   Route::view('/dashboard', 'user.dashboard')->name('.dashboard');\n" .
-                    "});\n"
-            );
+        if ($this->confirm('Do you wish to use the user dashboard?', true)) {
+            // File::append(
+            //     base_path('routes/web.php'),
+            //     "\nRoute::middleware(['auth', 'verified'])->prefix('user')->name('user')->group(function () {\n" .
+            //         "   Route::view('/dashboard', 'user.dashboard')->name('.dashboard');\n" .
+            //         "});\n"
+            // );
 
             (new Filesystem)->ensureDirectoryExists(resource_path('views/user'));
 

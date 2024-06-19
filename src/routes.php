@@ -75,7 +75,7 @@ Route::middleware('web')->group(function () {
     | The assumption is if authit is installed, there will always be an admin.
     */
     Route::middleware(['role:super|admin', 'auth'])->prefix('admin')->name('admin')->group(function () {
-        Route::view('/', 'admin.dashboard');
+        Route::view('/dashboard', 'admin.dashboard')->name('.dashboard');
     });
 
     // Route::get('/', function () {

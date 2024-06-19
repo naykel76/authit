@@ -1,0 +1,16 @@
+{
+    "main": {
+        "links": [
+            {
+                "name": "Dashboard",
+                "route_name": "admin.dashboard",
+                "icon": "dashboard",
+                "exclude_route": true
+            }
+        ]
+    },
+    "user": {
+        "__COMMENT": "Links here are for the admin account drop down menu",
+        "links": []
+    }
+}

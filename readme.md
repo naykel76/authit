@@ -9,15 +9,4 @@
 
 Authentication and permissions package for Naykel Laravel applications.
 
-**Refer to documentation for additional information**
-
-it_redirects_to_dashboard_if_user
-it_redirects_to_admin_if_admin_user
-it_redirects_to_home_when_logged_out
-it_uploads_avatar_image
-it_replaces_avatar_image
-
-## To Do's
-
-Update livewire components to use the new Livewire 3 'Form Object' approach. Currently, you will
-need to set `'legacy_model_binding' => true`, in your config/livewire.php file.
+[Official Documentation](https://naykel.com.au/docs/authit)

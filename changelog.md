@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.0
+- Updated: admin dashboard route for constancy
+- Added: `nav-admin.json` to stubs
+
 ## 3.1.0
 - Updated: Routes to conditionally add user and admin dashboard
 - Updated: Installer to handle more options

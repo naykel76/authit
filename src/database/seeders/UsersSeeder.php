@@ -10,7 +10,6 @@ class UsersSeeder extends Seeder
 
     public function run()
     {
-
         $super = config('authit.use_single_name_field')
             ? ['name' => 'Super']
             : ['firstname' => 'Super', 'lastname' => 'User'];
