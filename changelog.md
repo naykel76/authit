@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.2.1
+- Updated: JTB classes
+  
 ## 3.2.0
 - Updated: admin dashboard route for constancy
 - Added: `nav-admin.json` to stubs

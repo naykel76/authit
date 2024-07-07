@@ -2,7 +2,7 @@
 
     <div class="flex gap-2 pxy">
 
-        <div class="w-20 to-md:hide fs0">
+        <div class="w-20 to-md:hidden fs0">
             <div class="tac mb-2">
                 <img class="wh-12 rounded-full" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
             </div>
