@@ -13,8 +13,8 @@ class UpdateProfileFrom extends Component
     public User $user;
 
     public string $name;
-    public string $firstname;
-    public string $lastname;
+    public string $first_name;
+    public string $last_name;
     public string $email;
 
     // public $upload;
@@ -26,12 +26,12 @@ class UpdateProfileFrom extends Component
         ];
 
         // If the config option is set to use a single name field then use it,
-        // otherwise use firstname and lastname fields.
+        // otherwise use first_name and last_name fields.
         if (config('authit.use_single_name_field')) {
             $rules['name'] = ['required', 'string', 'max:255'];
         } else {
-            $rules['firstname'] = ['required', 'string', 'max:128'];
-            $rules['lastname'] = ['required', 'string', 'max:128'];
+            $rules['first_name'] = ['required', 'string', 'max:128'];
+            $rules['last_name'] = ['required', 'string', 'max:128'];
         }
 
         return $rules;
@@ -46,11 +46,11 @@ class UpdateProfileFrom extends Component
         if (config('authit.use_single_name_field')) {
             $this->name = $this->user->name;
         } else {
-            $this->firstname = $this->user->firstname;
-            $this->lastname = $this->user->lastname;
+            $this->first_name = $this->user->first_name;
+            $this->last_name = $this->user->last_name;
         }
 
-        // dd($this->user->firstname);
+        // dd($this->user->first_name);
         $this->email = $this->user->email;
     }
 

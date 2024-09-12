@@ -4,7 +4,7 @@ return [
 
     /**
      * This configuration option allows you to choose between a single `name`
-     * field or a `firstname` and `lastname` field when the user registers.
+     * field or a `first_name` and `last_name` field when the user registers.
      */
     'use_single_name_field' => env('NK_USE_SINGLE_NAME_FIELD', true),
 

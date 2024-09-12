@@ -49,7 +49,7 @@ class InstallCommand extends Command
             if (!FMS::stringInFile(app_path('Models/User.php'), "`protected \$fillable = [`")) {
                 FMS::replaceInFile(
                     'protected $fillable = [',
-                    "protected \$fillable = [ \n\t\t'firstname', \n\t\t'lastname',",
+                    "protected \$fillable = [ \n\t\t'first_name', \n\t\t'last_name',",
                     app_path('Models/User.php')
                 );
             }
@@ -68,7 +68,7 @@ class InstallCommand extends Command
                     "        return \$this->avatar\n" .
                     "            ? Storage::disk('avatars')->url(\$this->avatar)\n" .
                     "            : 'https://ui-avatars.com/api/?name=' . urlencode(" .
-                    ($hasSingleField ? "\$this->name" : "\$this->firstname . ' ' . \$this->lastname") . ") . '&color=7F9CF5&background=EBF4FF';\n" .
+                    ($hasSingleField ? "\$this->name" : "\$this->first_name . ' ' . \$this->last_name") . ") . '&color=7F9CF5&background=EBF4FF';\n" .
                     "    }\n",
                 './app/Models/User.php'
             );

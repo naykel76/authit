@@ -8,8 +8,8 @@
         @if (config('authit.use_single_name_field'))
             <x-gt-input wire:model="name" for="name" label="Name" autocomplete="name" req />
         @else
-            <x-gt-input wire:model="firstname" for="firstname" label="firstname" autocomplete="firstname" req />
-            <x-gt-input wire:model="lastname" for="lastname" label="lastname" autocomplete="lastname" req />
+            <x-gt-input wire:model="first_name" for="first_name" label="First Name" autocomplete="First Name" req />
+            <x-gt-input wire:model="last_name" for="last_name" label="Last Name" autocomplete="Last Name" req />
         @endif
 
         <x-gt-input wire:model="email" for="email" label="E-mail" req />

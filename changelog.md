@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.0
+- Updated variable names for first name and last name
+
 ## 3.2.1
 - Updated: JTB classes
   

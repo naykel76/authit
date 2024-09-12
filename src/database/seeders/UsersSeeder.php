@@ -12,7 +12,7 @@ class UsersSeeder extends Seeder
     {
         $super = config('authit.use_single_name_field')
             ? ['name' => 'Super']
-            : ['firstname' => 'Super', 'lastname' => 'User'];
+            : ['first_name' => 'Super', 'last_name' => 'User'];
 
         $super += [
             'email' => 'super@example.com',
@@ -22,7 +22,7 @@ class UsersSeeder extends Seeder
 
         $admin = config('authit.use_single_name_field')
             ? ['name' => 'Admin']
-            : ['firstname' => 'Admin', 'lastname' => 'User'];
+            : ['first_name' => 'Admin', 'last_name' => 'User'];
 
         $admin += [
             'email' => 'admin@example.com',
@@ -32,7 +32,7 @@ class UsersSeeder extends Seeder
 
         $user = config('authit.use_single_name_field')
             ? ['name' => 'Jimmy Peters']
-            : ['firstname' => 'Jimmy', 'lastname' => 'Peters'];
+            : ['first_name' => 'Jimmy', 'last_name' => 'Peters'];
 
         $user += [
             'email' => 'user@example.com',

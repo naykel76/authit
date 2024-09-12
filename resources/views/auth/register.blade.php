@@ -8,8 +8,8 @@
             <x-gt-input for="name" label="Name" autocomplete="name" />
         @else
             <div class="grid md:cols-2">
-                <x-gt-input for="firstname" label="firstname" autocomplete="firstname" />
-                <x-gt-input for="lastname" label="lastname" autocomplete="lastname" />
+                <x-gt-input for="first_name" label="First Name" autocomplete="First Name" />
+                <x-gt-input for="last_name" label="Last Name" autocomplete="Last Name" />
             </div>
         @endif
 
