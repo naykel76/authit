@@ -4,7 +4,7 @@
 
     <p>Update your account's profile information and email address.</p>
 
-    <form wire:submit.prevent="save" class="bx">
+    <form wire:submit="save" class="bx">
         @if (config('authit.use_single_name_field'))
             <x-gt-input wire:model="name" for="name" label="Name" autocomplete="name" req />
         @else
@@ -15,7 +15,7 @@
         <x-gt-input wire:model="email" for="email" label="E-mail" req />
 
         <div class="tar">
-            <x-gt-button wire:click.prevent="save" text="save" class="primary" />
+            <x-gt-button wire:click="save" text="save" class="primary" />
         </div>
     </form>
 

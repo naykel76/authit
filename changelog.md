@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.3.1
+- Minor template updates
+
 ## 3.3.0
 - Updated variable names for first name and last name
 
