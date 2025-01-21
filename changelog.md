@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.4.0
+- Fix incorrect password reset link
+
 ## 3.3.1
 - Minor template updates
 

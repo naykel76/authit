@@ -1,5 +1,5 @@
 <x-authit::layouts.guest pageTitle="Reset password">
-    <form method="POST" action="{{ route('password.update') }}">
+    <form method="POST" action="{{ route('password.store') }}">
         @csrf
         <input type="hidden" name="token" value="{{ $request->route('token') }}">
         <x-gt-input.email for="email" label="E-mail Address" autocomplete="email" />
