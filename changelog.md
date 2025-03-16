@@ -1,5 +1,8 @@
 # Changelog
 
+## 3.4.1
+- Add attribute forwarding to logout-link component
+  
 ## 3.4.0
 - Fix incorrect password reset link
 
