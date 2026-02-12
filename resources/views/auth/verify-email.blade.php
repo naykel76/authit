@@ -1,11 +1,11 @@
-<x-authit::layouts.guest title="Verify Password">
+<x-authit::layouts.guest title="Verify Email">
     @if (session('status') == 'verification-link-sent')
         <div class="bx success-light txt-sm pxy-1">
             {{ __('A new verification link has been sent to the email address you provided during registration.') }}
         </div>
     @endif
 
-    <p>{{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+    <p> {{ __('Please verify your email address by clicking on the link we just emailed to you.') }}
     </p>
 
     <form method="POST" action="/email/verification-notification">

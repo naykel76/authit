@@ -148,7 +148,9 @@ class InstallCommand extends Command
 
         $content = file_get_contents($userModelPath);
 
-        if (strpos($content, 'MustVerifyEmail') !== false) {
+        $contractUncommented = 'use Illuminate\Contracts\Auth\MustVerifyEmail;';
+
+        if (strpos($content, $contractUncommented) !== false && strpos($content, 'implements MustVerifyEmail') !== false) {
             return;
         }
 
@@ -159,10 +161,9 @@ class InstallCommand extends Command
         );
 
         $contractNeedle = '// use Illuminate\Contracts\Auth\MustVerifyEmail;';
-        $contractReplace = 'use Illuminate\Contracts\Auth\MustVerifyEmail;';
 
         if (strpos($content, $contractNeedle) !== false) {
-            $content = str_replace($contractNeedle, $contractReplace, $content);
+            $content = str_replace($contractNeedle, $contractUncommented, $content);
         }
 
         file_put_contents($userModelPath, $content);
