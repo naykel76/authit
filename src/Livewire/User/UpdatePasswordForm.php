@@ -13,7 +13,6 @@ class UpdatePasswordForm extends Component
     public string $current_password = '';
     public string $password = '';
     public string $password_confirmation = '';
-
     protected $validationAttributes = [
         'editing.current_password' => 'current password',
         'editing.password' => 'password',

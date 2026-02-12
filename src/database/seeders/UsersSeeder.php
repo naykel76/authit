@@ -7,7 +7,6 @@ use Illuminate\Database\Seeder;
 
 class UsersSeeder extends Seeder
 {
-
     public function run()
     {
         $super = config('authit.use_single_name_field')

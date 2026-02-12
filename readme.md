@@ -4,9 +4,6 @@
 <a href="https://packagist.org/packages/naykel/authit"><img src="https://img.shields.io/packagist/v/naykel/authit" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/naykel/authit"><img src="https://img.shields.io/packagist/l/naykel/authit" alt="License"></a>
 
-
 # NAYKEL Authit
 
 Authentication and permissions package for Naykel Laravel applications.
-
-[Official Documentation](https://naykel.com.au/docs/authit)

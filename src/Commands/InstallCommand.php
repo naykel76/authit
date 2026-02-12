@@ -45,8 +45,8 @@ class InstallCommand extends Command
 
         $this->addAvatarToUserModel($hasSingleField);
 
-        if (!$hasSingleField) {
-            if (!FMS::stringInFile(app_path('Models/User.php'), "`protected \$fillable = [`")) {
+        if (! $hasSingleField) {
+            if (! FMS::stringInFile(app_path('Models/User.php'), '`protected $fillable = [`')) {
                 FMS::replaceInFile(
                     'protected $fillable = [',
                     "protected \$fillable = [ \n\t\t'first_name', \n\t\t'last_name',",
@@ -54,7 +54,7 @@ class InstallCommand extends Command
                 );
             }
 
-            if (!FMS::stringInFile('.env', 'NK_USE_SINGLE_NAME_FIELD')) {
+            if (! FMS::stringInFile('.env', 'NK_USE_SINGLE_NAME_FIELD')) {
                 File::prepend('.env', "NK_USE_SINGLE_NAME_FIELD=false\n\n");
             }
         }
@@ -62,13 +62,13 @@ class InstallCommand extends Command
 
     public function addAvatarToUserModel(bool $hasSingleField = true)
     {
-        if (!FMS::stringInFile('./app/Models/User.php', "avatarUrl")) {
+        if (! FMS::stringInFile('./app/Models/User.php', 'avatarUrl')) {
             $this->appendBeforeLastCurlyBrace(
                 "\n    public function avatarUrl()\n    {\n" .
                     "        return \$this->avatar\n" .
                     "            ? Storage::disk('avatars')->url(\$this->avatar)\n" .
                     "            : 'https://ui-avatars.com/api/?name=' . urlencode(" .
-                    ($hasSingleField ? "\$this->name" : "\$this->first_name . ' ' . \$this->last_name") . ") . '&color=7F9CF5&background=EBF4FF';\n" .
+                    ($hasSingleField ? '$this->name' : "\$this->first_name . ' ' . \$this->last_name") . ") . '&color=7F9CF5&background=EBF4FF';\n" .
                     "    }\n",
                 './app/Models/User.php'
             );
@@ -77,7 +77,7 @@ class InstallCommand extends Command
 
     public function addAvatarStorageDisk()
     {
-        if (!FMS::stringInFile('./config/filesystems.php', "'avatars' => [")) {
+        if (! FMS::stringInFile('./config/filesystems.php', "'avatars' => [")) {
             FMS::replaceInFile(
                 "'disks' => [",
                 "'disks' => [\n\n\t\t" .
@@ -98,7 +98,7 @@ class InstallCommand extends Command
         if ($this->confirm('Do you wish to use permissions?', true)) {
             $this->callSilent('vendor:publish', ['--provider' => 'Spatie\Permission\PermissionServiceProvider', '--force' => true]);
 
-            if (!FMS::stringInFile('./app/Models/User.php', "HasRoles")) {
+            if (! FMS::stringInFile('./app/Models/User.php', 'HasRoles')) {
                 FMS::replaceInFile('HasFactory,', 'HasFactory, HasRoles,', 'app/Models/User.php');
 
                 FMS::replaceInFile(
@@ -109,8 +109,8 @@ class InstallCommand extends Command
             }
 
             FMS::replaceInFile(
-                "->withMiddleware(function (Middleware \$middleware) {",
-                "->withMiddleware(function (Middleware \$middleware) {" .
+                '->withMiddleware(function (Middleware $middleware) {',
+                '->withMiddleware(function (Middleware $middleware) {' .
                     "\n\t\t\$middleware->alias([" .
                     "\n\t\t\t'role' => \Spatie\Permission\Middleware\RoleMiddleware::class," .
                     "\n\t\t\t'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class," .
@@ -160,7 +160,7 @@ class InstallCommand extends Command
 
     public function updateUserModel()
     {
-        if (!FMS::stringInFile(app_path('Models/User.php'), 'class User extends Authenticatable implements MustVerifyEmail')) {
+        if (! FMS::stringInFile(app_path('Models/User.php'), 'class User extends Authenticatable implements MustVerifyEmail')) {
 
             FMS::replaceInFile(
                 'class User extends Authenticatable',
@@ -174,7 +174,7 @@ class InstallCommand extends Command
             );
         }
 
-        if (!FMS::stringInFile(app_path('Models/User.php'), 'use Illuminate\Support\Facades\Storage;')) {
+        if (! FMS::stringInFile(app_path('Models/User.php'), 'use Illuminate\Support\Facades\Storage;')) {
             FMS::replaceInFile(
                 'use Illuminate\Contracts\Auth\MustVerifyEmail;',
                 "use Illuminate\Contracts\Auth\MustVerifyEmail; \ruse Illuminate\Support\Facades\Storage;",
@@ -190,8 +190,8 @@ class InstallCommand extends Command
      * class) and inserts the provided string before it. This is useful for
      * programmatically adding methods to a class.
      *
-     * @param string $insertion The string to be inserted before the last curly brace
-     * @param string $path The path to the PHP file where the insertion should be made.
+     * @param  string  $insertion  The string to be inserted before the last curly brace
+     * @param  string  $path  The path to the PHP file where the insertion should be made.
      */
     protected function appendBeforeLastCurlyBrace($insertion, $path): void
     {

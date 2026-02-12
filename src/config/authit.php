@@ -14,11 +14,9 @@ return [
      * ----------------------------------------------------------------------
      * Specify whether to disable the Authit front-end registration routes and
      * user pages. This might be necessary if you only have a back-end.
-     * 
-     * Note: Admin routes and views will still be available.
      *
+     * Note: Admin routes and views will still be available.
      */
-
     'allow_register' => env('NK_ALLOW_REGISTER', true),
 
 ];

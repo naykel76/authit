@@ -11,7 +11,6 @@ class UpdateProfileFrom extends Component
     use WithFileUploads;
 
     public User $user;
-
     public string $name;
     public string $first_name;
     public string $last_name;
@@ -36,7 +35,6 @@ class UpdateProfileFrom extends Component
 
         return $rules;
     }
-
 
     public function mount()
     {
@@ -71,6 +69,6 @@ class UpdateProfileFrom extends Component
 
     public function render()
     {
-        return view('authit::user.update-profile-form');;
+        return view('authit::user.update-profile-form');
     }
 }

@@ -2,13 +2,13 @@
 
 namespace Naykel\Authit;
 
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
+use Livewire\Livewire;
+use Naykel\Authit\Commands\InstallCommand;
 use Naykel\Authit\Livewire\User\UpdatePasswordForm;
 use Naykel\Authit\Livewire\User\UpdateProfileFrom;
-use Illuminate\View\Compilers\BladeCompiler;
-use Naykel\Authit\Commands\InstallCommand;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Blade;
-use Livewire\Livewire;
 
 class AuthitServiceProvider extends ServiceProvider
 {

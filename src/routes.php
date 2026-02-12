@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use Naykel\Authit\Http\Controllers\Auth\AuthenticatedSessionController;
 use Naykel\Authit\Http\Controllers\Auth\ConfirmablePasswordController;
 use Naykel\Authit\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -9,9 +10,7 @@ use Naykel\Authit\Http\Controllers\Auth\PasswordController;
 use Naykel\Authit\Http\Controllers\Auth\PasswordResetLinkController;
 use Naykel\Authit\Http\Controllers\Auth\RegisteredUserController;
 use Naykel\Authit\Http\Controllers\Auth\VerifyEmailController;
-
 use Spatie\Honeypot\ProtectAgainstSpam;
-use Illuminate\Support\Facades\Route;
 
 Route::middleware('web')->group(function () {
 

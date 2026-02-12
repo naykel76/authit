@@ -1,2 +1,10 @@
+/.agents
+/.cursor
+/.github
+/.opencode
+/.vscode
+/node_modules
+/tmp
+/vendor
+AGENTS.md
 nk_tasks.md
-/ignore
