@@ -3,9 +3,6 @@
 <div class="dd cursor-pointer {{ $btnClass }}">
     @auth
         <div class="flex va-c py-025">
-            @if (method_exists(auth()->user(), 'avatarUrl'))
-                <img class="wh-2 rounded-full" src="{{ auth()->user()->avatarUrl() }}" alt="Profile Photo">
-            @endif
             <div class="inline-flex va-c ml-075">
                 <span>{{ Auth::user()->name }}</span>
                 <x-gt-icon name="chevron-down" class="wh-1 ml-025" />

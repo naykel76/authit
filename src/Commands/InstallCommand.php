@@ -28,8 +28,6 @@ class InstallCommand extends Command
         $this->handleUserDashboard();
         $this->handlePermissions();
         $this->handleAdminDashboard();
-        $this->addAvatarStorageDisk();
-        $this->updateUserModel();
 
         // Copy layouts, views and navs...
         (new Filesystem)->ensureDirectoryExists(resource_path('navs'));
@@ -43,8 +41,6 @@ class InstallCommand extends Command
     {
         $hasSingleField = $this->confirm('Do you wish to use a single name field?', true);
 
-        $this->addAvatarToUserModel($hasSingleField);
-
         if (! $hasSingleField) {
             if (! FMS::stringInFile(app_path('Models/User.php'), '`protected $fillable = [`')) {
                 FMS::replaceInFile(
@@ -57,38 +53,6 @@ class InstallCommand extends Command
             if (! FMS::stringInFile('.env', 'NK_USE_SINGLE_NAME_FIELD')) {
                 File::prepend('.env', "NK_USE_SINGLE_NAME_FIELD=false\n\n");
             }
-        }
-    }
-
-    public function addAvatarToUserModel(bool $hasSingleField = true)
-    {
-        if (! FMS::stringInFile('./app/Models/User.php', 'avatarUrl')) {
-            $this->appendBeforeLastCurlyBrace(
-                "\n    public function avatarUrl()\n    {\n" .
-                    "        return \$this->avatar\n" .
-                    "            ? Storage::disk('avatars')->url(\$this->avatar)\n" .
-                    "            : 'https://ui-avatars.com/api/?name=' . urlencode(" .
-                    ($hasSingleField ? '$this->name' : "\$this->first_name . ' ' . \$this->last_name") . ") . '&color=7F9CF5&background=EBF4FF';\n" .
-                    "    }\n",
-                './app/Models/User.php'
-            );
-        }
-    }
-
-    public function addAvatarStorageDisk()
-    {
-        if (! FMS::stringInFile('./config/filesystems.php', "'avatars' => [")) {
-            FMS::replaceInFile(
-                "'disks' => [",
-                "'disks' => [\n\n\t\t" .
-                    "'avatars' => [\n" .
-                    "\t\t\t'driver' => 'local',\n" .
-                    "\t\t\t'root' => storage_path('app/public/avatars'),\n" .
-                    "\t\t\t'url' => env('APP_URL') . '/storage/avatars',\n" .
-                    "\t\t\t'visibility' => 'public',\n" .
-                    "\t\t],",
-                './config/filesystems.php'
-            );
         }
     }
 
