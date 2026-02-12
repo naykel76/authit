@@ -1,4 +1,4 @@
-<x-gt-app-layout layout="{{ config('naykel.template') }}" :$pageTitle class="container py-3">
+<x-layouts.app :title="$title ?? null">
 
     <div class="flex gap-2 pxy">
 
@@ -12,4 +12,4 @@
 
     </div>
 
-</x-gt-app-layout>
+</x-layouts.app>

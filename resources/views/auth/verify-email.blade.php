@@ -1,5 +1,4 @@
-<x-authit::layouts.guest pageTitle="Verify Password">
-
+<x-authit::layouts.guest title="Verify Password">
     @if (session('status') == 'verification-link-sent')
         <div class="bx success-light txt-sm pxy-1">
             {{ __('A new verification link has been sent to the email address you provided during registration.') }}
@@ -18,5 +17,4 @@
         <x-gt-icon name="exclamation-triangle" class="wh-2.5 fs0 mr-075" />
         <p>If you do not see the email in your inbox, please check your junk mail folder.</p>
     </div>
-
 </x-authit::layouts.guest>
