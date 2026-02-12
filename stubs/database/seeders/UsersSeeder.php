@@ -1,6 +1,6 @@
 <?php
 
-namespace Naykel\Authit\Database\Seeders;
+namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -39,8 +39,8 @@ class UsersSeeder extends Seeder
             'email_verified_at' => now(),
         ];
 
-        User::create($super)->assignRole('super')->givePermissionTo('access admin');
-        User::create($admin)->assignRole('admin')->givePermissionTo('access admin');
+        User::create($super)->assignRole('super')->givePermissionTo('access-admin');
+        User::create($admin)->assignRole('admin')->givePermissionTo('access-admin');
         User::create($user)->assignRole('user');
     }
 }

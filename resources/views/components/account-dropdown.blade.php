@@ -12,7 +12,7 @@
             @if (isset($content))
                 {{ $content }}
             @else
-                @if (auth()->user()->can('access admin'))
+                @if (auth()->user()->can('access-admin'))
                     <x-gt-menu menuname="user" filename="nav-admin" class="menu">
                         <x-authit::logout-link />
                     </x-gt-menu>

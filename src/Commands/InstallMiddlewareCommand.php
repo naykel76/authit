@@ -34,7 +34,7 @@ class InstallMiddlewareCommand extends Command
         $aliasBlock .= "            'role' => \\Spatie\\Permission\\Middleware\\RoleMiddleware::class,\n";
         $aliasBlock .= "            'permission' => \\Spatie\\Permission\\Middleware\\PermissionMiddleware::class,\n";
         $aliasBlock .= "            'role_or_permission' => \\Spatie\\Permission\\Middleware\\RoleOrPermissionMiddleware::class,\n";
-        $aliasBlock .= "        ]);";
+        $aliasBlock .= '        ]);';
 
         $needle = '->withMiddleware(function (Middleware $middleware) {';
 
