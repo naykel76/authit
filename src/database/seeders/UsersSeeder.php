@@ -9,9 +9,9 @@ class UsersSeeder extends Seeder
 {
     public function run()
     {
-        $super = config('authit.use_single_name_field')
-            ? ['name' => 'Super']
-            : ['first_name' => 'Super', 'last_name' => 'User'];
+        $super = config('authit.split_name_fields')
+            ? ['first_name' => 'Super', 'last_name' => 'User']
+            : ['name' => 'Super'];
 
         $super += [
             'email' => 'super@example.com',
@@ -19,9 +19,9 @@ class UsersSeeder extends Seeder
             'email_verified_at' => now(),
         ];
 
-        $admin = config('authit.use_single_name_field')
-            ? ['name' => 'Admin']
-            : ['first_name' => 'Admin', 'last_name' => 'User'];
+        $admin = config('authit.split_name_fields')
+            ? ['first_name' => 'Admin', 'last_name' => 'User']
+            : ['name' => 'Admin'];
 
         $admin += [
             'email' => 'admin@example.com',
@@ -29,9 +29,9 @@ class UsersSeeder extends Seeder
             'email_verified_at' => now(),
         ];
 
-        $user = config('authit.use_single_name_field')
-            ? ['name' => 'Jimmy Peters']
-            : ['first_name' => 'Jimmy', 'last_name' => 'Peters'];
+        $user = config('authit.split_name_fields')
+            ? ['first_name' => 'Jimmy', 'last_name' => 'Peters']
+            : ['name' => 'Jimmy Peters'];
 
         $user += [
             'email' => 'user@example.com',

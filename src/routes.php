@@ -21,7 +21,7 @@ Route::middleware('web')->group(function () {
     |
     */
     Route::middleware('guest')->group(function () {
-        if (config('authit.allow_register')) {
+        if (config('authit.registration_enabled')) {
             Route::get('register', [RegisteredUserController::class, 'create'])->middleware(ProtectAgainstSpam::class)->name('register');
             Route::post('register', [RegisteredUserController::class, 'store'])->middleware(ProtectAgainstSpam::class);
         }
@@ -41,7 +41,7 @@ Route::middleware('web')->group(function () {
     |
     */
     Route::middleware('auth')->group(function () {
-        if (config('authit.allow_register')) {
+        if (config('authit.registration_enabled')) {
             Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
             Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
             Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
@@ -61,7 +61,7 @@ Route::middleware('web')->group(function () {
     // these should only be accessible if registration is enabled. However, this
     // would block admin users from accessing the user dashboard.
     Route::middleware(['auth', 'verified'])->prefix('user')->name('user')->group(function () {
-        if (config('authit.allow_register')) {
+        if (config('authit.registration_enabled')) {
             Route::view('/account', 'authit::user.account')->name('.account');
             Route::view('/dashboard', 'user.dashboard')->name('.dashboard');
         }
@@ -76,11 +76,4 @@ Route::middleware('web')->group(function () {
     Route::middleware(['role:super|admin', 'auth'])->prefix('admin')->name('admin')->group(function () {
         Route::view('/dashboard', 'admin.dashboard')->name('.dashboard');
     });
-
-    // Route::get('/', function () {
-    //     return view('admin.dashboard')->with([
-    //         'title' => 'Administrator Dashboard'
-    //     ]);
-    // })->name('dashboard');
-
 });

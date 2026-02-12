@@ -50,8 +50,8 @@ class InstallCommand extends Command
                 );
             }
 
-            if (! FMS::stringInFile('.env', 'NK_USE_SINGLE_NAME_FIELD')) {
-                File::prepend('.env', "NK_USE_SINGLE_NAME_FIELD=false\n\n");
+            if (! FMS::stringInFile('.env', 'AUTHIT_SPLIT_NAME_FIELDS')) {
+                File::prepend('.env', "AUTHIT_SPLIT_NAME_FIELDS=false\n\n");
             }
         }
     }

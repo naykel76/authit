@@ -4,13 +4,13 @@
         @csrf
         <x-honeypot />
 
-        @if (config('authit.use_single_name_field'))
-            <x-gt-input for="name" label="Name" autocomplete="name" />
-        @else
+        @if (config('authit.split_name_fields'))
             <div class="grid md:cols-2">
                 <x-gt-input for="first_name" label="First Name" autocomplete="First Name" />
                 <x-gt-input for="last_name" label="Last Name" autocomplete="Last Name" />
             </div>
+        @else
+            <x-gt-input for="name" label="Name" autocomplete="name" />
         @endif
 
         <x-gt-input.email for="email" label="E-mail Address" autocomplete="email" />

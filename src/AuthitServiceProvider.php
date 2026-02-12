@@ -22,6 +22,7 @@ class AuthitServiceProvider extends ServiceProvider
             Livewire::component('user.update-profile-form', UpdateProfileFrom::class);
         });
 
+        // move me
         $this->mergeConfigFrom(__DIR__ . '/config/authit.php', 'authit');
     }
 

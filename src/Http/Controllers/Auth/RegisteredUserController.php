@@ -40,25 +40,25 @@ class RegisteredUserController extends Controller
 
         // If the config option is set to use a single name field then use it,
         // otherwise use first_name and last_name fields.
-        if (config('authit.use_single_name_field')) {
-            $rules['name'] = ['required', 'string', 'max:255'];
-        } else {
+        if (config('authit.split_name_fields')) {
             $rules['first_name'] = ['required', 'string', 'max:128'];
             $rules['last_name'] = ['required', 'string', 'max:128'];
+        } else {
+            $rules['name'] = ['required', 'string', 'max:255'];
         }
 
         $request->validate($rules);
 
-        if (config('authit.use_single_name_field')) {
+        if (config('authit.split_name_fields')) {
             $user = User::create([
-                'name' => $request->name,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
         } else {
             $user = User::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
+                'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);

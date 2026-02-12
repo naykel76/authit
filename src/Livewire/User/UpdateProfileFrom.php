@@ -19,11 +19,11 @@ class UpdateProfileFrom extends Component
             'email' => 'required|string|email|max:255|unique:users,email,' . auth()->user()->id,
         ];
 
-        if (config('authit.use_single_name_field')) {
-            $rules['name'] = ['required', 'string', 'max:255'];
-        } else {
+        if (config('authit.split_name_fields')) {
             $rules['first_name'] = ['required', 'string', 'max:128'];
             $rules['last_name'] = ['required', 'string', 'max:128'];
+        } else {
+            $rules['name'] = ['required', 'string', 'max:255'];
         }
 
         return $rules;
@@ -33,11 +33,11 @@ class UpdateProfileFrom extends Component
     {
         $this->user = auth()->user();
 
-        if (config('authit.use_single_name_field')) {
-            $this->name = $this->user->name;
-        } else {
+        if (config('authit.split_name_fields')) {
             $this->first_name = $this->user->first_name;
             $this->last_name = $this->user->last_name;
+        } else {
+            $this->name = $this->user->name;
         }
 
         $this->email = $this->user->email;
