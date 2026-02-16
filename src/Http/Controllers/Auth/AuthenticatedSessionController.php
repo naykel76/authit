@@ -32,7 +32,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route(AuthitServiceProvider::REDIRECT_ROUTE, absolute: false));
+        $redirectRoute = Auth::user()->hasRole(['super', 'admin'])
+            ? 'admin.dashboard'
+            : AuthitServiceProvider::REDIRECT_ROUTE;
+
+        return redirect()->intended(route($redirectRoute, absolute: false));
     }
 
     /**

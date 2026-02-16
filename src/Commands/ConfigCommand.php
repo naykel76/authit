@@ -9,8 +9,8 @@ class ConfigCommand extends Command
     protected $signature = 'authit:config';
     protected $description = 'Publish Authit config file';
 
-    public function handle()
+    public function handle(): int
     {
-        $this->call('vendor:publish', ['--tag' => 'authit-config', '--force' => true]);
+        return $this->call('vendor:publish', ['--tag' => 'authit-config', '--force' => true]);
     }
 }

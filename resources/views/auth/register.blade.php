@@ -12,24 +12,24 @@
 
         @if (config('authit.split_name_fields'))
             <div class="grid md:cols-2">
-                <x-gt-input for="first_name" label="First Name" autocomplete="First Name"
-                    required autofocus autocomplete="first_name" />
-                <x-gt-input for="last_name" label="Last Name" autocomplete="Last Name"
-                    required autocomplete="last_name" />
+                <x-gt-input for="first_name" label="First Name" autocomplete="given-name"
+                    placeholder="First name" required autofocus />
+                <x-gt-input for="last_name" label="Last Name" autocomplete="family-name"
+                    placeholder="Last name" required />
             </div>
         @else
             <x-gt-input for="name" label="Name"
                 required autofocus autocomplete="name" placeholder="Full name" />
         @endif
 
-        <x-gt-input.email for="email" label="Email Address"
-            required autocomplete="new-password" placeholder="email@example.com.au" viewable />
+        <x-gt-input.email for="email" label="Email Address" autocomplete="email"
+            required placeholder="email@example.com.au" viewable />
 
-        <x-gt-input.password for="password" label="Password"
-            required autocomplete="new-password" placeholder="Password" viewable />
+        <x-gt-input.password for="password" label="Password" autocomplete="new-password"
+            required placeholder="Password" viewable />
 
-        <x-gt-input.password for="password_confirmation" label="Confirm Password"
-            required autocomplete="new-password" placeholder="Confirm Password" viewable />
+        <x-gt-input.password for="password_confirmation" label="Confirm Password" autocomplete="new-password"
+            required placeholder="Confirm Password" viewable />
 
         <div class="frm-row">
             <x-gt-submit text="Register" class="primary w-full" />

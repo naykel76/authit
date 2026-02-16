@@ -19,7 +19,9 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request): View
     {
-        return view('authit::auth.reset-password', ['request' => $request]);
+        return view()->exists('auth.reset-password')
+            ? view('auth.reset-password', ['request' => $request])
+            : view('authit::auth.reset-password', ['request' => $request]);
     }
 
     /**

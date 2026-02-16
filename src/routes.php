@@ -22,16 +22,20 @@ Route::middleware('web')->group(function () {
     */
     Route::middleware('guest')->group(function () {
         if (config('authit.registration_enabled')) {
+            $registrationMiddleware = [
+                ProtectAgainstSpam::class,
+                'throttle:' . config('authit.registration_throttle', '3,10'),
+            ];
             Route::get('register', [RegisteredUserController::class, 'create'])->middleware(ProtectAgainstSpam::class)->name('register');
-            Route::post('register', [RegisteredUserController::class, 'store'])->middleware(ProtectAgainstSpam::class);
+            Route::post('register', [RegisteredUserController::class, 'store'])->middleware($registrationMiddleware);
         }
 
         Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
         Route::post('login', [AuthenticatedSessionController::class, 'store']);
         Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
-        Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+        Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])->middleware('throttle:5,1')->name('password.email');
         Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
-        Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
+        Route::post('reset-password', [NewPasswordController::class, 'store'])->middleware('throttle:5,1')->name('password.store');
     });
 
     /*
@@ -41,6 +45,8 @@ Route::middleware('web')->group(function () {
     |
     */
     Route::middleware('auth')->group(function () {
+        Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
         if (config('authit.registration_enabled')) {
             Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
             Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
@@ -48,7 +54,6 @@ Route::middleware('web')->group(function () {
             Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
             Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
             Route::put('password', [PasswordController::class, 'update'])->name('password.update');
-            Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
         }
     });
 

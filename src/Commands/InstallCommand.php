@@ -75,7 +75,7 @@ class InstallCommand extends Command
         $callBlock .= "    UsersSeeder::class,\n";
         $callBlock .= ']);';
 
-        $content = preg_replace('/public function run\(\): void\s+\{/', "public function run(): void\n    {\n        " . $callBlock, $content);
+        $content = preg_replace('/public function run\(\\)(?::\s*void)?\s*\{/', "public function run(): void\n    {\n        " . $callBlock, $content);
 
         file_put_contents($path, $content);
     }

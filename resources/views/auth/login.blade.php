@@ -26,6 +26,8 @@
         @if (Route::has('password.request'))
             <p>Forgot your <a href="{{ route('password.request') }}">password</a>?</p>
         @endif
-        <p class="mt-05">Need and account? <a href="{{ route('register') }}">Sign up here.</a></p>
+        @if (config('authit.registration_enabled') && Route::has('register'))
+            <p class="mt-05">Need an account? <a href="{{ route('register') }}">Sign up here.</a></p>
+        @endif
     </x-slot>
 </x-authit::layouts.guest>

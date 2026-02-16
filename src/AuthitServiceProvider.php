@@ -10,7 +10,7 @@ use Naykel\Authit\Commands\ConfigCommand;
 use Naykel\Authit\Commands\InstallCommand;
 use Naykel\Authit\Commands\InstallMiddlewareCommand;
 use Naykel\Authit\Livewire\User\UpdatePasswordForm;
-use Naykel\Authit\Livewire\User\UpdateProfileFrom;
+use Naykel\Authit\Livewire\User\UpdateProfileForm;
 
 class AuthitServiceProvider extends ServiceProvider
 {
@@ -20,12 +20,9 @@ class AuthitServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/authit.php', 'authit');
 
-        // TODO: Check where the correct place to register the Livewire
-        // components is, this may not be the best place for it. Is this
-        // Livewire 4 way?
         $this->app->afterResolving(BladeCompiler::class, function () {
             Livewire::component('user.update-password-form', UpdatePasswordForm::class);
-            Livewire::component('user.update-profile-form', UpdateProfileFrom::class);
+            Livewire::component('user.update-profile-form', UpdateProfileForm::class);
         });
     }
 
@@ -53,7 +50,6 @@ class AuthitServiceProvider extends ServiceProvider
     {
         $this->registerComponent('auth-header');
 
-        // CHECK: WTF
         $this->callAfterResolving(BladeCompiler::class, function () {
             $this->registerComponent('account-dropdown');
         });
