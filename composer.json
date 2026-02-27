@@ -15,7 +15,6 @@
     "keywords": ["Laravel", "Authit"],
     "require": {
         "php": "^8.2",
-        "livewire/livewire": "^3.4",
         "spatie/laravel-honeypot": "^4.3",
         "spatie/laravel-permission": "^6.4"
     },
