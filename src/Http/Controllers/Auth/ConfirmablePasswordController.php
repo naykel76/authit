@@ -17,7 +17,9 @@ class ConfirmablePasswordController extends Controller
      */
     public function show(): View
     {
-        return view('authit::auth.confirm-password');
+        return view()->exists('auth.confirm-password')
+            ? view('auth.confirm-password')
+            : view('authit::auth.confirm-password');
     }
 
     /**

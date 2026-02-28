@@ -1,9 +1,10 @@
 {
     "name": "naykel/authit",
     "description": "Auth package with views for NayKel Laravel applications.",
-    "license": "MIT",
-    "minimum-stability": "dev",
-    "prefer-stable" : true,
+    "keywords": [
+        "Laravel",
+        "Authit"
+    ],
     "authors": [
         {
             "name": "Nathan Watts",
@@ -11,17 +12,31 @@
             "homepage": "https://naykel.com.au"
         }
     ],
-    "homepage": "https://github.com/naykel76/authit.git",
-    "keywords": ["Laravel", "Authit"],
+    "homepage": "https://naykel.com.au",
+    "license": "MIT",
     "require": {
         "php": "^8.2",
-        "spatie/laravel-honeypot": "^4.3",
-        "spatie/laravel-permission": "^6.4"
+        "naykel/gotime": "^4.0",
+        "spatie/laravel-honeypot": "^4.6",
+        "spatie/laravel-permission": "^6.8"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.25",
+        "pestphp/pest": "^4.3",
+        "pestphp/pest-plugin-laravel": "^4.0"
+    },
+    "scripts": {
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "autoload": {
         "psr-4": {
-            "Naykel\\Authit\\": "src/",
-            "Naykel\\Authit\\Database\\Seeders\\": "src/database/seeders/"
+            "Naykel\\Authit\\": "src/"
         }
     },
     "autoload-dev": {
@@ -35,5 +50,7 @@
                 "Naykel\\Authit\\AuthitServiceProvider"
             ]
         }
-    }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }

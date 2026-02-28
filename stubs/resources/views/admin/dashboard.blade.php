@@ -1,5 +1,5 @@
-<x-gt-app-layout layout="admin" pageTitle="Admin Dashboard">
+<x-layouts.admin title="Admin Dashboard" class="container pxy-3">
 
-    <h1>This layout needs to be set up for admin</h1>
+    <x-authit::logout-link />
 
-</x-gt-app-layout>
+</x-layouts.admin>

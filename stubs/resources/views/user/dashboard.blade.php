@@ -1,5 +1,7 @@
-<x-gt-app-layout layout="auth" pageTitle="Dashboard" hasContainer class="py-3">
+<x-layouts.app title="Dashboard" class="container pxy-3">
 
     <h1>User Dashboard</h1>
 
-</x-gt-app-layout>
+    <x-authit::logout-link />
+    
+</x-layouts.app>

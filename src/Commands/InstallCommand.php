@@ -4,133 +4,121 @@ namespace Naykel\Authit\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Facades\File;
-use Naykel\Gotime\Facades\FileManagement as FMS;
 
 class InstallCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     */
     protected $signature = 'authit:install';
-
-    /**
-     * The console command description.
-     */
     protected $description = 'Install Authit resources';
 
-    /**
-     * Execute the console command.
-     */
-    public function handle()
+    public function handle(): int
     {
-        $this->handleNameFields();
-        $this->handleUserDashboard();
         $this->handlePermissions();
         $this->handleAdminDashboard();
-        $this->addAvatarStorageDisk();
+        $this->handleUserDashboard();
+        $this->handleSeeders();
         $this->updateUserModel();
 
-        // Copy layouts, views and navs...
         (new Filesystem)->ensureDirectoryExists(resource_path('navs'));
         (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/navs', resource_path('navs'));
         (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/resources/views/components', resource_path('views/components'));
 
+        $this->info('Authit installed successfully!');
+        $this->info('To enable split name fields, publish the config and set split_name_fields to true.');
+
         return Command::SUCCESS;
     }
 
-    protected function handleNameFields()
+    protected function handleSeeders(): void
     {
-        $hasSingleField = $this->confirm('Do you wish to use a single name field?', true);
+        if (! $this->confirm('Publish demo seeders for roles, permissions, and users?', true)) {
+            return;
+        }
 
-        $this->addAvatarToUserModel($hasSingleField);
+        $source = __DIR__ . '/../../stubs/database/seeders';
+        $destination = database_path('seeders');
 
-        if (!$hasSingleField) {
-            if (!FMS::stringInFile(app_path('Models/User.php'), "`protected \$fillable = [`")) {
-                FMS::replaceInFile(
-                    'protected $fillable = [',
-                    "protected \$fillable = [ \n\t\t'first_name', \n\t\t'last_name',",
-                    app_path('Models/User.php')
-                );
+        (new Filesystem)->ensureDirectoryExists($destination);
+
+        collect(['RolesPermissionsSeeder.php', 'UsersSeeder.php'])->each(function (string $file) use ($source, $destination): void {
+            $sourcePath = str_replace('/', DIRECTORY_SEPARATOR, $source . '/' . $file);
+
+            $content = file_get_contents($sourcePath);
+
+            if ($content === false) {
+                return;
             }
 
-            if (!FMS::stringInFile('.env', 'NK_USE_SINGLE_NAME_FIELD')) {
-                File::prepend('.env', "NK_USE_SINGLE_NAME_FIELD=false\n\n");
-            }
-        }
+            $content = str_replace('namespace Naykel\\Authit\\Database\\Seeders;', 'namespace Database\\Seeders;', $content);
+
+            file_put_contents($destination . '/' . $file, $content);
+        });
+
+        $this->addSeedersToDatabaseSeeder();
     }
 
-    public function addAvatarToUserModel(bool $hasSingleField = true)
+    protected function addSeedersToDatabaseSeeder(): void
     {
-        if (!FMS::stringInFile('./app/Models/User.php', "avatarUrl")) {
-            $this->appendBeforeLastCurlyBrace(
-                "\n    public function avatarUrl()\n    {\n" .
-                    "        return \$this->avatar\n" .
-                    "            ? Storage::disk('avatars')->url(\$this->avatar)\n" .
-                    "            : 'https://ui-avatars.com/api/?name=' . urlencode(" .
-                    ($hasSingleField ? "\$this->name" : "\$this->first_name . ' ' . \$this->last_name") . ") . '&color=7F9CF5&background=EBF4FF';\n" .
-                    "    }\n",
-                './app/Models/User.php'
-            );
+        $path = database_path('seeders/DatabaseSeeder.php');
+
+        if (! file_exists($path)) {
+            return;
         }
+
+        $content = file_get_contents($path);
+
+        if (strpos($content, 'RolesPermissionsSeeder') !== false) {
+            return;
+        }
+
+        $callBlock = "\$this->call([\n";
+        $callBlock .= "    RolesPermissionsSeeder::class,\n";
+        $callBlock .= "    UsersSeeder::class,\n";
+        $callBlock .= ']);';
+
+        $content = preg_replace('/public function run\(\\)(?::\s*void)?\s*\{/', "public function run(): void\n    {\n        " . $callBlock, $content);
+
+        file_put_contents($path, $content);
     }
 
-    public function addAvatarStorageDisk()
+    public function handlePermissions(): void
     {
-        if (!FMS::stringInFile('./config/filesystems.php', "'avatars' => [")) {
-            FMS::replaceInFile(
-                "'disks' => [",
-                "'disks' => [\n\n\t\t" .
-                    "'avatars' => [\n" .
-                    "\t\t\t'driver' => 'local',\n" .
-                    "\t\t\t'root' => storage_path('app/public/avatars'),\n" .
-                    "\t\t\t'url' => env('APP_URL') . '/storage/avatars',\n" .
-                    "\t\t\t'visibility' => 'public',\n" .
-                    "\t\t],",
-                './config/filesystems.php'
-            );
-        }
-    }
-
-    public function handlePermissions()
-    {
-
         if ($this->confirm('Do you wish to use permissions?', true)) {
             $this->callSilent('vendor:publish', ['--provider' => 'Spatie\Permission\PermissionServiceProvider', '--force' => true]);
 
-            if (!FMS::stringInFile('./app/Models/User.php', "HasRoles")) {
-                FMS::replaceInFile('HasFactory,', 'HasFactory, HasRoles,', 'app/Models/User.php');
-
-                FMS::replaceInFile(
-                    'use Illuminate\Database\Eloquent\Factories\HasFactory;',
-                    "use Illuminate\Database\Eloquent\Factories\HasFactory;\ruse Spatie\Permission\Traits\HasRoles;",
-                    'app/Models/User.php'
-                );
-            }
-
-            FMS::replaceInFile(
-                "->withMiddleware(function (Middleware \$middleware) {",
-                "->withMiddleware(function (Middleware \$middleware) {" .
-                    "\n\t\t\$middleware->alias([" .
-                    "\n\t\t\t'role' => \Spatie\Permission\Middleware\RoleMiddleware::class," .
-                    "\n\t\t\t'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class," .
-                    "\n\t\t\t'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class," .
-                    "\n\t\t]);",
-                './bootstrap/app.php'
-            );
+            $this->addHasRolesTraitToUserModel();
+            $this->call(InstallMiddlewareCommand::class);
         }
+    }
+
+    protected function addHasRolesTraitToUserModel(): void
+    {
+        $userModelPath = app_path('Models/User.php');
+
+        if (! file_exists($userModelPath)) {
+            return;
+        }
+
+        $content = file_get_contents($userModelPath);
+
+        if (strpos($content, 'HasRoles') !== false) {
+            return;
+        }
+
+        $content = str_replace('HasFactory,', 'HasFactory, HasRoles,', $content);
+
+        $useNeedle = 'use Illuminate\\Database\\Eloquent\\Factories\\HasFactory;';
+        $useInsert = "use Illuminate\\Database\\Eloquent\\Factories\\HasFactory;\nuse Spatie\\Permission\\Traits\\HasRoles;";
+
+        if (strpos($content, $useNeedle) !== false) {
+            $content = str_replace($useNeedle, $useInsert, $content);
+        }
+
+        file_put_contents($userModelPath, $content);
     }
 
     public function handleAdminDashboard(): void
     {
-        // Routes are handled by the package. No need to add to web.php
         if ($this->confirm('Do you wish to use the admin dashboard?', true)) {
-            // File::append(
-            //     base_path('routes/web.php'),
-            //     "\nRoute::middleware(['role:super|admin', 'auth'])->prefix('admin')->name('admin')->group(function () {\n" .
-            //         "   Route::view('/dashboard', 'admin.dashboard');\n" .
-            //         "});\n"
-            // );
             (new Filesystem)->ensureDirectoryExists(resource_path('views/admin'));
             (new Filesystem)->copy(
                 __DIR__ . '/../../stubs/resources/views/admin/dashboard.blade.php',
@@ -142,15 +130,7 @@ class InstallCommand extends Command
     public function handleUserDashboard(): void
     {
         if ($this->confirm('Do you wish to use the user dashboard?', true)) {
-            // File::append(
-            //     base_path('routes/web.php'),
-            //     "\nRoute::middleware(['auth', 'verified'])->prefix('user')->name('user')->group(function () {\n" .
-            //         "   Route::view('/dashboard', 'user.dashboard')->name('.dashboard');\n" .
-            //         "});\n"
-            // );
-
             (new Filesystem)->ensureDirectoryExists(resource_path('views/user'));
-
             (new Filesystem)->copy(
                 __DIR__ . '/../../stubs/resources/views/user/dashboard.blade.php',
                 resource_path('views/user/dashboard.blade.php')
@@ -158,55 +138,34 @@ class InstallCommand extends Command
         }
     }
 
-    public function updateUserModel()
+    public function updateUserModel(): void
     {
-        if (!FMS::stringInFile(app_path('Models/User.php'), 'class User extends Authenticatable implements MustVerifyEmail')) {
+        $userModelPath = app_path('Models/User.php');
 
-            FMS::replaceInFile(
-                'class User extends Authenticatable',
-                'class User extends Authenticatable implements MustVerifyEmail',
-                app_path('Models/User.php')
-            );
-            FMS::replaceInFile(
-                '// use Illuminate\Contracts\Auth\MustVerifyEmail;',
-                'use Illuminate\Contracts\Auth\MustVerifyEmail;',
-                app_path('Models/User.php')
-            );
+        if (! file_exists($userModelPath)) {
+            return;
         }
 
-        if (!FMS::stringInFile(app_path('Models/User.php'), 'use Illuminate\Support\Facades\Storage;')) {
-            FMS::replaceInFile(
-                'use Illuminate\Contracts\Auth\MustVerifyEmail;',
-                "use Illuminate\Contracts\Auth\MustVerifyEmail; \ruse Illuminate\Support\Facades\Storage;",
-                app_path('Models/User.php')
-            );
+        $content = file_get_contents($userModelPath);
+
+        $contractUncommented = 'use Illuminate\Contracts\Auth\MustVerifyEmail;';
+
+        if (strpos($content, $contractUncommented) !== false && strpos($content, 'implements MustVerifyEmail') !== false) {
+            return;
         }
-    }
 
-    /**
-     * Append a given string before the last curly brace in a given file.
-     *
-     * It finds the last curly brace (which should be the closing brace of the
-     * class) and inserts the provided string before it. This is useful for
-     * programmatically adding methods to a class.
-     *
-     * @param string $insertion The string to be inserted before the last curly brace
-     * @param string $path The path to the PHP file where the insertion should be made.
-     */
-    protected function appendBeforeLastCurlyBrace($insertion, $path): void
-    {
-        // Read the content of the file into a string.
-        $content = file_get_contents($path);
+        $content = str_replace(
+            'class User extends Authenticatable',
+            'class User extends Authenticatable implements MustVerifyEmail',
+            $content
+        );
 
-        // Find the position of the last curly brace in the string.
-        $lastCurlyBracePos = strrpos($content, '}');
+        $contractNeedle = '// use Illuminate\Contracts\Auth\MustVerifyEmail;';
 
-        // This condition checks if the last curly brace was found in the string.
-        if ($lastCurlyBracePos !== false) {
-            // This line inserts $insertion before the last curly brace in the string,
-            // and then writes the modified string back to the file.
-            $content = substr_replace($content, $insertion . "\n}", $lastCurlyBracePos, 1);
-            file_put_contents($path, $content);
+        if (strpos($content, $contractNeedle) !== false) {
+            $content = str_replace($contractNeedle, $contractUncommented, $content);
         }
+
+        file_put_contents($userModelPath, $content);
     }
 }
